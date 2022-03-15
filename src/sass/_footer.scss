@@ -15,12 +15,30 @@ footer {
   }
 }
 
+.footer-box-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  // width: 100%;
+  // justify-content: center;
+
+  @include ipad {
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  @include desktop {
+    gap: 3rem;
+  }
+}
+
 .footer-box {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 
   h3 {
+    text-align: center;
     font-size: 1.5rem;
     font-weight: 400;
     color: var(--accent-color);
@@ -31,6 +49,10 @@ footer {
   display: flex;
   justify-content: center;
   gap: 1rem;
+
+  .nav-button {
+    display: block;
+  }
 }
 
 .social-link {

@@ -13,7 +13,17 @@ nav {
 }
 
 .logo {
-  width: 170px;
+  width: 120px;
+  
+  @include ipad {
+    width: 150px;
+    
+  }
+  
+  @include desktop {
+    width: 170px;
+
+  }
 
   img {
     width: 100%;
@@ -70,6 +80,11 @@ nav {
     display: block;
     margin-top: 0;
   }
+}
+
+.nav-button.mobile {
+  display: block;
+  color: black;
 }
 
 // Menu -button

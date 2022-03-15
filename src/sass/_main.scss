@@ -82,4 +82,12 @@
     }
   }
 
+  .nav-button {
+    display: block;
+
+    @include desktop {
+      display: none;
+    } 
+  }
+
 }
