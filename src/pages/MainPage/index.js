@@ -18,7 +18,7 @@ const MainPage = () => {
     mobileNavRef.current.style.display = "none";
   }
 
-  let countDownDate = new Date("Apr 1, 2022 00:00:00").getTime();
+  let countDownDate = new Date("Apr 11, 2022 00:00:00").getTime();
   // const daysSpan = document.getElementById("days");
   // const hoursSpan = document.getElementById("hours");
   // const minutesSpan = document.getElementById("minutes");
