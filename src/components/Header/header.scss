@@ -1,0 +1,62 @@
+.nav {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-family: 'Montserrat',"Helvetica Neue",Helvetica;
+  font-weight: 700;
+  padding: 0.2rem 10rem;
+}
+
+.navLink > img {
+    height: 15em;
+}
+
+.navMenu {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.links {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 0 1rem;
+    height: 100%;
+    cursor: pointer;
+}
+
+.links:hover {
+    transition: all 0.2s ease-in-out;
+    color: rgb(87, 80, 17);
+}
+
+.navBtn {
+    display: flex;
+    align-items: center;
+    margin-right: 24px;
+}
+
+.NavBtnLink {
+    border-radius: 4px;
+    padding: 10px 22px;
+    color: #fff;
+    outline: none;
+    border: none;
+    background: rgb(87, 80, 17);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    margin-left: 24px;
+    font-size: 1rem;
+    font-family: 'Montserrat',"Helvetica Neue",Helvetica;
+    font-weight: 700;
+}
+
+.NavBtnLink:hover {
+    transition: all 0.2s ease-in-out;
+    background: rgb(78, 13, 13);
+    color: #010606;
+}

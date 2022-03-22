@@ -1,88 +1,24 @@
-// @import "./sass/";
-@import "./sass/mixins/breakporintMixin";
-@import "./sass/container";
-@import "./sass/main";
-@import "./sass/nav";
-@import "./sass/countdown";
-@import "./sass/overview-section";
-@import "./sass/gallery-section";
-@import "./sass/roadmap";
-@import "./sass/team-section";
-@import "./sass/metaverse";
-@import "./sass/footer";
-
-@font-face {
-  font-family: 'Luxia';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Luxia'), url('https://fonts.cdnfonts.com/s/29728/LuxiaRegular.woff') format('woff');
-}
-@font-face {
-  font-family: 'Luxia';
-  font-style: normal;
-  font-weight: 500;
-  src: local('Luxia'), url('https://fonts.cdnfonts.com/s/29728/LuxiaDisplay.woff') format('woff');
-}
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-
-:root {
-  --body-color: #1B1B1B;
-
-  --main-gradient-color: linear-gradient(180deg, #F7DA7E 0%, #DEAA33 99.84%);
-
-  --main-clip-path: polygon(0 0, 100% 0, 100% 67%, 50% 96%, 0 67%);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    position: relative;
+  }
   
-  --font-light-color: #fff;
-
-  --font-dark-color: #1B1B1B;
-
-  --nav-button-gradient: linear-gradient(180deg, #E0B460 11.46%, #8F6226 95.83%);
-
-  --accent-color: #E0B460;
-
-  --accent-dark-color: #675532;
-
-  --gradient-for-backdrop: linear-gradient(126.6deg, rgba(255, 255, 255, 0.12) 28.69%, rgba(255, 255, 255, 0) 100%);
-
-  --border-dark-gradient:  linear-gradient(180deg, #E0B460 63.02%, #FCCD73 99.99%, rgba(224, 180, 96, 0) 100%, rgba(224, 180, 96, 0) 100%);
-
-  --roadmap-right-clippath: polygon(90% 0, 100% 50%, 90% 100%, 0 100%, 0 0);
-
-  --roadmap-left-clippath: polygon(100% 0, 100% 100%, 10% 100%, 0 53%, 10% 0);
-
-  --font-family-heading: 'Luxia', sans-serif;
-
-  --font-family-paragraph: 'Montserrat', sans-serif;
-
-  --roadmap-border-right-gradient: linear-gradient(158deg, rgba(255,255,255,1) 0%, #675532 41%);
-
-  --roadmap-border-left-gradient: linear-gradient(202deg, rgba(255,255,255,1) 0%, #675532 41%);
-
-  --footer-bg-color: #292929;
-
-  --border-gradient: linear-gradient(171deg, rgba(255,255,255,1) 0%, rgba(229,205,150,1) 12%, rgba(200,149,32,1) 100%);
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: var(--body-color);
-}
-
-body, a, button, span {
-  font-family: 'Luxia', sans-serif; 
-}
-
-.main-layout {
-  display: flex;
-  flex-direction: column;
-  gap: 5rem;
-}
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Montserrat' 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    /* background-image: radial-gradient( circle at top left, #706902, #161400); */
+    background: #161400;
+  
+  }
+  
+  code {
+    font-family: 'Courier New',
+      monospace;
+  }
+  

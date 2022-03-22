@@ -1,0 +1,44 @@
+.footer {
+    position: relative;
+    display: grid;
+    font-family: 'Montserrat',"Helvetica Neue",Helvetica;
+    font-weight: 700;
+    padding: 0.2rem 10rem;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footerImage {
+    height: 200px;
+}
+
+.icons  {
+    height: 150px;
+}
+.footerlinks {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 0 1rem;
+    height: 100%;
+    cursor: pointer;
+}
+.footerlinks:hover {
+    transition: all 0.2s ease-in-out;
+    color: rgb(87, 80, 17);
+}
+.footerMenu {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem 15rem;
+    color: #fff;
+}
+
+.terms > p > span {
+    margin-left: 0.5em;
+    border-left: 2px solid black;
+}

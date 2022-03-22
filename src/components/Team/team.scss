@@ -1,0 +1,41 @@
+.teamHeading {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin: 5rem;
+    font-size: 3rem;
+    color: #F0A500;
+    font-family: 'Montserrat', 'Helvetica Neue', Helvetica;
+    font-weight: 700;
+     
+}
+.team {
+    z-index: 1000;
+    position: relative;
+    display: flex;
+    text-align: center;
+    margin: 5rem;
+    padding: 1rem 15rem 1rem 15rem;
+}
+
+.team-container {
+    color: #fff;
+    border: 5px inset #A48D12;
+    border-radius: 40px 40px 40px 40px;
+    padding: 4em;
+    margin: 0 1em 0 1em;
+}
+.teamGap {
+    padding: 5rem;
+    border: none;
+}
+.team-container-two  {
+    color: #fff;
+    border: 5px inset #A48D12;
+    border-radius: 40px 40px 40px 40px;
+    padding: 4em;
+    margin: 0 5em 0 5em;
+}
+
+
+
