@@ -1,21 +1,14 @@
-import Home from './pages/Home/Home';
-import './App.scss';
+// import logo from './logo.svg';
+// import './App.css';
+// import MainPage from './pages/MainPage';
+// import "./asset/sass/"
 
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-
-} from "react-router-dom";
+import Home from "./pages/Home/Home";
 
 function App() {
   return (
-    <div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home/>} />
-        </Routes>
-      </Router>
+    <div className="App">
+      <Home />
     </div>
   );
 }

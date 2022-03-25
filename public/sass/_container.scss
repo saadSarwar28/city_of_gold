@@ -1,0 +1,26 @@
+@import "./mixins/breakporintMixin";
+
+.container {
+  // z-index: 100;
+  width: 95%;
+  height: 100%;
+  margin: 0 auto;
+  max-width: 1500px;
+  // overflow: hidden;
+  
+  @include ipad {
+    width: 95%;
+  }
+  
+  @include desktop {
+    width: 95%;
+    // max-width: 1290px;
+  }
+
+}
+
+.hero-container {
+  width: 92%;
+  max-width: 1500px;
+  margin: 0 0 0 auto;
+}

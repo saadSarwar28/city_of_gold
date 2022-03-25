@@ -2,14 +2,18 @@ import React, { useRef, useState } from 'react'
 
 const MainPage = () => {
 
+  
+  const [balanceAmount, setBalanceAmount] = useState(0);
+  
+  const increaseBalanceAmount = () => {
+    setBalanceAmount((prev) => prev + 1);
+  }
+  
+  const decreaseBalanceAmount = () => {
+    setBalanceAmount((prev) => prev - 1);
+  }
   const mobileNavRef = useRef();
-
-  const [days, setDays] = useState(0);
-  const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
-
-
+  
   const openNavMenu = () => {
     mobileNavRef.current.style.display = "flex"
   }
@@ -18,11 +22,11 @@ const MainPage = () => {
     mobileNavRef.current.style.display = "none";
   }
 
-  let countDownDate = new Date("Apr 11, 2022 00:00:00").getTime();
-  // const daysSpan = document.getElementById("days");
-  // const hoursSpan = document.getElementById("hours");
-  // const minutesSpan = document.getElementById("minutes");
-  // const secondsSpan = document.getElementById("seconds");
+  let countDownDate = new Date("April 1, 2022 00:00:00").getTime();
+  const daysSpan = document.getElementById("days");
+  const hoursSpan = document.getElementById("hours");
+  const minutesSpan = document.getElementById("minutes");
+  const secondsSpan = document.getElementById("seconds");
 
   // Update the count down every 1 second
   let x = setInterval(function () {
@@ -33,15 +37,15 @@ const MainPage = () => {
     let distance = countDownDate - now;
 
     // Time calculations for days, hours, minutes and seconds
-    setDays(Math.floor(distance / (1000 * 60 * 60 * 24)));
-    setHours(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-    setMinutes(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
-    setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
-    
-    // daysSpan.innerText = days;
-    // hoursSpan.innerText = hours;
-    // minutesSpan.innerText = minutes;
-    // secondsSpan.innerText = seconds;
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    daysSpan.innerText = days;
+    hoursSpan.innerText = hours;
+    minutesSpan.innerText = minutes;
+    secondsSpan.innerText = seconds;
 
     // Display the result in the element with id="demo"
     // document.getElementById("demo").innerHTML = days + "d " + hours + "h "
@@ -56,6 +60,7 @@ const MainPage = () => {
 
   return (
     <div className="main-layout">
+
       {/* Main section */}
       <div className="main-wrapper">
         <div className="main">
@@ -92,25 +97,25 @@ const MainPage = () => {
                 <div className="countdown-wrapper">
                   <div className="countdown-box-wrapper">
                     <div className="countdown-box">
-                      <span id="days">{days}</span>
+                      <span id="days"></span>
                     </div>
                     <span className="countdown-box-label">Days</span>
                   </div>
                   <div className="countdown-box-wrapper">
                     <div className="countdown-box">
-                      <span id="hours">{hours}</span>
+                      <span id="hours"></span>
                     </div>
                     <span className="countdown-box-label">Hours</span>
                   </div>
                   <div className="countdown-box-wrapper">
                     <div className="countdown-box">
-                      <span id="minutes">{minutes}</span>
+                      <span id="minutes"></span>
                     </div>
                     <span className="countdown-box-label">Minutes</span>
                   </div>
                   <div className="countdown-box-wrapper">
                     <div className="countdown-box">
-                      <span id="seconds">{seconds}</span>
+                      <span id="seconds"></span>
                     </div>
                     <span className="countdown-box-label">Seconds</span>
                   </div>
@@ -146,11 +151,53 @@ const MainPage = () => {
       </div>
 
 
+      {/* Mint Section */}
+      <div>
+        <div className="container">
+          <div className="mint-section">
+            <div className="mint-section-content">
+              <h1>Close Look Presale</h1>
+              <p>In publishing and Graphic design, Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, quisquam!</p>
+            </div>
+            <div className="mint-section-card">
+              <div className="mint-section-card-heading">
+                <h2>Mint NFT</h2>
+                <span>1000 NFTs</span>
+              </div>
+              <div className="input-section-list">
+                <div className="mint-input-section">
+                  <span>Balance</span>
+                  <span className='balance-amount'>200 ETH</span>
+                  {/* <input type="text"  placeholder='Balance'/> */}
+                </div>  
+
+                <div className="mint-input-section">
+                  <span>Amount</span>
+                  <div className='amount-box'> 
+                    <div><i class="fas fa-plus" onClick={increaseBalanceAmount}></i></div>
+                    <span className='balance-amount'>{balanceAmount}</span>
+                    {/* <input type="text"  placeholder='Amount'/> */}
+                    <div><i class="fas fa-minus" onClick={decreaseBalanceAmount}></i></div>
+                  </div>
+                  <button className='max-button' type='button'>Max</button>
+                </div>  
+
+                <div className="mint-total-section">
+                  <span>Total</span>
+                  <span className='total-amount'>116.98 ETH</span>
+                </div>
+              </div>
+              <button className='connect-wallet-button'>Connect Wallet</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       {/* Overview section */}
-      
-        <div>
-          <div className="container">
-            <div className="overview-section" id="overview">
+      <div>
+        <div className="container">
+          <div className="overview-section" id="overview">
             <div className=" overview-section-image">
               <img src="https://storage.googleapis.com/msgsndr/3Lm0Uh5hGdQixz6dXDVn/media/622b4eb6bb4fc5c888efcd25.png"
                 alt="" />

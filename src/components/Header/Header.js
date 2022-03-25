@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import "./header.scss";
 import logo from "../../Images/favicon.ico"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { Link } from "react-router-dom";
 
 export default function Header() {

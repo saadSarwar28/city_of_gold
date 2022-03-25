@@ -1,46 +1,41 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
-import logo from '../../Images/favicon.ico';
-import facebook from '../../Images/facebook.svg';
-import instagram from '../../Images/instagram.svg';
-import twitter from '../../Images/twitter.svg';
-import linkedin from '../../Images/linkedin.svg';
-import './footer.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTwitter, faInstagram, faDiscord } from '@fortawesome/free-brands-svg-icons'
 
-export default function Footer() {
+const Footer = () => {
   return (
-    <>
-        <footer className='footer'>
-            <div className='footer-container'>
-                <div>
-                    <img className='footerImage' src={logo} alt='footerLogo'/>
-                </div>
-                <div className='icons'>
-                    <img src={facebook} alt='footerLogo'/>
-                    <img src={instagram} alt='footerLogo'/>
-                    <img src={twitter} alt='footerLogo'/>
-                    <img src={linkedin} alt='footerLogo'/>
-                </div>
+    <footer>
+      <div class="second-row">
+        <div class="container">
+          <div class="second-row-content">
+            <div class="logo">
+              <img src="https://storage.googleapis.com/msgsndr/3Lm0Uh5hGdQixz6dXDVn/media/622c01e16fc5bb0fea50a60f.png" alt="" />
             </div>
-            <div className='footerMenu'>
-                <Link to='/' className="footerlinks">Home</Link>
-                <Link to='/' className="footerlinks">Overview</Link>
-                <Link to='/' className="footerlinks">Roadmap</Link>
-                <Link to='/' className="footerlinks">The Team</Link>
+            <div class="socialLinks">
+              <a href="https://twitter.com/cityofgold_io" target="_blank">
+                <FontAwesomeIcon icon={faTwitter} />
+              </a>
+              <a href="https://www.instagram.com/cityofgold_io/" target="_blank">
+                <FontAwesomeIcon icon={faInstagram} />
+              </a>
+              <a href="https://discord.gg/cityofgold" target="_blank">
+                <FontAwesomeIcon icon={faDiscord} />
+              </a>
             </div>
-            <div className='footerMenu'>
-                <div>
-                    <p>All rights reserved</p>
-                </div>
-                <div className='terms'>
-                    <p>Terms & Conditions
-                        <span>
-                        Privacy Policy
-                        </span>
-                    </p>
-                </div>
-            </div>
-        </footer>
-    </>
+          </div>
+        </div>
+      </div>
+
+      <div class="third-row">
+        <div class="container">
+          <div class="third-row-content">
+            <span>All rights reserved © City Of Gold</span>
+            
+          </div>
+        </div>
+      </div>
+    </footer>
   )
 }
+
+export default Footer
