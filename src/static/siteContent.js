@@ -36,7 +36,7 @@ export const roadmapSectionContent = {
 
   // Heading for Roadmap Hexagon Box
   boxOneHeading: "PHASE-1",
-  boxTwoHeading: "PHASE-1",
+  boxTwoHeading: "PHASE-2",
   boxThreeHeading: "PHASE-3",
   boxFourHeading: "PHASE-4",
   boxFiveHeading: "PHASE-5",
