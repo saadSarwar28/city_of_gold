@@ -1,0 +1,267 @@
+@import "./sass/container";
+@import "./sass/general_classes";
+@import "./sass/mixins/breakporintMixin";
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  // Background colors
+  --body-color: #161616;
+
+  --input-field-color: #272727;
+
+  // Font colors
+  --font-light-color: white;
+  --accent-color: #fecb42; 
+  --accent-dark-color: #4e3b18; 
+
+  // Start color
+  --star-color: rgb(255, 185, 35);
+
+  
+
+  // Font families
+  --font-poppins: 'Poppins', sans-serif;
+  
+  // Gradients
+  --border-linear-gradient: linear-gradient(180deg, rgb(206 182 124) 0%, rgb(161 144 85) 29%, rgb(116 83 7) 100%);
+
+  --button-gradient: linear-gradient(
+    to right, 
+    rgb(216, 185, 75),
+    rgb(185, 135, 18)
+  );
+
+  --button-border-gradient: linear-gradient(
+    to left bottom, 
+    var(--accent-color),
+    var(--accent-dark-color)
+  );
+
+  // Clippaths
+  --hexagon-clip-path: polygon(0 25%, 50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%);
+  --button-clip-path: polygon(0 0, 90% 0, 100% 32%, 100% 100%, 10% 100%, 0 68%);
+  // --button-clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 81%);
+
+  // Clippath for Dashboard
+  --notched-dashboard-nav-box: polygon(
+    /* Top left corner */
+    0 0, 
+    /* Top right corner first notch corner */
+    83% 0, 
+    /* Top right corner second noch corner */
+    100% 23%,
+    /* Bottom right corener */
+    100% 100%, 
+    /* bottom right first notched corner */
+    17% 100%, 
+    /*bottom right second notched corner */
+    0 77%
+  );
+
+  --dashboard-main-box-polygon: polygon(
+    /* bottom left corner */
+    0 100%,
+    /* top left first notched on left */
+    0 15%,
+    /* top left second notched on top */
+    8% 0,
+    /* top right first point to start the design */
+    80% 0,
+    /* top right second point for curve */
+    82% 2%,
+    /* top right third point which end line and start noctch point */
+    96% 2%,
+    /* top right notch point last point */
+    98% 6%,
+    /* top right right line first notch point  */
+    98% 31%,
+    /* top right right line second notch point which touch the right line */
+    100% 34%,
+    /* bottom right first point on right line  */
+    100% 86%,
+    /* bottom right second point on bottom line */
+    92% 100%
+  );
+  
+  --dashboard-main-box-polygon-ipad: polygon(
+    /* bottom left corner */
+    0 100%,
+    /* top left first notched on left */
+    0 15%,
+    /* top left second notched on top */
+    11% 0,
+    /* top right first point to start the design */
+    80% 0,
+    /* top right second point for curve */
+    82% 2%,
+    /* top right third point which end line and start noctch point */
+    97% 2%,
+    /* top right notch point last point */
+    99% 4%,
+    /* top right right line first notch point  */
+    99% 24%,
+    /* top right right line second notch point which touch the right line */
+    100% 25%,
+    /* bottom right first point on right line  */
+    100% 86%,
+    /* bottom right second point on bottom line */
+    89% 100%
+  );
+
+  --notched-dashboard-nav-box-last: polygon(
+    /* Top left corner */
+    0 0, 
+    /* Top right corner first notch corner */
+    90% 0,
+    /* Top right corner second noch corner */
+    100% 23%,
+    /* Bottom right corener */
+    100% 100%,
+    /* bottom right first notched corner */
+    10% 100%,
+    /*bottom right second notched corner */
+    0 77%
+  );
+
+
+  --dashboard-box-mobile: polygon(
+    /* Top left corner */
+    0 0,
+    /* Top right corner first notch corner */
+    88% 0,
+    /* Top right corner second noch corner */
+    100% 8%,
+    /* Bottom right corener */
+    100% 100%,
+    /* bottom right first notched corner */
+    10% 100%,
+    /*bottom right second notched corner */
+    0 93%);
+}
+
+body {
+  background-color: var(--body-color);
+  font-family: var(--font-poppins);
+  position: relative;
+  
+  overflow-x: hidden;
+}
+
+a, 
+button,
+*::after,
+*::before {
+  font-family: var(--font-poppins);
+
+}
+
+// For all section heading
+.section-heading {
+  color: var(--accent-color);
+  text-transform: uppercase;
+  font-size: 40px;
+  line-height: 44px;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+// Discord button anchor tag
+.discord-button {
+  background-image: var(--button-border-gradient);
+  color: var(--body-color);
+  border-radius: 10px;
+  padding: 2px;
+  cursor: pointer;
+  height: 100%;
+  text-decoration: none;
+  position: relative;
+  bottom: 0;
+  transition: bottom 0.2s ease-in;
+  font-size: 30px;
+  display: block;
+
+  &:hover {
+    bottom: 3px;
+  }
+}
+
+// Large
+.discord-button.large {
+  
+  button {
+    font-size: 1rem;
+    padding: 15px 40px;
+    
+    @include ipad {
+      font-size: 1.1rem;
+      padding: 15px 40px;
+    }
+  }
+}
+
+// Discord button Inside Anchor Tag
+.discord-button button {
+  cursor: pointer;
+  background-image: var(--button-gradient);
+  
+  padding: 0.7rem 1.1rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-family: var(--font-poppins);
+  border: none;
+  outline: none;
+  color: var(--body-color);
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: block;
+  
+
+  
+}
+
+// Gradient on Main Section and Overview Section
+.gradient {
+  // Gradient for mobile
+  // z-index: -10;
+  background-image: radial-gradient(
+    circle at 50% 35%,
+    var(--accent-dark-color) 5%,
+    var(--body-color) 30%,
+  );
+  
+  // Gradient for desktop
+  @include desktop {
+    background-image: radial-gradient(
+      circle at 20% 50%,
+      var(--accent-dark-color) 10%,
+      var(--body-color) 40%,
+    );
+  }
+}
+
+// Loader Wrapper
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+
+  background-color: var(--body-color);
+}

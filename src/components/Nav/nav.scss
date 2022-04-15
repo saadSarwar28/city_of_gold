@@ -1,0 +1,154 @@
+@import "../../static/css/sass/mixins/breakporintMixin";
+
+nav {
+  z-index: 1;
+  padding-top: 12px;
+  
+  grid-row: 1 / 2;
+  grid-column: 1 / -1;
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  
+  @include ipad {
+    padding-top: 26px;
+  }
+}
+
+.logo {
+  width: 120px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Navigation links
+.nav__links {
+  display: none;
+  list-style-type: none;
+  color: var(--font-light-color);
+  
+  @include desktop {
+    gap: 2.2rem;
+    display: flex;
+  }
+
+  li {
+    font-size: 1.2rem;
+  }
+  
+  a {
+    color: var(--font-light-color);
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    bottom: 0;
+    transition: color 0.2s ease-in;
+
+    &:hover, 
+    &:focus {
+      color: var(--accent-color);
+    }
+  }
+}
+
+// / Discord button desktop
+nav .discord-button {
+  display: none;
+
+  @include desktop {
+    display: block;
+  }
+}
+
+// Hamburger menu button 
+.menu-button {
+  color: var(--accent-color);
+  font-size: 2rem;
+  display: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+
+  @include desktop {
+    display: none;
+  }
+
+  svg {
+    font-weight: 200;   
+  }
+  
+  &:hover {
+    color: white;
+  }
+
+  span {
+    width: 30px;
+    height: 2px;
+    background-color: var(--accent-color);
+  }
+}
+
+// Mobile Navigation hidden on dekstop
+.nav--mobile {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--body-color);
+  z-index: 5;
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  // Close button
+  .close-menu-button {
+    width: 25px;
+    height: 25px;
+    top: 3.8rem;
+    right: 3rem;
+    position: absolute;
+    color: white;
+    font-weight: 200;
+    cursor: pointer;
+
+    
+
+    &:hover {
+      color: var(--accent-color);
+    }
+  }
+
+  .discord-button {
+    display: block !important;
+  }
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  text-align: center;
+  list-style-type: none;
+
+  a {
+    font-size: 24px;
+    text-decoration: none;
+    color: var(--accent-color);
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+      color: var(--font-light-color);
+    }
+  }
+}

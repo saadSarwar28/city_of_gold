@@ -3,9 +3,11 @@ import React, { useRef } from 'react'
 import DiscordButton from '../Buttons/DiscordButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark, faBars } from "@fortawesome/free-solid-svg-icons";
+import { Link, useLocation } from 'react-router-dom';
+import { routeUrl } from '../../utils/routeUrls';
 
 const Nav = () => {
-  
+  const location = useLocation()
   const mobileNavRef = useRef();
 
   const openNavMenu = () => {
@@ -26,23 +28,41 @@ const Nav = () => {
       {/* Desktop Nav link */}
       <ul className="nav-links">
         <li>
-          <a href="#hero-section">Home</a>
+          <Link to={"/"}>
+              Home
+          </Link>
+          {/* <a href="#hero-section"></a> */}
         </li>
         <li>
-          <a href="#overview-section">Overview</a>
+          <a href={
+            location.pathname !== "/" ?
+              "/#overview-section" :
+              "#overview-section"   
+          }>Overview</a>
         </li>
         <li>
-          <a href="#roadmap-section">Roadmap</a>
+            <a href={
+              location.pathname !== "/" ?
+                "/#roadmap-section" :
+                "#roadmap-section"
+            }>Roadmap</a>
         </li>
         <li>
-          <a href="#team-section">The Team</a>
+          <a href={
+            location.pathname !== "/" ?
+              "/#team-section" :
+              "#team-section"
+          }>The Team</a>
         </li>
       </ul>
       {/* Discord Button */}
       <DiscordButton />
       {/* Menu Button */}
       <div className="menu-button" onClick={openNavMenu}>
-        <FontAwesomeIcon icon={faBars} />
+        <span></span>
+        <span></span>
+        <span></span>
+        {/* <FontAwesomeIcon icon={faBars}  /> */}
       </div>
     </nav>
     {/* Mobile Nav */}
@@ -52,16 +72,41 @@ const Nav = () => {
           <a className="mobile-anchor-link" href="#">Home</a>
         </li>
         <li>
-          <a className="mobile-anchor-link" href="#overview-section" onClick={closeNavMenu}>Overview</a>
+          <a className="mobile-anchor-link" 
+            href={
+              location.pathname !== "/" ?
+                "/#overview-section" :
+                "#overview-section"
+            } 
+            onClick={closeNavMenu}
+          >Overview</a>
         </li>
         <li>
-          <a className="mobile-anchor-link" href="#roadmap-section" onClick={closeNavMenu}>Roadmap</a>
+            <a className="mobile-anchor-link"
+              href={
+                location.pathname !== "/" ?
+                  "/#roadmap-section" :
+                  "#roadmap-section"
+              }
+              onClick={closeNavMenu}
+            >Roadmap</a>
+          {/* <a className="mobile-anchor-link" href="#roadmap-section" onClick={closeNavMenu}>Roadmap</a> */}
         </li>
         <li>
-          <a className="mobile-anchor-link" href="#team-section" onClick={closeNavMenu}>The Team</a>
+            <a className="mobile-anchor-link"
+              href={
+                location.pathname !== "/" ?
+                  "/#team-section" :
+                  "#team-section"
+              }
+              onClick={closeNavMenu}
+            >The Team</a>
+          {/* <a className="mobile-anchor-link" href="#team-section" onClick={closeNavMenu}>The Team</a> */}
         </li>
-        <a className="discord-button" href="https://discord.gg/cityofgold" target="_blank"><button>JOIN OUR DISCORD</button></a>
-        <FontAwesomeIcon icon={faXmark} onClick={closeNavMenu}></FontAwesomeIcon>
+        <DiscordButton />
+        {/* <a className="discord-button" href="https://discord.gg/cityofgold" target="_blank"><button>JOIN OUR DISCORD</button>
+        </a> */}
+          <FontAwesomeIcon icon={faXmark} onClick={closeNavMenu} className="close-menu-button"></FontAwesomeIcon>
       </ul>
     </div>
     </>

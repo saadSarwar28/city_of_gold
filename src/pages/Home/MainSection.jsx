@@ -1,15 +1,19 @@
-// Main Section or Hero Section Component
+/* 
+  - Landing page section  
+  - Includes Nav and Hero Section  
+*/
 
 import React from 'react'
-import Nav from '../Nav/Nav'
+import "./home.css";
 import HeroSection from './HeroSection'
-// import Nav from './Nav'
+import Nav from '../../components/Nav/Nav';
+
 
 const MainSection = () => {
   return (
-    <div className="main-section">
+    <div className="main" id="main-section">
       <div className="container">
-        <div className="hero-section-wrapper">
+        <div className="main--wrapper">
           <Nav />
           <HeroSection />
         </div>

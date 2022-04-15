@@ -1,0 +1,282 @@
+@import "./mint-page-animated-bg";
+@import "../../static/css/sass/mixins/breakporintMixin";
+
+
+:root {
+  // Clippath Shapes
+  --clippath: polygon(0 13%, 13% 0, 77% 0, 80% 2%, 96% 2%, 98% 6%, 98% 22%, 100% 24%, 100% 87%, 87% 100%, 0 100%);
+  --traingle-clippath: polygon(50% 0%, 0 100%, 100% 100%);
+  --hexagon-medium-height: polygon(0 0, 80% 0, 100% 27%, 100% 100%, 19% 100%, 0 77%);
+
+  // Gradients
+  --border-linear-gradient: linear-gradient(180deg, rgba(234,215,170,1) 0%, rgba(233,216,158,1) 29%, rgba(200,149,32,1) 100%);
+  --button-gradient: linear-gradient(
+    to right, 
+    rgb(216, 185, 75),
+    rgb(185, 135, 18)
+  );
+  --button-border-gradient: linear-gradient(
+    to left bottom, 
+    var(--accent-color),
+    var(--accent-dark-color)
+  );
+
+}
+
+.mint {
+
+}
+
+
+// .mint-box-wrapper {
+.mint__wrapper {
+  margin: 3rem auto 0;
+  z-index: 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  @include ipad {
+    margin: 1rem auto 0;
+    padding: 40px;
+    width: 600px;
+    height: 600px;
+  }
+}
+
+.mint__box {
+  position: relative;
+ 
+  clip-path: var(--clippath);
+  background-image: var(--border-linear-gradient);
+  width: 100%;
+  height: 100%;
+  padding: 3px;
+  // overflow: visible;
+
+}
+
+
+// Mint Box  Content
+.mint__box__content {
+  background-color: var(--body-color);
+  clip-path: var(--clippath);
+  width: 100%;
+  height: 100%;
+  // z-index: -1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--font-light-color);
+  gap: 3rem;
+  padding: 3rem 1.4rem;
+
+  @include ipad  {
+    padding: 0;
+  }
+
+  h2 {
+    text-align: center;
+    width: 100%;
+    
+    @include ipad {
+      width: 70%;
+
+    }
+  }
+}
+
+// Traingle
+.mint__triangle {
+  clip-path: var(--traingle-clippath);
+  width: 81px;
+  height: 41px;
+  background-image: var(--border-linear-gradient);
+  // background-color: orange;
+
+ 
+}
+
+// Upper Left Traingle Box
+.mint__triangle--left {
+  position: absolute;
+  top: 34px;
+  left: 14px;
+  transform: rotate(-45deg);
+  display: none;
+
+  @include ipad {
+    display: block;
+  }
+  
+}
+
+// Bottom Right Traingle Box
+.mint__triangle--right {
+  position: absolute;
+  bottom: 36px;
+  right: 14px;
+  transform: rotate(135deg);
+  padding: 1px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  @include ipad {
+    display: flex;
+  }
+
+  // Inner side box right to make border
+  div {
+    clip-path: var(--traingle-clippath);
+    width: 67px;
+    height: 32px;
+    background-color: var(--body-color);
+  }
+
+}
+
+// 
+.mint__wrapper .logo {
+  position: absolute;
+  background-color: var(--body-color);
+  border: 1px solid var(--accent-color);
+  z-index: 1;
+  top: -8%;
+  width: 80px;
+  height: 80px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  
+  @include ipad {
+    top: -2%;
+    width: 100px;
+    height: 100px;
+  }
+}
+
+
+.mint__box__content__button-group {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+
+  @include ipad {
+    flex-direction: row;
+  }
+}
+
+.button-hexagon {
+  display: block;
+  background-image: var(--border-linear-gradient);
+  clip-path: var(--button-clip-path);
+  outline: none;
+  border: none;
+  width: 170px;
+  height: 45px;
+  font-size: 16px;
+  cursor: pointer;
+  // padding: 10px 0;
+}
+
+.button-hexagon.gradient {
+  background-image: var(--border-linear-gradient);
+  // z-index: 1;
+ 
+}
+
+.button-hexagon.border {
+  background-image: var(--border-linear-gradient);
+  padding: 2px;
+  color: var(--font-light-color);
+
+  span {
+    width: 100%;
+    height: 100%;
+    background-color: var(--body-color);
+    clip-path: var(--button-clip-path);
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+}
+
+// Already minted name span
+.mint__box__content__already-minted {
+  color: var(--accent-color);
+  font-size: 14px;
+}
+
+// Increase Decrease Input Fields
+.number-field__buttons {
+  background-color: var(--input-field-color);
+  width: 165px;
+  z-index: 4;
+  // padding: 12px 10px;
+
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.number-field__buttons input {
+  background: none;
+  text-align: center;
+  width: 100%;
+  margin: 0 10px;
+  color: var(--font-light-color);
+  outline: none;
+  border: none;
+  font-size: 1.4rem;
+}
+
+.number-field__buttons div {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Field input button
+.number-field__buttons .button {
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  outline: none;
+  border: none;
+  color: var(--accent-color);
+  
+  &:hover {
+    color: var(--font-light-color);
+  }
+}
+
+
+
+/* Chrome, Safari, Edge, Opera */
+.number-field__buttons input::-webkit-outer-spin-button,
+.number-field__buttons input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.number-field__buttons input {
+  -moz-appearance: textfield;
+}

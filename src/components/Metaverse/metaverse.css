@@ -1,0 +1,262 @@
+.box-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 30px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (min-width: 768px) {
+  .box-list {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    gap: 8px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .box-list {
+    gap: 8px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .box-list {
+    gap: 20px;
+  }
+}
+
+.box {
+  -webkit-clip-path: var(--hexagon-clip-path);
+          clip-path: var(--hexagon-clip-path);
+  padding: 2px;
+  background-color: #ead7aa;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#eed18d), color-stop(29%, var(--accent-color)), to(var(--accent-dark-color)));
+  background-image: linear-gradient(180deg, #eed18d 0%, var(--accent-color) 29%, var(--accent-dark-color) 100%);
+  height: 500px;
+}
+
+@media (min-width: 768px) {
+  .box {
+    width: 300px;
+    height: 390px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .box {
+    width: 320px;
+    height: 370px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .box {
+    width: 385px;
+    height: 425px;
+  }
+}
+
+.box-content {
+  background-color: var(--body-color);
+  -webkit-clip-path: var(--hexagon-clip-path);
+          clip-path: var(--hexagon-clip-path);
+  width: 100%;
+  height: 100%;
+  padding: 3rem 1rem 5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 8px;
+}
+
+.box-content .img {
+  width: 70px;
+  height: 70px;
+}
+
+.box-content .img img {
+  width: 100%;
+  height: 100%;
+}
+
+.box-content .img.large {
+  width: 90px;
+  height: 90px;
+  margin-bottom: -14px;
+}
+
+.box-content h1 {
+  text-align: center;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  font-size: 24px;
+}
+
+@media (min-width: 768px) {
+  .box-content h1 {
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .box-content h1 {
+    font-size: 28px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .box-content h1 {
+    font-size: 32px;
+  }
+}
+
+.box-content p {
+  text-transform: uppercase;
+  color: var(--font-light-color);
+  text-align: center;
+  font-size: 14px;
+}
+
+@media (min-width: 1080px) {
+  .box-content p {
+    font-size: 13px;
+    line-height: 20px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .box-content p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+@media (min-width: 768px) {
+  .metaverse-first .box.one {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+  }
+}
+
+@media (min-width: 768px) {
+  .metaverse-second .box.two {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    grid-column: 1 / 2;
+    grid-row: 1 / -1;
+  }
+}
+
+@media (min-width: 768px) {
+  .metaverse-second .box.three {
+    grid-column: 2 / -1;
+    grid-row: 1 / -1;
+  }
+}
+
+@media (min-width: 768px) {
+  .metaverse-third .box.four {
+    grid-column: 1 / -1;
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 1;
+    grid-row: 1 / 2;
+    -ms-grid-column-align: center;
+        justify-self: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .metaverse-third .box.five {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    grid-column: 1 / 2;
+    grid-row: 2 / -1;
+    -ms-grid-column-align: end;
+        justify-self: end;
+    margin-top: -185px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .metaverse-third .box.five {
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .metaverse-third .box.six {
+    grid-column: 2 / -1;
+    grid-row: 2 / -1;
+    margin-top: -185px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .metaverse-third .box.six {
+    margin-top: 0;
+  }
+}
+
+.metaverse-second {
+  margin-top: 30px;
+}
+
+@media (min-width: 768px) {
+  .metaverse-second {
+    margin-top: -85px;
+  }
+}
+
+.metaverse-third {
+  margin-top: 30px;
+}
+
+@media (min-width: 768px) {
+  .metaverse-third {
+    margin-top: -85px;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (1fr)[2];
+        grid-template-columns: repeat(2, 1fr);
+    -ms-grid-rows: (1fr)[2];
+        grid-template-rows: repeat(2, 1fr);
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+}
+
+@media (min-width: 1080px) {
+  .metaverse-third {
+    margin-top: -85px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+/*# sourceMappingURL=metaverse.css.map */

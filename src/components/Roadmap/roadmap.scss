@@ -1,110 +1,100 @@
-.roadMap {
-    position: relative;
+@import "../../static/css/sass/mixins/breakporintMixin";
+
+.roadmap-section {
+  // display: none;
+  padding: 2rem 0;
+  
+}
+
+.roadmap-section-content {
+  padding-top: 1rem;
+}
+
+.roadmap-section-content .box-list {
+  // align-items: baseline;
+}
+
+// Roadmap Hexagon first row
+.roadmap-first {
+  
+  @include ipad {
+    // margin-top: -85px;
+
     display: grid;
-}
-
-.hex {
-    margin: 0 auto;
-    position: relative;
-    width: 25rem;
-    height: 20rem; /* width * 0.866 */
-    background: #423e07;
-    box-sizing: border-box;
-    clip-path:polygon(0% 50%, 25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%);
-    -webkit-clip-path: polygon(0% 50%, 25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%);
-    -moz-clip-path: polygon(0% 50%, 25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    align-items: center;
+    justify-content: center;
   }
 
-  .hex-background {
-    position: absolute;
-    background: #161400;
-    top: 8px; /* equal to border thickness */
-    left: 9px; /* equal to border thickness */
-    width: 24rem; /* container height - (border thickness * 2) */
-    height: 18.9rem; /* container height - (border thickness * 2) */
-    clip-path: polygon(0% 50%, 25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%);
-    -webkit-clip-path: polygon(0% 50%, 25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%);
-    -moz-clip-path: polygon(0% 50%, 25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%);
+  @include desktop {
+    display: flex;
   }
 
-.hex-content {
-    text-align: center;
-    padding: 2rem;
-    color: #fff;
-    font-family: Montserrat,"Helvetica Neue",Helvetica;
 }
 
-.hex-content > p {
-    font-style: uppercase;
+// Roadmap Hexagon second row
+.roadmap-second {
+  margin-top: 30px;
+
+  // Ipad
+  @include ipad {
+    margin-top: -178px;
+  }
+
+  // Desktop
+  @include desktop {
+    margin-top: -85px;
+  }
 }
 
-.roadmapThree {
-    display: flex;
-    padding: 0.4rem 20rem;
+
+// Roadmap Hexagon third row
+.roadmap-third {
+  margin-top: 30px;
+  
+  // Ipad
+  @include ipad {
+    margin-top: -85px;
+  }
+
+  // Desktop
+  @include desktop {
+    margin-top: -85px;
+  }
 }
 
-.roadmapTwo {
-    position: relative;
-    display: flex;
-    padding: 0.1rem 33rem;
+
+// RoadMap First Hexagon Box
+.roadmap-first .box.one {
+  @include ipad {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    justify-self: end;
+  }
 }
 
-.cardHeading {
-    position: relative;
-    font-size: 3rem;
-    text-align: center;
-    margin: 3rem;
-    color: #F0A500;
-    font-family: 'Montserrat', 'Helvetica Neue', Helvetica;
-    font-weight: 700; 
+// RoadMap Second Hexagon Box
+.roadmap-first .box.two {
+  @include ipad {
+    grid-column: 2 / -1;
+    grid-row: 1 / 2;
+  }
+  
 }
 
-.roadmapHeading {
-    position: relative;
-    font-size: 3rem;
-    text-align: center;
-    margin: 3rem;
-    color: #F0A500;
-    font-family: 'Montserrat', 'Helvetica Neue', Helvetica;
-    font-weight: 700; 
-}
+// RoadMap Third Hexagon Box
+.roadmap-first .box.three {
+  @include ipad {
+    margin-top: -185px;
+    grid-column: 1 / -1;
+    grid-row: 2 / -1;
+    justify-self: center;
+  }
 
-/* tablet view */
-
-@media only screen and (min-width: 900px) and (max-width: 1800px) {
-    .roadMap {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-    }   
-    .roadmapThree {
-        display: flex;
-        margin: 1rem 1em 1rem 1em;
-    }
-    .roadmapTwo {
-        display: flex;
-        margin: 3rem 2rem 3rem 2rem;
-    }
+  @include desktop {
+    margin-top: 0;
+  }
 
 }
 
-/* Mobile View */
-
-@media only screen and (min-width: 200px) and (max-width: 899px) {
-    .roadMap {
-        position: relative;
-        display: flex;
-        flex-direction: row;
-    }   
-    .roadmapThree {
-        display: flex;
-        flex-direction: row;
-      
-    }
-    .roadmapTwo {
-        display: flex;
-        flex-direction: row;
-     
-    }
-}

@@ -1,0 +1,251 @@
+@import "../../static/css/sass/mixins/breakporintMixin";
+
+$mediumHeighHexagon: polygon(
+  /* bottom left corner */
+  0 100%, 
+  /* top left first notched on left */
+  0 15%,
+  /* top left second notched on top */ 
+  5% 0, 
+  /* top right first point to start he design */
+  79% 0, 
+  /* top right second point for curve */
+  81% 4%, 
+  /* top right third point which end line and start noctch point */
+  95% 4%, 
+  /* top right notch point last point */
+  97% 9%, 
+  /* top right right line first notch point  */
+  97% 28%, 
+  /* top right right line second notch point which touch the right line */
+  100% 30%, 
+  /* bottom right first point on right line  */
+  100% 82%, 
+  /* bottom right second point on bottom line */
+  89% 100%
+);
+
+$dashboardNavHexagon: polygon(0 0, 81% 0, 100% 23%, 100% 100%, 19% 100%, 0 78%);
+
+
+$dashboardNavHexagonTwo: polygon(
+  0 0, /* Top left corner */
+  90% 0, /* Top right corner first notch corner */
+  100% 17%, /* Top right corner second noch corner */
+  100% 100%, /* Bottom right corener */
+  19% 100%, /* bottom right first notched corner */
+  0 78% /*bottom right second notched corner */
+);
+
+
+.staking__wrapper {
+  padding-top: 1rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.staking {
+  width: 100%;
+  position: relative;
+  margin: 2rem 0 7rem;
+
+  @include ipad {
+    width: auto;
+  }
+
+  // Triangle top left corner
+  &::after {
+    content: "";
+    position: absolute;
+    clip-path: polygon(0 0, 0 100%, 100% 0);
+    background-image: var(--border-linear-gradient);
+    // top: 0px;
+    // left: 1px;
+    // width: 60px;
+    // height: 60px;
+
+    @include ipad {
+      top: 0px;
+      left: 1px;
+      width: 60px;
+      height: 60px;
+    }
+
+    @include desktop {
+      top: 0px;
+      left: 1px;
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  // Triangle bottom right corner
+  &::before {
+    content: "";
+    position: absolute;
+    clip-path: polygon(0 100%, 100% 100%, 100% 0);
+    background-image: var(--border-linear-gradient);
+    // bottom: 0px;
+    // right: 1px;
+    // width: 60px;
+    // height: 60px;
+
+    @include ipad {
+      bottom: 0px;
+      right: 1px;
+      width: 60px;
+      height: 60px;
+    }
+
+    @include desktop {
+      bottom: 0px;
+      right: 1px;
+      width: 60px;
+      height: 60px;
+    }
+  }
+  
+}
+
+.staking__notched-box {
+  padding: 2px;
+  width: 100%;
+  height: 500px;
+  background-image: var(--border-linear-gradient);
+  // clip-path: var(--dashboard-main-box-polygon);
+  clip-path: var(--dashboard-box-mobile);
+
+  @include ipad {
+    width: 650px;
+    height: 500px;
+    background-image: var(--border-linear-gradient);
+    clip-path: var(--dashboard-main-box-polygon-ipad);
+  }
+
+  @include desktop {
+    width: 900px;
+    height: 500px;
+    background-image: var(--border-linear-gradient);
+    clip-path: var(--dashboard-main-box-polygon);
+  }
+}
+
+.staking__notched-box__content {
+  width: 100%;
+  height: 100%;
+  background-color: var(--body-color);
+  // clip-path: var(--dashboard-main-box-polygon);
+  clip-path: var(--dashboard-box-mobile);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  
+  @include ipad {
+    clip-path: var(--dashboard-main-box-polygon-ipad);
+  }
+  
+  @include desktop {
+    clip-path: var(--dashboard-main-box-polygon);
+  }
+}
+
+
+
+.stakeinfo__list {
+  padding-top: 2rem;
+  display: flex;
+  // flex-direction: column;
+  justify-content: center;
+  // align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0 auto;
+
+  @include ipad {
+    width: 650px;
+  }
+  
+  @include desktop {
+    flex-direction: row;
+    width: 900px;
+  }
+
+  @include largeDesktop {
+    width: 900px;
+  }
+}
+
+.stakeinfo__item {
+  border-radius: 5px;
+  width: 500px;
+  padding: 2px;
+  background-image: var(--border-linear-gradient);
+  color: white;
+  
+  @include ipad {
+    width: 315px;
+  }
+
+  @include desktop {
+    width: 288px;
+  } 
+ 
+
+}
+
+.stakeinfo__item__content {
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  background-color: var(--body-color);
+  padding: 40px 14px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stakeinfo__item__content__amount {
+
+}
+
+.stakeinfo__item__content__title {
+  font-size: 16px;
+  line-height: 18px;
+  color: var(--accent-color);
+  // display: contents;
+}
+
+
+.button-hexagon.border.connect-you-wallet {
+// .connect-you-wallet {
+  width: 200px !important;
+  height: 58px !important;
+  margin-bottom: 1rem !important;
+  
+  @include ipad {
+    width: 250px !important;
+    height: 58px !important;
+    margin-bottom: 1rem !important;
+
+  }
+
+  span {
+    font-size: 14px;
+    
+    @include ipad {
+      font-size: 1.1rem;
+
+    }
+  }
+}
+
+.staking .wallet-image {
+  width: 80px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}

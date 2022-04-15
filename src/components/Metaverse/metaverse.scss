@@ -1,0 +1,245 @@
+@import "../../static/css/sass/mixins/breakporintMixin";
+
+// Hexagon box list
+.box-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+
+  // Ipad
+  @include ipad {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  // Desktop
+  @include desktop {
+    gap: 8px;
+  }
+
+  // LargeDesktop
+  @include largeDesktop {
+    gap: 20px;
+  }
+}
+
+// Hexagon box
+.box {
+  clip-path: var(--hexagon-clip-path);
+  padding: 2px;
+  background-color: rgb(234, 215, 170);
+  background-image: linear-gradient(
+    180deg,
+    rgb(238, 209, 141) 0%,
+    var(--accent-color) 29%,
+    var(--accent-dark-color) 100%
+  );
+  height: 500px;
+
+  @include ipad {
+    width: 300px;
+    height: 390px;
+  }
+
+  @include desktop {
+    width: 320px;
+    height: 370px;
+  }
+
+  @include largeDesktop {
+    width: 385px;
+    height: 425px;
+  }
+}
+
+// Hexgon box content
+.box-content {
+  background-color: var(--body-color);
+  clip-path: var(--hexagon-clip-path);
+  width: 100%;
+  height: 100%;
+  padding: 3rem 1rem 5rem;
+  // padding-top: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  @include ipad {
+    // justify-content: flex-start;
+    // padding: 14px 1rem 1rem;
+  }
+
+  @include desktop {
+    // padding: 14px 1rem 3rem;
+  }
+
+  @include largeDesktop {
+    // padding: 14px 1.4rem 3rem;
+  }
+
+  // Image of box daimond box
+  .img {
+    width: 70px;
+    height: 70px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    &.large {
+      width: 90px;
+      height: 90px;
+      margin-bottom: -14px;
+    }
+  }
+
+  // Heading of hexagon box
+  h1 {
+    text-align: center;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    font-size: 24px;
+
+    @include ipad {
+      font-size: 24px;
+    }
+
+    @include desktop {
+      font-size: 28px;
+    }
+
+    @include largeDesktop {
+      font-size: 32px;
+    }
+  }
+
+  // Paragraph
+  p {
+    text-transform: uppercase;
+    color: var(--font-light-color);
+    // text-align: center;
+    // text-align: justify;
+    text-align: center;
+    // text-align-last: center;
+    font-size: 14px;
+
+    // @include ipad {
+
+    // }
+
+    @include desktop {
+      font-size: 13px;
+      line-height: 20px;
+    }
+
+    @include largeDesktop {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+}
+
+// Metaverse Hexagon Box First List
+.metaverse-first {
+}
+
+// First Box Of Metaverse Section
+.metaverse-first .box.one {
+  @include ipad {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+  }
+}
+// Second Box Of Metaverse Section
+.metaverse-second .box.two {
+  @include ipad {
+    grid-column: 1 / 2;
+    grid-row: 1 / -1;
+  }
+}
+// Third Box Of Metaverse Section
+.metaverse-second .box.three {
+  @include ipad {
+    grid-column: 2 / -1;
+    grid-row: 1 / -1;
+  }
+}
+// Fourth Box Of Metaverse Section
+.metaverse-third .box.four {
+  @include ipad {
+    grid-column: 1 / -1;
+    grid-row: 1 / 2;
+    justify-self: center;
+
+  }
+}
+
+// Fifth Box Of Metaverse Section
+.metaverse-third .box.five {
+  @include ipad {
+    grid-column: 1 / 2;
+    grid-row: 2 / -1;
+    justify-self: end;
+
+    margin-top: -185px;
+  }
+
+  @include desktop {
+    margin-top: 0;
+  }
+}
+
+// Six Box Of Metaverse Section
+.metaverse-third .box.six {
+  @include ipad {
+    grid-column: 2 / -1;
+    grid-row: 2 / -1;
+    margin-top: -185px;
+  }
+
+   @include desktop {
+    margin-top: 0;
+  }
+}
+
+// Metaverse Hexagon Box Second List
+.metaverse-second {
+  margin-top: 30px;
+
+  // Ipad
+  @include ipad {
+    margin-top: -85px;
+  }
+
+  // Desktop
+  @include desktop {
+  }
+}
+
+// Metaverse Hexagon Box Third List
+.metaverse-third {
+  margin-top: 30px;
+
+  @include ipad {
+    margin-top: -85px;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    align-items: center;
+    justify-content: center;
+  }
+
+  // Desktop
+  @include desktop {
+    margin-top: -85px;
+    
+    display: flex;
+  }
+}

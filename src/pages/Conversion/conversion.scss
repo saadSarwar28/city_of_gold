@@ -1,0 +1,106 @@
+@import "../../static/css/sass/mixins/breakporintMixin";
+
+.conversion__wrapper {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.conversion {
+  width: 100%;
+  position: relative;
+  margin: 2rem 0 7rem;
+
+  @include ipad {
+    width: auto;
+  }
+
+  // Triangle top left corner
+  &::after {
+    content: "";
+    position: absolute;
+    clip-path: polygon(0 0, 0 100%, 100% 0);
+    background-image: var(--border-linear-gradient);
+    
+
+    @include ipad {
+      top: 0px;
+      left: 1px;
+      width: 60px;
+      height: 60px;
+    }
+
+    @include desktop {
+      top: 0px;
+      left: 1px;
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  // Triangle bottom right corner
+  &::before {
+    content: "";
+    position: absolute;
+    clip-path: polygon(0 100%, 100% 100%, 100% 0);
+    background-image: var(--border-linear-gradient);
+    
+
+    @include ipad {
+      bottom: 0px;
+      right: 1px;
+      width: 60px;
+      height: 60px;
+    }
+
+    @include desktop {
+      bottom: 0px;
+      right: 1px;
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+}
+
+.conversion__notched-box {
+  padding: 2px;
+  width: 100%;
+  height: 500px;
+  background-image: var(--border-linear-gradient);
+  clip-path: var(--dashboard-box-mobile);
+
+  @include ipad {
+    width: 650px;
+    height: 500px;
+    background-image: var(--border-linear-gradient);
+    clip-path: var(--dashboard-main-box-polygon-ipad);
+  }
+
+  @include desktop {
+    width: 900px;
+    height: 500px;
+    background-image: var(--border-linear-gradient);
+    clip-path: var(--dashboard-main-box-polygon);
+  }
+}
+
+.conversion__notched-box__content {
+  width: 100%;
+  height: 100%;
+  background-color: var(--body-color);
+  clip-path: var(--dashboard-box-mobile);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
+  @include ipad {
+    clip-path: var(--dashboard-main-box-polygon-ipad);
+  }
+
+  @include desktop {
+    clip-path: var(--dashboard-main-box-polygon);
+  }
+}
