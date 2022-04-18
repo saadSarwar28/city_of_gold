@@ -110,6 +110,7 @@ const Mint = () => {
                 const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
                 const tx = await contractWithSigner.publicMint(amount, false, options)
                 console.log(tx)
+                alert('Minted Successfully')
             }
         } else {
             alert('Please connect Metamask first')
@@ -138,6 +139,7 @@ const Mint = () => {
                 const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
                 const tx = await contractWithSigner.publicMint(amount, true, options)
                 console.log(tx)
+                alert('Minted and staked Successfully!')
             }
         } else {
             alert('Please connect Metamask first')
