@@ -8,6 +8,7 @@ import {ethers} from "ethers";
 import stakerAbi from "../../abi/Staker.json";
 import landAbi from "../../abi/Land.json";
 import estateAbi from "../../abi/Estate.json";
+import tokenTypes from "../../utils/tokenTypes";
 
 const StakeTableRow = ({type, id, _isStaked}) => {
 
@@ -22,6 +23,59 @@ const StakeTableRow = ({type, id, _isStaked}) => {
     const [isStaked, setIsStaked] = useState(_isStaked)
     const [stakedAt, setStakedAt] = useState(0)
     const [cogEarned, setCogEarned] = useState(0)
+
+    useEffect(() => {
+        if (window.ethereum && landContract !== null) {
+            if (!isStaked) {
+                landContract.getApproved(id)
+                    .then(res => {
+                        if (res === Addresses.staker) {
+                            setApproved(true)
+                        }
+                    })
+            }
+        }
+    }, [address, landContract])
+
+    useEffect(() => {
+        if (window.ethereum && address !== '') {
+            if (isStaked) {
+                if (type === tokenTypes.LAND) {
+                    stakingContract.stakedLands(id)
+                        .then(res => {
+                            setStakedAt(new Date(res.stakedAt.toString() * 1000).toLocaleDateString())
+                        })
+                } else {
+                    stakingContract.stakedEstates(id)
+                        .then(res => {
+                            setStakedAt(new Date(res.stakedAt.toString() * 1000).toLocaleDateString())
+                        })
+                }
+            }
+        }
+    }, [stakingContract])
+
+    useEffect(() => {
+        if (window.ethereum && address !== '') {
+            if (isStaked) {
+                if (type === tokenTypes.LAND) {
+                    const options = {from: address}
+                    stakingContract.calculateTokenDistributionForLand(id, options)
+                        .then(res => {
+                            setCogEarned(Number(ethers.utils.formatEther(res)).toFixed(2))
+                        })
+                } else {
+                    const options = {from: address}
+                    stakingContract.calculateTokenDistributionForEstate(id, options)
+                        .then(res => {
+                            setCogEarned(Number(ethers.utils.formatEther(res)).toFixed(2))
+                        })
+                }
+            }
+        }
+    }, [stakedAt])
+
+
 
     useEffect(() => {
         if (window.ethereum) {
@@ -59,7 +113,7 @@ const StakeTableRow = ({type, id, _isStaked}) => {
             return
         }
         const stakingContractSigned = stakingContract.connect(signer)
-        if (type === "LAND") {
+        if (type === tokenTypes.LAND) {
             const trx = await stakingContractSigned.stakeLand([id])
             await trx.wait()
         } else {
@@ -67,12 +121,16 @@ const StakeTableRow = ({type, id, _isStaked}) => {
             await trx.wait()
         }
         setIsStaked(!isStaked)
-        setCogEarned('00')
+        setCogEarned(0.00)
         setStakedAt(new Date().toLocaleDateString("en-US"))
     }
 
     async function approveToken() {
-        if (type === 'LAND') {
+        if (approved) {
+            alert('Token already approved! Please click on Stake to stake the token.')
+            return
+        }
+        if (type === tokenTypes.LAND) {
             if (window.ethereum && address !== '') {
                 const landContractWithSigner = landContract.connect(signer)
                 const trx = await landContractWithSigner.approve(Addresses.staker, id)
@@ -88,7 +146,7 @@ const StakeTableRow = ({type, id, _isStaked}) => {
 
     async function unstakeToken() {
         const stakingContractSigned = stakingContract.connect(signer)
-        if (type === 'LAND') {
+        if (type === tokenTypes.LAND) {
             if (window.ethereum && address !== '') {
                 const trx = await stakingContractSigned.unStakeLand([id])
                 await trx.wait();
@@ -100,21 +158,21 @@ const StakeTableRow = ({type, id, _isStaked}) => {
             alert('ESTATE unstaked!')
         }
         setIsStaked(!isStaked)
-        setCogEarned(0)
+        setCogEarned(0.00)
         setStakedAt(0)
     }
 
     async function claimRewards() {
         const stakingContractSigned = stakingContract.connect(signer)
         if (type === "LAND") {
-            const trx = stakingContractSigned.claimLandRewards([id])
+            const trx = await stakingContractSigned.claimLandRewards([id])
             await trx.wait();
         } else {
-            const trx = stakingContractSigned.claimEstateRewards([id])
+            const trx = await stakingContractSigned.claimEstateRewards([id])
             await trx.wait();
         }
         alert('Rewards claimed successfully!')
-        setCogEarned(0)
+        setCogEarned(0.00)
     }
 
     return (
@@ -127,12 +185,15 @@ const StakeTableRow = ({type, id, _isStaked}) => {
                 {
                     isStaked ?
                         <>
-                            <button type="button" className="claim-rewards-button" onClick={claimRewards}>Claim COG</button>
+                            <button type="button" className="claim-rewards-button" onClick={claimRewards}>Claim COG
+                            </button>
                             <button type="button" className="unstake-button" onClick={unstakeToken}>Unstake</button>
                         </>
                         : <>
                             <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
-                            <button type="button" className="stake-button" onClick={stakeToken} title="Needs approval first">Stake</button>
+                            <button type="button" className="stake-button" onClick={stakeToken}
+                                    title="Needs approval first">Stake
+                            </button>
                         </>
                 }
             </td>

@@ -100,16 +100,14 @@ const Mint = () => {
             await provider.send("eth_requestAccounts", []);
             const signer = provider.getSigner()
             const mintContract = new ethers.Contract(Addresses.land, landAbi, provider);
-            const nftBalance = await mintContract.balanceOf(address)
             if (price > balance) {
                 alert('Not enough ETH in your wallet')
-            } else if (Number(nftBalance.toString()) + amount > maxMint) {
-                alert(`Max ${maxMint} nft mintable and you already have ${nftBalance.toString()} in your wallet.`)
             } else {
                 const contractWithSigner = mintContract.connect(signer)
                 const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
                 const tx = await contractWithSigner.publicMint(amount, false, options)
-                console.log(tx)
+                await tx.wait()
+                // console.log(tx)
                 alert('Minted Successfully')
             }
         } else {
@@ -138,7 +136,8 @@ const Mint = () => {
                 const contractWithSigner = mintContract.connect(signer)
                 const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
                 const tx = await contractWithSigner.publicMint(amount, true, options)
-                console.log(tx)
+                await tx.wait()
+                // console.log(tx)
                 alert('Minted and staked Successfully!')
             }
         } else {

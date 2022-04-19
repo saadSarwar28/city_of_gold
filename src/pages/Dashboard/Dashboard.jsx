@@ -14,6 +14,7 @@ import landAbi from "../../abi/Land.json";
 import estateAbi from "../../abi/Estate.json";
 import stakerAbi from "../../abi/Staker.json";
 import StakeTableRow from "./StakingTableRows";
+import tokenTypes from "../../utils/tokenTypes";
 
 
 const Dashboard = () => {
@@ -24,10 +25,6 @@ const Dashboard = () => {
     const [stakingContract, setStakingContract] = useState(null)
     const [landContract, setLandContract] = useState(null)
     const [estateContract, setEstateContract] = useState(null)
-    // const [totalLandsOwned, setTotalLandsOwned] = useState(0)
-    // const [totalLandsStaked, setTotalLandsStaked] = useState(0)
-    // const [totalEstatesOwned, setTotalEstatesOwned] = useState(0)
-    // const [totalEstatesStaked, setTotalEstatesStaked] = useState(0)
     const [cogEarnedFromLand, setCogEarnedFromLand] = useState(0)
     const [cogEarnedFromEstate, setCogEarnedFromEstate] = useState(0)
     const [ownedLands, setOwnedLands] = useState([])
@@ -40,22 +37,46 @@ const Dashboard = () => {
     useEffect(() => {
         ownedLands.forEach(land => {
             if (!allNfts.filter(nft => nft.id === land).length > 0) {
-                setAllNfts(allNfts => [...allNfts, {type: 'LAND', id: land, stakedAt: 'NA', cogEarned: 'NA', isStaked: false}])
+                setAllNfts(allNfts => [...allNfts, {
+                    type: tokenTypes.LAND,
+                    id: land,
+                    stakedAt: 'NA',
+                    cogEarned: 'NA',
+                    isStaked: false
+                }])
             }
         })
         stakedLands.forEach(land => {
             if (!allNfts.filter(nft => nft.id === land).length > 0) {
-                setAllNfts(allNfts => [...allNfts, {type: 'LAND', id: land, stakedAt: '1234', cogEarned: '123', isStaked: true}])
+                setAllNfts(allNfts => [...allNfts, {
+                    type: tokenTypes.LAND,
+                    id: land,
+                    stakedAt: '0',
+                    cogEarned: '0',
+                    isStaked: true
+                }])
             }
         })
         ownedEstates.forEach(estate => {
             if (!allNfts.filter(nft => nft.id === estate).length > 0) {
-                setAllNfts(allNfts => [...allNfts, {type: 'ESTATE', id: estate, stakedAt: 'NA', cogEarned: 'NA', isStaked: false}])
+                setAllNfts(allNfts => [...allNfts, {
+                    type: tokenTypes.ESTATE,
+                    id: estate,
+                    stakedAt: 'NA',
+                    cogEarned: 'NA',
+                    isStaked: false
+                }])
             }
         })
         stakedEstates.forEach(estate => {
             if (!allNfts.filter(nft => nft.id === estate).length > 0) {
-                setAllNfts(allNfts => [...allNfts, {type: 'ESTATE', id: estate, stakedAt: '1234', cogEarned: '123', isStaked: true}])
+                setAllNfts(allNfts => [...allNfts, {
+                    type: tokenTypes.ESTATE,
+                    id: estate,
+                    stakedAt: '0',
+                    cogEarned: '0',
+                    isStaked: true
+                }])
             }
         })
     }, [ownedLands, stakedLands, ownedEstates, stakedEstates])
@@ -97,7 +118,7 @@ const Dashboard = () => {
     }
 
     function updateTotalLandStaked() {
-        if (window.ethereum && address !== '' && landContract!== null) {
+        if (window.ethereum && address !== '' && landContract !== null) {
             stakingContract.returnAllLandsOfOwner(address).then(res => {
                 res.forEach(id => {
                     setStakedLands(stakedLands => [...stakedLands, id.toString()])
@@ -118,7 +139,6 @@ const Dashboard = () => {
         }
     }
 
-
     function updateTotalEstatesStaked() {
         if (window.ethereum && address !== '' && stakingContract !== null) {
             stakingContract.returnAllEstatesOfOwner(address)
@@ -126,6 +146,24 @@ const Dashboard = () => {
                     res.forEach(id => {
                         setStakedEstates(stakedEstates => [...stakedEstates, id.toString()])
                     })
+                })
+        }
+    }
+
+    function updateTotalEstatesEarning() {
+        if (window.ethereum && address !== '' && stakingContract !== null) {
+            stakingContract.calculateTotalCogEarning(stakedEstates, false, {from: address})
+                .then(res => {
+                    setCogEarnedFromEstate(Number(ethers.utils.formatEther(res)).toFixed(2))
+                })
+        }
+    }
+
+    function updateTotalLandEarning() {
+        if (window.ethereum && address !== '' && stakingContract !== null) {
+            stakingContract.calculateTotalCogEarning(stakedLands, true,{from: address})
+                .then(res => {
+                    setCogEarnedFromLand(Number(ethers.utils.formatEther(res)).toFixed(2))
                 })
         }
     }
@@ -139,12 +177,20 @@ const Dashboard = () => {
     }, [address, stakingContract])
 
     useEffect(() => {
+        updateTotalLandEarning()
+    }, [stakedLands])
+
+    useEffect(() => {
         updateTotalEstatesOwned()
     }, [address, estateContract])
 
     useEffect(() => {
         updateTotalEstatesStaked()
     }, [address, stakingContract])
+
+    useEffect(() => {
+        updateTotalEstatesEarning()
+    }, [stakedEstates])
 
     return (
         <div className='dashboard-page'>
@@ -153,7 +199,7 @@ const Dashboard = () => {
                 <div className="stakeinfo__list">
                     <StakeInfoItem
                         title="Lands Owned"
-                        amount={(ownedLands.length + stakedLands.length).toString() + '/10,000'}
+                        amount={(ownedLands.length + stakedLands.length).toString() + ' / 10,000'}
                     />
                     <StakeInfoItem
                         title="Total LAND Earning"
@@ -161,7 +207,7 @@ const Dashboard = () => {
                     />
                     <StakeInfoItem
                         title="Lands Staked"
-                        amount={stakedLands.length + '/' + ownedLands.length}
+                        amount={stakedLands.length + ' / ' + (ownedLands.length + stakedLands.length).toString()}
                     />
                     <StakeInfoItem
                         title="Estates Owned"
@@ -173,7 +219,7 @@ const Dashboard = () => {
                     />
                     <StakeInfoItem
                         title="Estates Staked"
-                        amount={stakedEstates.length + '/' + ownedEstates.length}
+                        amount={stakedEstates.length + ' / ' + (ownedEstates.length + stakedEstates.length).toString()}
                     />
                 </div>
                 <div className="staking__wrapper">
@@ -202,9 +248,14 @@ const Dashboard = () => {
                                     </thead>
                                     <tbody>
                                     {
-                                        allNfts.map(nft => {
+                                        allNfts.sort().map(nft => {
                                             return (
-                                                <StakeTableRow key={nft.id} type={nft.type} id={nft.id} _isStaked={nft.isStaked}></StakeTableRow>
+                                                <StakeTableRow
+                                                    key={nft.id}
+                                                    type={nft.type}
+                                                    id={nft.id}
+                                                    _isStaked={nft.isStaked}
+                                                ></StakeTableRow>
                                             )
                                         })
                                     }

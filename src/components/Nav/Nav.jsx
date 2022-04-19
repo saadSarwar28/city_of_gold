@@ -13,6 +13,8 @@ const Nav = () => {
     const mobileNavRef = useRef();
 
     const [address, setAddress] = useState('Connect Wallet')
+    const [provider, setProvider] = useState(new ethers.providers.Web3Provider(window.ethereum))
+    const [chainID, setChainId] = useState(0)
 
     useEffect(() => {
         if (window.ethereum) {
@@ -29,6 +31,32 @@ const Nav = () => {
             alert('Please install metamask');
         }
     })
+
+    useEffect(() => {
+        if (window.ethereum) {
+            provider.send("eth_requestAccounts", []).then(res => {
+                setAddress(res[0])
+            })
+        }
+    }, [provider])
+
+    useEffect(() => {
+        if (window.ethereum) {
+            provider.getNetwork().then(res => {
+                setChainId(res.chainId)
+            })
+        }
+    }, [provider])
+
+    useEffect(() => {
+        if (window.ethereum && chainID !== 4 && chainID !== 0) {
+            alert('Please switch to Ethereum Rinkeby Testnet in Metamask.')
+            window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: '0x4' }], // chainId must be in hexadecimal numbers
+            });
+        }
+    }, [chainID])
 
     const connectWallet = () => {
         if (address === 'Connect Wallet') {

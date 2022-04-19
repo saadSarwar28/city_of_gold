@@ -141,11 +141,6 @@
         "internalType": "uint256",
         "name": "estateId",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "lastClaimedAt",
-        "type": "uint256"
       }
     ],
     "name": "calculateTokenDistributionForEstate",
@@ -165,11 +160,6 @@
         "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "lastClaimedAt",
-        "type": "uint256"
       }
     ],
     "name": "calculateTokenDistributionForLand",
@@ -177,6 +167,30 @@
       {
         "internalType": "uint256",
         "name": "amountToDistribute",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "tokenIds",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "bool",
+        "name": "isLand",
+        "type": "bool"
+      }
+    ],
+    "name": "calculateTotalCogEarning",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
         "type": "uint256"
       }
     ],
