@@ -8,7 +8,10 @@ import {ethers} from "ethers";
 import Addresses from "../../constants/contractAddresses";
 import Network from "../../constants/networkDetails";
 import landAbi from "../../abi/Land.json"
-import {AiOutlineMinus, AiOutlinePlus} from "react-icons/ai";
+import whiteListedAddresses from "../../whitelist/whiteListedAddresses";
+import {MerkleTree} from "merkletreejs";
+import keccak256 from "keccak256";
+
 
 const Mint = () => {
 
@@ -16,20 +19,21 @@ const Mint = () => {
     const [address, setAddress] = useState('')
     const [alreadyMinted, setAlreadyMinted] = useState(0)
     const [price, setPrice] = useState(0)
-    const [amount, setAmount] = useState(1)
     const [balance, setBalance] = useState(0)
     const [chainID, setChainId] = useState(0)
+    const [whitelistClaimed, setWhitelistClaimed] = useState(false)
 
-    const increaseAmount = () => {
-        if (amount < maxMint) {
-            setAmount(amount + 1)
-        }
-    }
+    // to input in the contract
+    // const getRootHash = () => {
+    //     const leafNodes = whiteListedAddresses.map(addr => keccak256(addr))
+    //     const merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true })
+    //     console.log(merkleTree.getHexRoot())
+    // }
 
-    const decreaseAmount = () => {
-        if (amount > 1) {
-            setAmount(amount - 1)
-        }
+    const getMerkleProof = () => {
+        const leafNodes = whiteListedAddresses.map(addr => keccak256(addr))
+        const merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true })
+        return merkleTree.getHexProof(keccak256(address))
     }
 
     useEffect(() => {
@@ -46,10 +50,24 @@ const Mint = () => {
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             await provider.send("eth_requestAccounts", [])
             const mintContract = new ethers.Contract(Addresses.land, landAbi, provider)
-            const mintPrice = await mintContract.nftPrice()
-            setPrice(Number(ethers.utils.formatEther(mintPrice)) * amount)
+            const mintPrice = await mintContract.whitelistPrice()
+            setPrice(Number(ethers.utils.formatEther(mintPrice)))
         }
     }
+
+    async function isAlreadyClaimed() {
+        if (window.ethereum && address !== '') {
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            await provider.send("eth_requestAccounts", [])
+            const mintContract = new ethers.Contract(Addresses.land, landAbi, provider)
+            const isClaimed = await mintContract.whitelistClaimed(address)
+            setWhitelistClaimed(isClaimed)
+        }
+    }
+
+    useEffect(() => {
+        isAlreadyClaimed()
+    }, [address])
 
     useEffect(() => {
         updateMintPrice()
@@ -92,6 +110,14 @@ const Mint = () => {
 
     const handleMint = async () => {
         if (window.ethereum && (address !== '')) {
+            if (getMerkleProof().length < 1) {
+                alert('Your address is not whitelisted.')
+                return
+            }
+            if (whitelistClaimed) {
+                alert('You have already claimed your nft.')
+                return
+            }
             if (chainID !== Network.chainId) {
                 alert('Please switch to Rinkeby testnet in metamask.')
                 return
@@ -105,7 +131,7 @@ const Mint = () => {
             } else {
                 const contractWithSigner = mintContract.connect(signer)
                 const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
-                const tx = await contractWithSigner.publicMint(amount, false, options)
+                const tx = await contractWithSigner.whitelistMint(getMerkleProof(), false, options)
                 await tx.wait()
                 // console.log(tx)
                 alert('Minted Successfully')
@@ -117,6 +143,14 @@ const Mint = () => {
 
     const handleMintAndStake = async () => {
         if (window.ethereum && (address !== '')) {
+            if (getMerkleProof().length < 1) {
+                alert('Your address is not whitelisted.')
+                return
+            }
+            if (whitelistClaimed) {
+                alert('You have already claimed your nft.')
+                return
+            }
             if (chainID !== Network.chainId) {
                 alert('Please switch to Rinkeby testnet in metamask.')
                 return
@@ -127,15 +161,12 @@ const Mint = () => {
             // signer.getAddress().then(_address => {console.log(_address)})
             // signer.getBalance().then(res  => console.log(ethers.utils.formatEther(res)))
             const mintContract = new ethers.Contract(Addresses.land, landAbi, provider);
-            const nftBalance = await mintContract.balanceOf(address)
             if (price > balance) {
                 alert('Not enough ETH in your wallet')
-            } else if (Number(nftBalance.toString()) + amount > maxMint) {
-                alert(`Max ${maxMint} nft mintable and you already have ${nftBalance.toString()} in your wallet.`)
             } else {
                 const contractWithSigner = mintContract.connect(signer)
                 const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
-                const tx = await contractWithSigner.publicMint(amount, true, options)
+                const tx = await contractWithSigner.whitelistMint(getMerkleProof(), true, options)
                 await tx.wait()
                 // console.log(tx)
                 alert('Minted and staked Successfully!')
@@ -153,39 +184,39 @@ const Mint = () => {
             <div className='container'>
                 <Nav/>
 
-                <div class="mint__wrapper">
+                <div className="mint__wrapper">
                     {/* <!-- Logo --> */}
-                    <div class="logo">
+                    <div className="logo">
                         <img src={logoSrc} alt="logo"/>
                     </div>
-                    <div class="mint__triangle mint__triangle--left"></div>
-                    <div class="mint__triangle mint__triangle--right">
+                    <div className="mint__triangle mint__triangle--left"></div>
+                    <div className="mint__triangle mint__triangle--right">
                         <div></div>
                     </div>
-                    <div class="mint__box">
-                        <div class="mint__box__content">
-                            <h2>LAND mint is live!</h2>
+                    <div className="mint__box">
+                        <div className="mint__box__content">
+                            <h2>Whitelist LAND mint is live!</h2>
                             <div>
                                 <span className='mint__box__content__already-minted'>ALREADY MINTED</span>
                                 <h3 className='mint-box-already-minted'>{alreadyMinted} / 10,000</h3>
                             </div>
                             <div className='flex gap-2 flex-col'>
                                 <h3 className='mint-box-already-minted'>{price.toFixed(2)} ETH</h3>
-                                <div className='mint__box__content__button-group flex-center'>
-                                    <div className='number-field__buttons'>
-                                        <div>
-                                            <button onClick={decreaseAmount} className='button'>
-                                                <AiOutlineMinus/>
-                                            </button>
-                                        </div>
-                                        {amount}
-                                        <div>
-                                            <button onClick={increaseAmount} className='button'>
-                                                <AiOutlinePlus/>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                {/*<div className='mint__box__content__button-group flex-center'>*/}
+                                {/*    <div className='number-field__buttons'>*/}
+                                {/*        <div>*/}
+                                {/*            <button onClick={decreaseAmount} className='button'>*/}
+                                {/*                <AiOutlineMinus/>*/}
+                                {/*            </button>*/}
+                                {/*        </div>*/}
+                                {/*        {amount}*/}
+                                {/*        <div>*/}
+                                {/*            <button onClick={increaseAmount} className='button'>*/}
+                                {/*                <AiOutlinePlus/>*/}
+                                {/*            </button>*/}
+                                {/*        </div>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
                                 <div className='mint__box__content__button-group'>
                                     <button className="button-hexagon" onClick={handleMint}>Mint</button>
                                     <button className="button-hexagon gradient" onClick={handleMintAndStake}>Mint and
