@@ -45,7 +45,7 @@ const Mint = () => {
         if (window.ethereum) {
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             await provider.send("eth_requestAccounts", [])
-            const mintContract = new ethers.Contract(Addresses.land, landAbi, provider)
+            const mintContract = new ethers.Contract(Addresses.LAND, landAbi, provider)
             const mintPrice = await mintContract.nftPrice()
             setPrice(Number(ethers.utils.formatEther(mintPrice)) * amount)
         }
@@ -63,7 +63,7 @@ const Mint = () => {
             signer.getBalance().then(res => {
                 setBalance(ethers.utils.formatEther(res))
             })
-            const mintContract = new ethers.Contract(Addresses.land, landAbi, provider)
+            const mintContract = new ethers.Contract(Addresses.LAND, landAbi, provider)
             const totalSupply = await mintContract.totalSupply()
             setAlreadyMinted(Number(totalSupply.toString()))
         }
@@ -99,7 +99,7 @@ const Mint = () => {
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             await provider.send("eth_requestAccounts", []);
             const signer = provider.getSigner()
-            const mintContract = new ethers.Contract(Addresses.land, landAbi, provider);
+            const mintContract = new ethers.Contract(Addresses.LAND, landAbi, provider);
             if (price > balance) {
                 alert('Not enough ETH in your wallet')
             } else {
@@ -126,12 +126,9 @@ const Mint = () => {
             const signer = provider.getSigner()
             // signer.getAddress().then(_address => {console.log(_address)})
             // signer.getBalance().then(res  => console.log(ethers.utils.formatEther(res)))
-            const mintContract = new ethers.Contract(Addresses.land, landAbi, provider);
-            const nftBalance = await mintContract.balanceOf(address)
+            const mintContract = new ethers.Contract(Addresses.LAND, landAbi, provider);
             if (price > balance) {
                 alert('Not enough ETH in your wallet')
-            } else if (Number(nftBalance.toString()) + amount > maxMint) {
-                alert(`Max ${maxMint} nft mintable and you already have ${nftBalance.toString()} in your wallet.`)
             } else {
                 const contractWithSigner = mintContract.connect(signer)
                 const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
@@ -139,6 +136,7 @@ const Mint = () => {
                 await tx.wait()
                 // console.log(tx)
                 alert('Minted and staked Successfully!')
+                updateTotalSupply()
             }
         } else {
             alert('Please connect Metamask first')

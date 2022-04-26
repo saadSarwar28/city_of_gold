@@ -31,6 +31,7 @@ const Dashboard = () => {
     const [stakedLands, setStakedLands] = useState([])
     const [ownedEstates, setOwnedEstates] = useState([])
     const [stakedEstates, setStakedEstates] = useState([])
+    const [totalSupply, setTotalSupply] = useState(0)
 
     const [allNfts, setAllNfts] = useState([])
 
@@ -99,9 +100,9 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (window.ethereum && address !== '') {
-            setStakingContract(new ethers.Contract(Addresses.staker, stakerAbi, provider))
-            setLandContract(new ethers.Contract(Addresses.land, landAbi, provider))
-            setEstateContract(new ethers.Contract(Addresses.estate, estateAbi, provider))
+            setStakingContract(new ethers.Contract(Addresses.STAKER, stakerAbi, provider))
+            setLandContract(new ethers.Contract(Addresses.LAND, landAbi, provider))
+            setEstateContract(new ethers.Contract(Addresses.ESTATE, estateAbi, provider))
         }
     }, [address])
 
@@ -152,7 +153,7 @@ const Dashboard = () => {
 
     function updateTotalEstatesEarning() {
         if (window.ethereum && address !== '' && stakingContract !== null) {
-            stakingContract.calculateTotalCogEarning(stakedEstates, false, {from: address})
+            stakingContract.calculateTotalCogEarning(false, {from: address})
                 .then(res => {
                     setCogEarnedFromEstate(Number(ethers.utils.formatEther(res)).toFixed(2))
                 })
@@ -161,9 +162,19 @@ const Dashboard = () => {
 
     function updateTotalLandEarning() {
         if (window.ethereum && address !== '' && stakingContract !== null) {
-            stakingContract.calculateTotalCogEarning(stakedLands, true,{from: address})
+            stakingContract.calculateTotalCogEarning(true, {from: address})
                 .then(res => {
+                    console.log(res.toString(), ' < here ')
                     setCogEarnedFromLand(Number(ethers.utils.formatEther(res)).toFixed(2))
+                })
+        }
+    }
+
+    function updateTotalSupply() {
+        if (window.ethereum && address !== '' && landContract !== null) {
+            landContract.totalSupply()
+                .then(res => {
+                    setTotalSupply(res.toString())
                 })
         }
     }
@@ -178,7 +189,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         updateTotalLandEarning()
-    }, [stakedLands])
+    }, [address, stakingContract])
 
     useEffect(() => {
         updateTotalEstatesOwned()
@@ -190,7 +201,11 @@ const Dashboard = () => {
 
     useEffect(() => {
         updateTotalEstatesEarning()
-    }, [stakedEstates])
+    }, [address])
+
+    useEffect(() => {
+        updateTotalSupply()
+    }, [address, landContract])
 
     return (
         <div className='dashboard-page'>
@@ -199,7 +214,7 @@ const Dashboard = () => {
                 <div className="stakeinfo__list">
                     <StakeInfoItem
                         title="Lands Owned"
-                        amount={(ownedLands.length + stakedLands.length).toString() + ' / 10,000'}
+                        amount={(ownedLands.length + stakedLands.length).toString() + ' / ' + totalSupply}
                     />
                     <StakeInfoItem
                         title="Total LAND Earning"

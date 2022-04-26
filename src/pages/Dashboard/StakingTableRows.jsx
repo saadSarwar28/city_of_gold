@@ -29,7 +29,7 @@ const StakeTableRow = ({type, id, _isStaked}) => {
             if (!isStaked) {
                 landContract.getApproved(id)
                     .then(res => {
-                        if (res === Addresses.staker) {
+                        if (res === Addresses.STAKER) {
                             setApproved(true)
                         }
                     })
@@ -95,9 +95,9 @@ const StakeTableRow = ({type, id, _isStaked}) => {
 
     useEffect(() => {
         if (window.ethereum && address !== '') {
-            setStakingContract(new ethers.Contract(Addresses.staker, stakerAbi, provider))
-            setLandContract(new ethers.Contract(Addresses.land, landAbi, provider))
-            setEstateContract(new ethers.Contract(Addresses.estate, estateAbi, provider))
+            setStakingContract(new ethers.Contract(Addresses.STAKER, stakerAbi, provider))
+            setLandContract(new ethers.Contract(Addresses.LAND, landAbi, provider))
+            setEstateContract(new ethers.Contract(Addresses.ESTATE, estateAbi, provider))
         }
     }, [address])
 
@@ -133,12 +133,12 @@ const StakeTableRow = ({type, id, _isStaked}) => {
         if (type === tokenTypes.LAND) {
             if (window.ethereum && address !== '') {
                 const landContractWithSigner = landContract.connect(signer)
-                const trx = await landContractWithSigner.approve(Addresses.staker, id)
+                const trx = await landContractWithSigner.approve(Addresses.STAKER, id)
                 await trx.wait();
             }
         } else {
             const estateContractWithSigner = estateContract.connect(signer)
-            const trx = await estateContractWithSigner.approve(Addresses.staker, id)
+            const trx = await estateContractWithSigner.approve(Addresses.STAKER, id)
             await trx.wait();
         }
         setApproved(true)
