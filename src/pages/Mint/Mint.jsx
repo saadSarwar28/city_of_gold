@@ -12,6 +12,9 @@ import {AiOutlineMinus, AiOutlinePlus} from "react-icons/ai";
 
 const Mint = () => {
 
+    const [provider, setProvider] = useState(null)
+    const [mintContract, setMintContract] = useState(null)
+    const [signedContract, setSignedContract] = useState(null)
     const maxMint = 9;
     const [address, setAddress] = useState('')
     const [alreadyMinted, setAlreadyMinted] = useState(0)
@@ -19,6 +22,32 @@ const Mint = () => {
     const [amount, setAmount] = useState(1)
     const [balance, setBalance] = useState(0)
     const [chainID, setChainId] = useState(0)
+
+    useEffect(() => {
+        if (window.ethereum && provider != null) {
+            provider.getSigner().getBalance().then(res => {
+                setBalance(ethers.utils.formatEther(res))
+            })
+        }
+    }, [provider])
+
+    useEffect(() => {
+        if (window.ethereum) {
+            setProvider(new ethers.providers.Web3Provider(window.ethereum))
+        }
+    }, [window.ethereum])
+
+    useEffect(() => {
+        if (window.ethereum && address !== '' && mintContract != null) {
+            setSignedContract(mintContract.connect(provider.getSigner()))
+        }
+    }, [address, mintContract, provider])
+
+    useEffect(() => {
+        if (window.ethereum && address !== '' && provider != null) {
+            setMintContract(new ethers.Contract(Addresses.LAND, landAbi, provider))
+        }
+    }, [address, provider])
 
     const increaseAmount = () => {
         if (amount < maxMint) {
@@ -33,45 +62,38 @@ const Mint = () => {
     }
 
     useEffect(() => {
-        if (window.ethereum) {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
+        if (window.ethereum && provider != null) {
             provider.getNetwork().then(res => {
                 setChainId(res.chainId)
             })
         }
-    })
+    }, [provider])
 
-    async function updateMintPrice() {
-        if (window.ethereum) {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            await provider.send("eth_requestAccounts", [])
-            const mintContract = new ethers.Contract(Addresses.LAND, landAbi, provider)
-            const mintPrice = await mintContract.nftPrice()
-            setPrice(Number(ethers.utils.formatEther(mintPrice)) * amount)
+    function updateMintPrice() {
+        if (window.ethereum && mintContract != null) {
+            mintContract.nftPrice()
+                .then(res => {
+                    setPrice(Number(ethers.utils.formatEther(res)) * amount)
+                })
         }
     }
 
     useEffect(() => {
         updateMintPrice()
-    })
+    }, [mintContract, amount])
 
-    async function updateTotalSupply() {
-        if (window.ethereum) {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            await provider.send("eth_requestAccounts", [])
-            const signer = provider.getSigner()
-            signer.getBalance().then(res => {
-                setBalance(ethers.utils.formatEther(res))
-            })
-            const mintContract = new ethers.Contract(Addresses.LAND, landAbi, provider)
-            const totalSupply = await mintContract.totalSupply()
-            setAlreadyMinted(Number(totalSupply.toString()))
+    function updateTotalSupply() {
+        if (window.ethereum && mintContract != null) {
+            mintContract.totalSupply()
+                .then(res => {
+                    setAlreadyMinted(Number(res.toString()))
+                })
         }
     }
 
     useEffect(() => {
         updateTotalSupply()
-    })
+    }, [mintContract])
 
 
     useEffect(() => {
@@ -95,17 +117,10 @@ const Mint = () => {
             if (chainID !== Network.chainId) {
                 alert('Please switch to Rinkeby testnet in metamask.')
                 return
-            }
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            await provider.send("eth_requestAccounts", []);
-            const signer = provider.getSigner()
-            const mintContract = new ethers.Contract(Addresses.LAND, landAbi, provider);
-            if (price > balance) {
+            } else if (price > balance) {
                 alert('Not enough ETH in your wallet')
             } else {
-                const contractWithSigner = mintContract.connect(signer)
-                const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
-                const tx = await contractWithSigner.publicMint(amount, false, options)
+                const tx = await signedContract.publicMint(amount, false, {value: ethers.utils.parseEther(String(price.toFixed(2)))})
                 await tx.wait()
                 // console.log(tx)
                 alert('Minted Successfully')
@@ -120,19 +135,10 @@ const Mint = () => {
             if (chainID !== Network.chainId) {
                 alert('Please switch to Rinkeby testnet in metamask.')
                 return
-            }
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            await provider.send("eth_requestAccounts", []);
-            const signer = provider.getSigner()
-            // signer.getAddress().then(_address => {console.log(_address)})
-            // signer.getBalance().then(res  => console.log(ethers.utils.formatEther(res)))
-            const mintContract = new ethers.Contract(Addresses.LAND, landAbi, provider);
-            if (price > balance) {
+            } else if (price > balance) {
                 alert('Not enough ETH in your wallet')
             } else {
-                const contractWithSigner = mintContract.connect(signer)
-                const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
-                const tx = await contractWithSigner.publicMint(amount, true, options)
+                const tx = await signedContract.publicMint(amount, true, {value: ethers.utils.parseEther(String(price.toFixed(2)))})
                 await tx.wait()
                 // console.log(tx)
                 alert('Minted and staked Successfully!')
@@ -147,21 +153,19 @@ const Mint = () => {
         <div className="mint">
             {/* Stars */}
             <StarsAnimtedBg/>
-
             <div className='container'>
                 <Nav/>
-
-                <div class="mint__wrapper">
+                <div className="mint__wrapper">
                     {/* <!-- Logo --> */}
-                    <div class="logo">
+                    <div className="logo">
                         <img src={logoSrc} alt="logo"/>
                     </div>
-                    <div class="mint__triangle mint__triangle--left"></div>
-                    <div class="mint__triangle mint__triangle--right">
+                    <div className="mint__triangle mint__triangle--left"></div>
+                    <div className="mint__triangle mint__triangle--right">
                         <div></div>
                     </div>
-                    <div class="mint__box">
-                        <div class="mint__box__content">
+                    <div className="mint__box">
+                        <div className="mint__box__content">
                             <h2>LAND mint is live!</h2>
                             <div>
                                 <span className='mint__box__content__already-minted'>ALREADY MINTED</span>

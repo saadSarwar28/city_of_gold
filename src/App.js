@@ -1,8 +1,6 @@
 import {
   BrowserRouter as Router,
-  Switch,
   Route,
-  Redirect,
   Routes
 } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";

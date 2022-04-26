@@ -1,7 +1,3 @@
-/*
-  This component use in Staking page
-*/
-
 import React, {useEffect, useState} from 'react'
 import Addresses from "../../constants/contractAddresses";
 import {ethers} from "ethers";
