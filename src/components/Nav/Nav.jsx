@@ -7,6 +7,9 @@ import {Link, useLocation} from 'react-router-dom';
 import {routeUrl} from '../../utils/routeUrls';
 import "./nav.css";
 import {ethers} from "ethers";
+import { Flip, toast, ToastContainer } from 'react-toastify';
+import { showWarningToast } from '../../utils/utilityFunctions';
+import errorsMessage from '../../constants/errorMessages';
 
 const Nav = () => {
     const location = useLocation()
@@ -50,7 +53,8 @@ const Nav = () => {
 
     useEffect(() => {
         if (window.ethereum && chainID !== 4 && chainID !== 0) {
-            alert('Please switch to Ethereum Rinkeby Testnet in Metamask.')
+            // alert('Please switch to Ethereum Rinkeby Testnet in Metamask.')
+            showWarningToast(errorsMessage.INSTALL_METAMASK);
             window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
                 params: [{ chainId: '0x4' }], // chainId must be in hexadecimal numbers
@@ -84,6 +88,7 @@ const Nav = () => {
     const closeNavMenu = () => {
         mobileNavRef.current.style.display = "none";
     }
+
     return (
         <>
             <nav>

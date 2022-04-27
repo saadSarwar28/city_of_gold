@@ -1,11 +1,16 @@
 import React from 'react'
+import CustomImage from '../CustomImage'
 
 const GalleryCard = ({
   imageSrc,
 }) => {
   return (
     <div className="gallery__card">
-      <img src={imageSrc} alt="gallery-image" />
+      <CustomImage
+        imgSrc={imageSrc}
+        imgAlt={"gallery-image"}
+      />
+      {/* <img src={imageSrc} alt="gallery-image" /> */}
     </div>
   )
 }

@@ -16,6 +16,7 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
+    // setIsLoading(true);
     // Adding event listener for loader
     window.addEventListener("load", pageLoaderCallback)
 
@@ -25,10 +26,12 @@ const Home = () => {
 
 
   const unmountCallback = () => {
+    console.log("In unmount");
     window.removeEventListener("load", pageLoaderCallback);
   }
-
+  
   const pageLoaderCallback = () => {
+    console.log("In Moutn");
     setIsLoading(false);
   }
   

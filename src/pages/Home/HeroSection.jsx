@@ -1,5 +1,6 @@
 import React from 'react'
 import DiscordButton from '../../components/Buttons/DiscordButton'
+import CustomImage from '../../components/CustomImage'
 import heroImage from "../../static/images/1.png"
 
 const HeroSection = () => {
@@ -15,7 +16,14 @@ const HeroSection = () => {
 
       {/* Hero section image */}
       <div className="hero__image" data-aos="fade-left">
-        <img src={heroImage} alt="home-image" />
+        <CustomImage 
+          imgSrc={heroImage}
+          imgAlt={"home-image"}
+          rest={{
+            loading: "lazy",
+          }}
+        />
+        {/* <img src={heroImage} alt="home-image" loading='lazy' /> */}
       </div>
     </div>
   )

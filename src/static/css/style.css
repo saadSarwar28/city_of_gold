@@ -1,6 +1,5 @@
 .container {
   width: 90%;
-  height: 100%;
   margin: 0 auto;
   max-width: 1500px;
   overflow: hidden;
@@ -132,6 +131,18 @@
 
 .height {
   height: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-start {
+  text-align: start;
+}
+
+.text-end {
+  text-align: end;
 }
 
 * {

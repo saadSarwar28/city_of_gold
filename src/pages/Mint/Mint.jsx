@@ -2,13 +2,17 @@ import React, {useEffect, useState} from 'react'
 import "./mint.css"
 import Footer from '../../components/Footer/Footer'
 import logoSrc from "../../static/images/logo_without_name.png";
-import StarsAnimtedBg from '../../components/Mint/StarsAnimtedBg';
 import Nav from '../../components/Nav/Nav';
-import {ethers} from "ethers";
+import {errors, ethers} from "ethers";
 import Addresses from "../../constants/contractAddresses";
 import Network from "../../constants/networkDetails";
 import landAbi from "../../abi/Land.json"
 import {AiOutlineMinus, AiOutlinePlus} from "react-icons/ai";
+import StarsAnimtedBg from '../../components/AnimatedStarsBg/StarsAnimtedBg';
+import { toast } from 'react-toastify';
+import { showSuccessToast, showWarningToast } from '../../utils/utilityFunctions';
+import errorsMessage from '../../constants/errorMessages';
+import successMessages from '../../constants/successMessages';
 
 const Mint = () => {
 
@@ -86,14 +90,16 @@ const Mint = () => {
                     console.log(error)
                 });
         } else {
-            alert('Please install metamask');
+            showWarningToast(errorsMessage.INSTALL_METAMASK);
+            
         }
     })
 
     const handleMint = async () => {
         if (window.ethereum && (address !== '')) {
             if (chainID !== Network.chainId) {
-                alert('Please switch to Rinkeby testnet in metamask.')
+                showWarningToast(errorsMessage.SWITCH_TO_RINKEBY_TESTNET);
+                // alert('Please switch to Rinkeby testnet in metamask.')
                 return
             }
             const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -101,24 +107,28 @@ const Mint = () => {
             const signer = provider.getSigner()
             const mintContract = new ethers.Contract(Addresses.land, landAbi, provider);
             if (price > balance) {
-                alert('Not enough ETH in your wallet')
+                showWarningToast(errorsMessage.NOT_ENOUGH_ETH);
+                // alert('Not enough ETH in your wallet')
             } else {
                 const contractWithSigner = mintContract.connect(signer)
                 const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
                 const tx = await contractWithSigner.publicMint(amount, false, options)
                 await tx.wait()
                 // console.log(tx)
-                alert('Minted Successfully')
+                showSuccessToast(successMessages.MINTED_SUCCESSFULLY);
+                // alert('Minted Successfully')
             }
         } else {
-            alert('Please connect Metamask first')
+            showWarningToast(errorsMessage.CONNECT_METAMASK_FIRST);
+            // alert('Please connect Metamask first')
         }
     }
 
     const handleMintAndStake = async () => {
         if (window.ethereum && (address !== '')) {
             if (chainID !== Network.chainId) {
-                alert('Please switch to Rinkeby testnet in metamask.')
+                showWarningToast(errorsMessage.SWITCH_TO_RINKEBY_TESTNET);
+                // alert('Please switch to Rinkeby testnet in metamask.')
                 return
             }
             const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -129,26 +139,32 @@ const Mint = () => {
             const mintContract = new ethers.Contract(Addresses.land, landAbi, provider);
             const nftBalance = await mintContract.balanceOf(address)
             if (price > balance) {
-                alert('Not enough ETH in your wallet')
+                showWarningToast(errorsMessage.NOT_ENOUGH_ETH);
+                // alert('Not enough ETH in your wallet')
             } else if (Number(nftBalance.toString()) + amount > maxMint) {
-                alert(`Max ${maxMint} nft mintable and you already have ${nftBalance.toString()} in your wallet.`)
+                showWarningToast(errorsMessage.ALREADY_MAX_NFT_MINTABLE(maxMint, nftBalance));
+                // alert(`Max ${maxMint} nft mintable and you already have ${nftBalance.toString()} in your wallet.`)
             } else {
                 const contractWithSigner = mintContract.connect(signer)
                 const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
                 const tx = await contractWithSigner.publicMint(amount, true, options)
                 await tx.wait()
                 // console.log(tx)
-                alert('Minted and staked Successfully!')
+                showSuccessToast(successMessages.MINTED_AND_STAKED_SUCCESSFULLY);
+                // alert('Minted and staked Successfully!')
             }
         } else {
-            alert('Please connect Metamask first')
+            showWarningToast(errorsMessage.CONNECT_METAMASK_FIRST);
+            // alert('Please connect Metamask first')
         }
     }
+
+   
 
     return (
         <div className="mint">
             {/* Stars */}
-            <StarsAnimtedBg/>
+            <StarsAnimtedBg />
 
             <div className='container'>
                 <Nav/>
@@ -167,10 +183,10 @@ const Mint = () => {
                             <h2>LAND mint is live!</h2>
                             <div>
                                 <span className='mint__box__content__already-minted'>ALREADY MINTED</span>
-                                <h3 className='mint-box-already-minted'>{alreadyMinted} / 10,000</h3>
+                                <h3 className='text-center'>{alreadyMinted} / 10,000</h3>
                             </div>
                             <div className='flex gap-2 flex-col'>
-                                <h3 className='mint-box-already-minted'>{price.toFixed(2)} ETH</h3>
+                                <h3 className='text-center'>{price.toFixed(2)} ETH</h3>
                                 <div className='mint__box__content__button-group flex-center'>
                                     <div className='number-field__buttons'>
                                         <div>

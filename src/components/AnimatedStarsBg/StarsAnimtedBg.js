@@ -1,8 +1,8 @@
 import React from 'react'
-
+import "./stars-animated-bg.css"
 const StarsAnimtedBg = () => {
   return (
-    <section class="wrapper">
+    <section class="stars__wrapper">
       <div id="stars"></div>
       <div id="stars2"></div>
       <div id="stars3"></div>

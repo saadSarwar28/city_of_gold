@@ -1,0 +1,32 @@
+@import "../../static/css/sass/mixins/breakporintMixin";
+
+// Page Not Found Main div
+.pageNotFound {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+// Heading Text 404
+.pageNotFound h1 {
+  font-size: 5rem;
+  color: var(--accent-color);
+  
+  @include ipad {
+    font-size: 8rem;
+  }
+}
+
+// Page not found span
+.pageNotFound span {
+  color: var(--font-light-color);
+  margin-top: -20px;
+  font-size: 1.2rem;
+  
+  @include ipad {
+    margin-top: -40px;
+    font-size: 1.7rem;
+  }
+}
