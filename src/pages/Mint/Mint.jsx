@@ -21,6 +21,7 @@ const Mint = () => {
     const [chainID, setChainId] = useState(0)
 
     const increaseAmount = () => {
+        
         if (amount < maxMint) {
             setAmount(amount + 1)
         }
