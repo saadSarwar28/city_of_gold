@@ -1,4 +1,5 @@
 import React from 'react'
+import CustomImage from '../CustomImage'
 
 const DaimondBox = ({
   title,
@@ -12,7 +13,8 @@ const DaimondBox = ({
         {
           imageUrl && 
             <div className="img">
-              <img src={imageUrl} alt="" />
+              <CustomImage imgAlt={""} imgSrc={imageUrl}/>
+              {/* <img src={imageUrl} alt="" /> */}
             </div>
         }
         <h1>{title}</h1>

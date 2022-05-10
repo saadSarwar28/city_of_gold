@@ -15,7 +15,7 @@ import estateAbi from "../../abi/Estate.json";
 import stakerAbi from "../../abi/Staker.json";
 import StakeTableRow from "./StakingTableRows";
 import tokenTypes from "../../utils/tokenTypes";
-
+import logoImage from "../../static/images/logo_without_name.png"
 
 const Dashboard = () => {
 
@@ -226,41 +226,209 @@ const Dashboard = () => {
                     <div className="staking">
                         <div className="staking__notched-box">
                             <div className="staking__notched-box__content">
-                                <table className="staking__notched-box__table">
-                                    <thead>
-                                    <tr>
-                                        <th>
-                                            Token Type
-                                        </th>
-                                        <th>
-                                            Token ID
-                                        </th>
-                                        <th>
-                                            Staked at
-                                        </th>
-                                        <th>
-                                            Pending COG
-                                        </th>
-                                        <th>
-                                            Actions
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {
-                                        allNfts.sort().map(nft => {
-                                            return (
-                                                <StakeTableRow
-                                                    key={nft.id}
-                                                    type={nft.type}
-                                                    id={nft.id}
-                                                    _isStaked={nft.isStaked}
-                                                ></StakeTableRow>
-                                            )
-                                        })
-                                    }
-                                    </tbody>
-                                </table>
+                                <div className="staking__table__wrapper">
+                                    <div className="saking__table__logo">
+                                        <img src={logoImage} alt=""  />
+                                    </div>
+                                    <table className="staking__notched-box__table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Token Type
+                                                </th>
+                                                <th>
+                                                    Token ID
+                                                </th>
+                                                <th>
+                                                    Staked at
+                                                </th>
+                                                <th>
+                                                    Pending COG
+                                                </th>
+                                                <th>
+                                                    Actions
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {
+                                            allNfts.sort().map(nft => {
+                                                return (
+                                                    <StakeTableRow
+                                                        key={nft.id}
+                                                        type={nft.type}
+                                                        id={nft.id}
+                                                        _isStaked={nft.isStaked}
+                                                    ></StakeTableRow>
+                                                )
+                                            })
+                                        }
+                                            <tr>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"stakedAt"}</td>
+                                                <td className="">{"cogEarned"}</td>
+                                                <td className="">
+                                                    
+                                                    <div className='buttonGroup'>
+                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
+                                                        </button>
+                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
+                                                    </div>
+                                                    {/* <>
+                                                        <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
+                                                        <button type="button" className="stake-button" onClick={stakeToken}
+                                                            title="Needs approval first">Stake
+                                                        </button>
+                                                    </> */}
+                                                
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"stakedAt"}</td>
+                                                <td className="">{"cogEarned"}</td>
+                                                <td className="">
+                                                    
+                                                    <>
+                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
+                                                        </button>
+                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
+                                                    </>
+                                                    {/* <>
+                                                        <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
+                                                        <button type="button" className="stake-button" onClick={stakeToken}
+                                                            title="Needs approval first">Stake
+                                                        </button>
+                                                    </> */}
+                                                
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"stakedAt"}</td>
+                                                <td className="">{"cogEarned"}</td>
+                                                <td className="">
+                                                    
+                                                    <>
+                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
+                                                        </button>
+                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
+                                                    </>
+                                                    {/* <>
+                                                        <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
+                                                        <button type="button" className="stake-button" onClick={stakeToken}
+                                                            title="Needs approval first">Stake
+                                                        </button>
+                                                    </> */}
+                                                
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"stakedAt"}</td>
+                                                <td className="">{"cogEarned"}</td>
+                                                <td className="">
+                                                    
+                                                    <>
+                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
+                                                        </button>
+                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
+                                                    </>
+                                                    {/* <>
+                                                        <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
+                                                        <button type="button" className="stake-button" onClick={stakeToken}
+                                                            title="Needs approval first">Stake
+                                                        </button>
+                                                    </> */}
+                                                
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"stakedAt"}</td>
+                                                <td className="">{"cogEarned"}</td>
+                                                <td className="">
+                                                    
+                                                    <>
+                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
+                                                        </button>
+                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
+                                                    </>
+                                                    {/* <>
+                                                        <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
+                                                        <button type="button" className="stake-button" onClick={stakeToken}
+                                                            title="Needs approval first">Stake
+                                                        </button>
+                                                    </> */}
+                                                
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"stakedAt"}</td>
+                                                <td className="">{"cogEarned"}</td>
+                                                <td className="">
+                                                    
+                                                    <>
+                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
+                                                        </button>
+                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
+                                                    </>
+                                                    {/* <>
+                                                        <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
+                                                        <button type="button" className="stake-button" onClick={stakeToken}
+                                                            title="Needs approval first">Stake
+                                                        </button>
+                                                    </> */}
+                                                
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"stakedAt"}</td>
+                                                <td className="">{"cogEarned"}</td>
+                                                <td className="">
+                                                    
+                                                    <>
+                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
+                                                        </button>
+                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
+                                                    </>
+                                                    {/* <>
+                                                        <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
+                                                        <button type="button" className="stake-button" onClick={stakeToken}
+                                                            title="Needs approval first">Stake
+                                                        </button>
+                                                    </> */}
+                                                
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"1"}</td>
+                                                <td className="">{"stakedAt"}</td>
+                                                <td className="">{"cogEarned"}</td>
+                                                <td className="">
+                                                    
+                                                    <>
+                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
+                                                        </button>
+                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
+                                                    </>
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

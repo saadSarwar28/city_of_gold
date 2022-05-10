@@ -13,6 +13,8 @@ import { toast } from 'react-toastify';
 import { showSuccessToast, showWarningToast } from '../../utils/utilityFunctions';
 import errorsMessage from '../../constants/errorMessages';
 import successMessages from '../../constants/successMessages';
+import { Link } from 'react-router-dom';
+import { routeUrl } from '../../utils/routeUrls';
 
 const Mint = () => {
 
@@ -168,18 +170,21 @@ const Mint = () => {
 
             <div className='container'>
                 <Nav/>
+                {/* <Link to={routeUrl.home}>
+                    Home
+                </Link> */}
 
-                <div class="mint__wrapper">
+                <div className="mint__wrapper">
                     {/* <!-- Logo --> */}
-                    <div class="logo">
+                    <div className="logo">
                         <img src={logoSrc} alt="logo"/>
                     </div>
-                    <div class="mint__triangle mint__triangle--left"></div>
-                    <div class="mint__triangle mint__triangle--right">
+                    <div className="mint__triangle mint__triangle--left"></div>
+                    <div className="mint__triangle mint__triangle--right">
                         <div></div>
                     </div>
-                    <div class="mint__box">
-                        <div class="mint__box__content">
+                    <div className="mint__box">
+                        <div className="mint__box__content">
                             <h2>LAND mint is live!</h2>
                             <div>
                                 <span className='mint__box__content__already-minted'>ALREADY MINTED</span>

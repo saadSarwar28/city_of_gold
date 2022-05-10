@@ -1,10 +1,16 @@
 // Custom Image
 
 import React from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const CustomImage = ({imgSrc, imgAlt, rest}) => {
   return (
-    <img src={imgSrc} alt={imgAlt} {...rest} loading="lazy"/>
+    <LazyLoadImage 
+      alt={imgAlt}
+      src={imgSrc}
+      {...rest} 
+    />
+    // <img src={imgSrc} alt={imgAlt} loading="lazy" {...rest}/>
   )
 }
 

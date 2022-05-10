@@ -17,11 +17,17 @@ const Overview = () => {
 
           {/* Overview image section */}
           <div className='overview__image' data-aos="fade-right">
-            <CustomImage 
+            {/* <CustomImage 
               imgSrc={overviewImage}
               imgAlt={"overview__content__image"}
-            />
-            {/* <img src={overviewImage} alt="overview__content__image" /> */}
+              
+              rest={{
+                loading: "earger",
+                height: "520",
+                width: "750",
+              }}
+            /> */}
+            <img src={overviewImage} alt="overview__content__image" />
           </div>
 
           {/* Overview Content section */}

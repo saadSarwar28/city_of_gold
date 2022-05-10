@@ -15,10 +15,13 @@ const Team = () => {
           <div className="team__card__list">
             <div className="team__card">
               <div className="team__card__content">
-                <div className="team__card__image team__card__image--one">
+                <div className="team__card__image  team__card__image--one" data-aos="zoom-out">
                   <CustomImage
                     imgSrc={teamMemberOneImageSrc}
                     imgAlt={"Member One Image"}
+                    // rest={{
+                    //   "data-aos": "zoom-out",
+                    // }}
                   />
                   {/* <img src={teamMemberOneImageSrc} alt="" data-aos="zoom-out" /> */}
                 </div>
@@ -28,7 +31,10 @@ const Team = () => {
             </div>
             <div className="team__card">
               <div className="team__card__content">
-                <div className="team__card__image team__card__image--two">
+                <div 
+                  className="team__card__image team__card__image--two" 
+                  data-aos="zoom-out"
+                >
                   <CustomImage
                     imgSrc={teamMemberTwoImageSrc}
                     imgAlt={"Member Two Image"}

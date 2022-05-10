@@ -10,7 +10,7 @@ const HeroSection = () => {
       <div className="hero__content">
         <h1 className='hero__content--heading'>Welcome To The World That Is <b>Owned By You!</b></h1>
 
-        <h2 className='hero__content--subheading'>Coming To You In April</h2>
+        <h2 className='hero__content--subheading'>Coming To You In May</h2>
         <DiscordButton />
       </div>
 
@@ -23,7 +23,7 @@ const HeroSection = () => {
             loading: "lazy",
           }}
         />
-        {/* <img src={heroImage} alt="home-image" loading='lazy' /> */}
+        
       </div>
     </div>
   )
