@@ -108,7 +108,7 @@ $dashboardNavHexagonTwo: polygon(
   padding: 2px;
   width: 100%;
   // height: 500px;
-  background-image: var(--border-linear-gradient);
+  // background-image: var(--border-linear-gradient);
   border-radius: 10px;
   // clip-path: var(--dashboard-main-box-polygon);
   // clip-path: var(--dashboard-box-mobile);
@@ -116,7 +116,7 @@ $dashboardNavHexagonTwo: polygon(
   @include ipad {
     width: 650px;
     // height: 500px;
-    background-image: var(--border-linear-gradient);
+    // background-image: var(--border-linear-gradient);
     // clip-path: var(--dashboard-main-box-polygon-ipad);
   }
 
@@ -251,7 +251,7 @@ $dashboardNavHexagonTwo: polygon(
 
 $tableBorderColor: rgba(122, 86, 19, 0.629);
 
-.staking__notched-box__table {
+.staking__table {
   // Todo: has to change with padding of parent element
   // margin-top: 2rem;
   border-collapse: collapse;
@@ -262,6 +262,12 @@ $tableBorderColor: rgba(122, 86, 19, 0.629);
   
 
   thead {
+    display: none;
+
+    @include desktop {
+      display: table-header-group;
+    }
+    
     tr th {
       color: var(--accent-color);
       border-bottom: 1px solid $tableBorderColor;
@@ -269,10 +275,26 @@ $tableBorderColor: rgba(122, 86, 19, 0.629);
   }
 
   tr {
-    border-bottom: 1px solid $tableBorderColor;
+
+    display: block;
+    border: 1px solid $tableBorderColor;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+
+    @include desktop {
+      display: table-row;
+      border: none;
+      margin-bottom: 0;
+      border-bottom: 1px solid $tableBorderColor;
+    }
+
 
     &:last-child {
-      border-bottom: none;
+
+      @include desktop {
+        border-bottom: none;
+
+      }
     }
     
   }
@@ -293,10 +315,47 @@ $tableBorderColor: rgba(122, 86, 19, 0.629);
   }
 
   td {
-    &:not(:first-child) {
-      border-left: 1px solid $tableBorderColor;
-      border-radius: 20px;
+    display: block;
+    text-align: end;
+    position: relative;
+
+    &::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 1rem;
+      color: var(--accent-color);
     }
+
+    @include desktop {
+      text-align: center;
+      display: table-cell;
+      border-bottom: none;
+
+      &::before {
+        content: "";
+        // position: absolute;
+      }
+      
+    }
+
+    &:not(:first-child) {
+      border-left: none;
+      
+      @include desktop {
+        border-left: 1px solid $tableBorderColor;
+
+      }
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $tableBorderColor;
+      
+      @include desktop {
+        border-bottom: none;
+      }
+    }
+
+    
   }
   
 }
@@ -327,29 +386,12 @@ $buttonXPadding: 7px;
   // overflow: scroll;
 }
 
-.scroll::-webkit-scrollbar {
-  width: 12px;
-  // background-color: red;
-}
-
-.scroll::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  // background-color: var(--accent-color);
-}
-
-.scroll::-webkit-scrollbar-thumb {
-  background-color: var(--accent-color);
-  border-radius: 10px;
-  height: 3px;
-  -webkit-box-shadow: inset 0 0 2px var(--accent-color);
-}
 
 .saking__table__logo {
   position: absolute;
   width: 600px;
   opacity: 0.1;
-
+  display: none;
   img {
     width: 100%;
     height: 100%;
@@ -359,10 +401,11 @@ $buttonXPadding: 7px;
 .staking .buttonGroup {
   display: flex;
   gap: 10px;
-  flex-direction: column;
+  justify-content: flex-end;
+  // flex-direction: column;
+  flex-direction: row;
 
   @include desktop {
-    flex-direction: row;
   }
 }
 

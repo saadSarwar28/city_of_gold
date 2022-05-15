@@ -230,7 +230,7 @@ const Dashboard = () => {
                                     <div className="saking__table__logo">
                                         <img src={logoImage} alt=""  />
                                     </div>
-                                    <table className="staking__notched-box__table">
+                                    <table className="staking__table">
                                         <thead>
                                             <tr>
                                                 <th>
@@ -264,11 +264,11 @@ const Dashboard = () => {
                                             })
                                         }
                                             <tr>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"stakedAt"}</td>
-                                                <td className="">{"cogEarned"}</td>
-                                                <td className="">
+                                                <td className="" data-label='Token Type'>{"1"}</td>
+                                                <td className="" data-label='Token ID'>{"1"}</td>
+                                                <td className="" data-label='Staked at'>{"stakedAt"}</td>
+                                                <td className="" data-label='Pending COG'>{"cogEarned"}</td>
+                                                <td className="" data-label='Actions'>
                                                     
                                                     <div className='buttonGroup'>
                                                         <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
@@ -285,17 +285,17 @@ const Dashboard = () => {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"stakedAt"}</td>
-                                                <td className="">{"cogEarned"}</td>
-                                                <td className="">
+                                                <td className="" data-label='Token Type'>{"1"}</td>
+                                                <td className="" data-label='Token ID'>{"1"}</td>
+                                                <td className="" data-label='Staked at'>{"stakedAt"}</td>
+                                                <td className="" data-label='Pending COG'>{"cogEarned"}</td>
+                                                <td className="" data-label='Actions'>
                                                     
-                                                    <>
+                                                    <div className='buttonGroup'>
                                                         <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
                                                         </button>
                                                         <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
-                                                    </>
+                                                    </div>
                                                     {/* <>
                                                         <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
                                                         <button type="button" className="stake-button" onClick={stakeToken}
@@ -306,17 +306,17 @@ const Dashboard = () => {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"stakedAt"}</td>
-                                                <td className="">{"cogEarned"}</td>
-                                                <td className="">
+                                                <td className="" data-label='Token Type'>{"1"}</td>
+                                                <td className="" data-label='Token ID'>{"1"}</td>
+                                                <td className="" data-label='Staked at'>{"stakedAt"}</td>
+                                                <td className="" data-label='Pending COG'>{"cogEarned"}</td>
+                                                <td className="" data-label='Actions'>
                                                     
-                                                    <>
+                                                    <div className='buttonGroup'>
                                                         <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
                                                         </button>
                                                         <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
-                                                    </>
+                                                    </div>
                                                     {/* <>
                                                         <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
                                                         <button type="button" className="stake-button" onClick={stakeToken}
@@ -327,17 +327,17 @@ const Dashboard = () => {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"stakedAt"}</td>
-                                                <td className="">{"cogEarned"}</td>
-                                                <td className="">
+                                                <td className="" data-label='Token Type'>{"1"}</td>
+                                                <td className="" data-label='Token ID'>{"1"}</td>
+                                                <td className="" data-label='Staked at'>{"stakedAt"}</td>
+                                                <td className="" data-label='Pending COG'>{"cogEarned"}</td>
+                                                <td className="" data-label='Actions'>
                                                     
-                                                    <>
+                                                    <div className='buttonGroup'>
                                                         <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
                                                         </button>
                                                         <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
-                                                    </>
+                                                    </div>
                                                     {/* <>
                                                         <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
                                                         <button type="button" className="stake-button" onClick={stakeToken}
@@ -348,17 +348,17 @@ const Dashboard = () => {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"stakedAt"}</td>
-                                                <td className="">{"cogEarned"}</td>
-                                                <td className="">
+                                                <td className="" data-label='Token Type'>{"1"}</td>
+                                                <td className="" data-label='Token ID'>{"1"}</td>
+                                                <td className="" data-label='Staked at'>{"stakedAt"}</td>
+                                                <td className="" data-label='Pending COG'>{"cogEarned"}</td>
+                                                <td className="" data-label='Actions'>
                                                     
-                                                    <>
+                                                    <div className='buttonGroup'>
                                                         <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
                                                         </button>
                                                         <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
-                                                    </>
+                                                    </div>
                                                     {/* <>
                                                         <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
                                                         <button type="button" className="stake-button" onClick={stakeToken}
@@ -369,17 +369,17 @@ const Dashboard = () => {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"stakedAt"}</td>
-                                                <td className="">{"cogEarned"}</td>
-                                                <td className="">
+                                                <td className="" data-label='Token Type'>{"1"}</td>
+                                                <td className="" data-label='Token ID'>{"1"}</td>
+                                                <td className="" data-label='Staked at'>{"stakedAt"}</td>
+                                                <td className="" data-label='Pending COG'>{"cogEarned"}</td>
+                                                <td className="" data-label='Actions'>
                                                     
-                                                    <>
+                                                    <div className='buttonGroup'>
                                                         <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
                                                         </button>
                                                         <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
-                                                    </>
+                                                    </div>
                                                     {/* <>
                                                         <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
                                                         <button type="button" className="stake-button" onClick={stakeToken}
@@ -389,43 +389,7 @@ const Dashboard = () => {
                                                 
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"stakedAt"}</td>
-                                                <td className="">{"cogEarned"}</td>
-                                                <td className="">
-                                                    
-                                                    <>
-                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
-                                                        </button>
-                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
-                                                    </>
-                                                    {/* <>
-                                                        <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
-                                                        <button type="button" className="stake-button" onClick={stakeToken}
-                                                            title="Needs approval first">Stake
-                                                        </button>
-                                                    </> */}
-                                                
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"1"}</td>
-                                                <td className="">{"stakedAt"}</td>
-                                                <td className="">{"cogEarned"}</td>
-                                                <td className="">
-                                                    
-                                                    <>
-                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
-                                                        </button>
-                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
-                                                    </>
-                                                    
-                                                
-                                                </td>
-                                            </tr>
+                                            
                                         </tbody>
                                     </table>
                                 </div>
