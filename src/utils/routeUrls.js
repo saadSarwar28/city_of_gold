@@ -4,4 +4,5 @@ export const routeUrl = {
   staking: "/staking",
   treasureHunt: "/treasure-hunt",
   conversion: "/conversion",
+  thankyou: "/thankyou",
 } 

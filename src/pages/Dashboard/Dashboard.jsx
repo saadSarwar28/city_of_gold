@@ -15,7 +15,7 @@ import estateAbi from "../../abi/Estate.json";
 import stakerAbi from "../../abi/Staker.json";
 import StakeTableRow from "./StakingTableRows";
 import tokenTypes from "../../utils/tokenTypes";
-
+import logoImage from "../../static/images/logo_without_name.png"
 
 const Dashboard = () => {
 
@@ -192,10 +192,19 @@ const Dashboard = () => {
         updateTotalEstatesEarning()
     }, [stakedEstates])
 
+    const isWalletConnected = () => {
+        provider.listAccounts()
+            .then(res => {
+                if (res.length > 0) {
+                    setAddress(res[0])
+                }
+            })
+    }
+
     return (
         <div className='dashboard-page'>
             <div className="container">
-                <Nav/>
+                <Nav walletConnected={isWalletConnected}/>
                 <div className="stakeinfo__list">
                     <StakeInfoItem
                         title="Lands Owned"
@@ -226,41 +235,173 @@ const Dashboard = () => {
                     <div className="staking">
                         <div className="staking__notched-box">
                             <div className="staking__notched-box__content">
-                                <table className="staking__notched-box__table">
-                                    <thead>
-                                    <tr>
-                                        <th>
-                                            Token Type
-                                        </th>
-                                        <th>
-                                            Token ID
-                                        </th>
-                                        <th>
-                                            Staked at
-                                        </th>
-                                        <th>
-                                            Pending COG
-                                        </th>
-                                        <th>
-                                            Actions
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {
-                                        allNfts.sort().map(nft => {
-                                            return (
-                                                <StakeTableRow
-                                                    key={nft.id}
-                                                    type={nft.type}
-                                                    id={nft.id}
-                                                    _isStaked={nft.isStaked}
-                                                ></StakeTableRow>
-                                            )
-                                        })
-                                    }
-                                    </tbody>
-                                </table>
+                                <div className="staking__table__wrapper">
+                                    <div className="saking__table__logo">
+                                        <img src={logoImage} alt=""  />
+                                    </div>
+                                    <table className="staking__table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Token Type
+                                                </th>
+                                                <th>
+                                                    Token ID
+                                                </th>
+                                                <th>
+                                                    Staked at
+                                                </th>
+                                                <th>
+                                                    Pending COG
+                                                </th>
+                                                <th>
+                                                    Actions
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {
+                                            allNfts.sort().map(nft => {
+                                                return (
+                                                    <StakeTableRow
+                                                        key={nft.id}
+                                                        type={nft.type}
+                                                        id={nft.id}
+                                                        _isStaked={nft.isStaked}
+                                                    ></StakeTableRow>
+                                                )
+                                            })
+                                        }
+                                            <tr>
+                                                <td className="" data-label='Token Type'>{"1"}</td>
+                                                <td className="" data-label='Token ID'>{"1"}</td>
+                                                <td className="" data-label='Staked at'>{"stakedAt"}</td>
+                                                <td className="" data-label='Pending COG'>{"cogEarned"}</td>
+                                                <td className="" data-label='Actions'>
+                                                    
+                                                    <div className='buttonGroup'>
+                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
+                                                        </button>
+                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
+                                                    </div>
+                                                    {/* <>
+                                                        <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
+                                                        <button type="button" className="stake-button" onClick={stakeToken}
+                                                            title="Needs approval first">Stake
+                                                        </button>
+                                                    </> */}
+                                                
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="" data-label='Token Type'>{"1"}</td>
+                                                <td className="" data-label='Token ID'>{"1"}</td>
+                                                <td className="" data-label='Staked at'>{"stakedAt"}</td>
+                                                <td className="" data-label='Pending COG'>{"cogEarned"}</td>
+                                                <td className="" data-label='Actions'>
+                                                    
+                                                    <div className='buttonGroup'>
+                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
+                                                        </button>
+                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
+                                                    </div>
+                                                    {/* <>
+                                                        <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
+                                                        <button type="button" className="stake-button" onClick={stakeToken}
+                                                            title="Needs approval first">Stake
+                                                        </button>
+                                                    </> */}
+                                                
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="" data-label='Token Type'>{"1"}</td>
+                                                <td className="" data-label='Token ID'>{"1"}</td>
+                                                <td className="" data-label='Staked at'>{"stakedAt"}</td>
+                                                <td className="" data-label='Pending COG'>{"cogEarned"}</td>
+                                                <td className="" data-label='Actions'>
+                                                    
+                                                    <div className='buttonGroup'>
+                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
+                                                        </button>
+                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
+                                                    </div>
+                                                    {/* <>
+                                                        <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
+                                                        <button type="button" className="stake-button" onClick={stakeToken}
+                                                            title="Needs approval first">Stake
+                                                        </button>
+                                                    </> */}
+                                                
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="" data-label='Token Type'>{"1"}</td>
+                                                <td className="" data-label='Token ID'>{"1"}</td>
+                                                <td className="" data-label='Staked at'>{"stakedAt"}</td>
+                                                <td className="" data-label='Pending COG'>{"cogEarned"}</td>
+                                                <td className="" data-label='Actions'>
+                                                    
+                                                    <div className='buttonGroup'>
+                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
+                                                        </button>
+                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
+                                                    </div>
+                                                    {/* <>
+                                                        <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
+                                                        <button type="button" className="stake-button" onClick={stakeToken}
+                                                            title="Needs approval first">Stake
+                                                        </button>
+                                                    </> */}
+                                                
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="" data-label='Token Type'>{"1"}</td>
+                                                <td className="" data-label='Token ID'>{"1"}</td>
+                                                <td className="" data-label='Staked at'>{"stakedAt"}</td>
+                                                <td className="" data-label='Pending COG'>{"cogEarned"}</td>
+                                                <td className="" data-label='Actions'>
+                                                    
+                                                    <div className='buttonGroup'>
+                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
+                                                        </button>
+                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
+                                                    </div>
+                                                    {/* <>
+                                                        <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
+                                                        <button type="button" className="stake-button" onClick={stakeToken}
+                                                            title="Needs approval first">Stake
+                                                        </button>
+                                                    </> */}
+                                                
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="" data-label='Token Type'>{"1"}</td>
+                                                <td className="" data-label='Token ID'>{"1"}</td>
+                                                <td className="" data-label='Staked at'>{"stakedAt"}</td>
+                                                <td className="" data-label='Pending COG'>{"cogEarned"}</td>
+                                                <td className="" data-label='Actions'>
+                                                    
+                                                    <div className='buttonGroup'>
+                                                        <button type="button" className="claim-rewards-button" onClick={() => {}}>Claim COG
+                                                        </button>
+                                                        <button type="button" className="unstake-button" onClick={() => {}}>Unstake</button>
+                                                    </div>
+                                                    {/* <>
+                                                        <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
+                                                        <button type="button" className="stake-button" onClick={stakeToken}
+                                                            title="Needs approval first">Stake
+                                                        </button>
+                                                    </> */}
+                                                
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

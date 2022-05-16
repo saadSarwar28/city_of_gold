@@ -21,6 +21,8 @@ html {
 
   // Font colors
   --font-light-color: white;
+
+  --font-light-gray-color: rgb(186, 186, 186);
   --accent-color: #fecb42; 
   --accent-dark-color: #4e3b18; 
 
@@ -187,7 +189,7 @@ button,
   position: relative;
   bottom: 0;
   transition: bottom 0.2s ease-in;
-  font-size: 30px;
+  // font-size: 12px;
   display: block;
 
   &:hover {
@@ -214,10 +216,12 @@ button,
   cursor: pointer;
   background-image: var(--button-gradient);
   
-  padding: 0.7rem 1.1rem;
+  // padding: 0.7rem 1.1rem;
+  padding: 10px 15px;
   border-radius: 10px;
   font-weight: 700;
-  font-family: var(--font-poppins);
+  // letter-spacing: 1px;
+  // font-family: var(--font-poppins);
   border: none;
   outline: none;
   color: var(--body-color);

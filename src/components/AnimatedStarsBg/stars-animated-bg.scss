@@ -1,8 +1,8 @@
-.mint-page .wrapper {
+.stars__wrapper {
   position: fixed;
 }
 
-.mint-page #stars {
+.stars__wrapper #stars {
     width: 1px;
     height: 1px;
     background: transparent;
@@ -186,7 +186,7 @@
     // 696px 1654px var(--star-color), 1144px 60px var(--star-color);
 }
 
-.mint-page #stars:after {
+.stars__wrapper #stars:after {
     content: '';
     position: absolute;
     top: 2000px;
@@ -372,7 +372,7 @@
     // 696px 1654px var(--star-color), 1144px 60px var(--star-color);
 }
 
-.mint-page #stars2 {
+.stars__wrapper #stars2 {
     width: 2px;
     height: 2px;
     background: transparent;
@@ -430,7 +430,7 @@
     // 986px 1529px var(--star-color), 1667px 1137px var(--star-color);
 }
 
-.mint-page #stars2:after {
+.stars__wrapper #stars2:after {
     content: '';
     position: absolute;
     top: 2000px;
@@ -490,7 +490,7 @@
     // 986px 1529px var(--star-color), 1667px 1137px var(--star-color);
 }
 
-.mint-page #stars3 {
+.stars__wrapper #stars3 {
     width: 3px;
     height: 3px;
     background: transparent;
@@ -523,7 +523,7 @@
     // 498px 1947px var(--star-color), 617px 880px var(--star-color), 240px 403px var(--star-color);
 }
 
-.mint-page #stars3:after {
+.stars__wrapper #stars3:after {
     content: '';
     position: absolute;
     top: 2000px;

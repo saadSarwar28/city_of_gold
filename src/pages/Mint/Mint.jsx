@@ -2,13 +2,18 @@ import React, {useEffect, useState} from 'react'
 import "./mint.css"
 import Footer from '../../components/Footer/Footer'
 import logoSrc from "../../static/images/logo_without_name.png";
-import StarsAnimtedBg from '../../components/Mint/StarsAnimtedBg';
 import Nav from '../../components/Nav/Nav';
-import {ethers} from "ethers";
+import {errors, ethers} from "ethers";
 import Addresses from "../../constants/contractAddresses";
 import Network from "../../constants/networkDetails";
 import landAbi from "../../abi/Land.json"
 import {AiOutlineMinus, AiOutlinePlus} from "react-icons/ai";
+import StarsAnimtedBg from '../../components/AnimatedStarsBg/StarsAnimtedBg';
+import { toast } from 'react-toastify';
+import { showSuccessToast, showWarningToast } from '../../utils/utilityFunctions';
+import errorsMessage from '../../constants/errorMessages';
+import successMessages from '../../constants/successMessages';
+import estateAbi from "../../abi/Estate.json";
 
 const Mint = () => {
 
@@ -17,8 +22,26 @@ const Mint = () => {
     const [alreadyMinted, setAlreadyMinted] = useState(0)
     const [price, setPrice] = useState(0)
     const [amount, setAmount] = useState(1)
-    const [balance, setBalance] = useState(0)
     const [chainID, setChainId] = useState(0)
+    const [provider, setProvider] = useState(new ethers.providers.Web3Provider(window.ethereum))
+    const [signer, setSigner] = useState(null)
+    const [landContract, setLandContract] = useState(null)
+
+    const initializeLandContract = () => {
+        if (window.ethereum && address !== '') {
+            setLandContract(new ethers.Contract(Addresses.land, landAbi, provider))
+        }
+    }
+
+    useEffect(() => {
+        initializeLandContract()
+    }, [address])
+
+    useEffect(() => {
+        if (window.ethereum && address !== '') {
+            setSigner(provider.getSigner())
+        }
+    }, [provider, address])
 
     const increaseAmount = () => {
         
@@ -35,7 +58,6 @@ const Mint = () => {
 
     useEffect(() => {
         if (window.ethereum) {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
             provider.getNetwork().then(res => {
                 setChainId(res.chainId)
             })
@@ -43,135 +65,146 @@ const Mint = () => {
     })
 
     async function updateMintPrice() {
-        if (window.ethereum) {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            await provider.send("eth_requestAccounts", [])
-            const mintContract = new ethers.Contract(Addresses.land, landAbi, provider)
-            const mintPrice = await mintContract.nftPrice()
+        if (window.ethereum && landContract !== null) {
+            const mintPrice = await landContract.nftPrice()
             setPrice(Number(ethers.utils.formatEther(mintPrice)) * amount)
         }
     }
 
     useEffect(() => {
         updateMintPrice()
-    })
+    }, [address, landContract, amount])
 
     async function updateTotalSupply() {
-        if (window.ethereum) {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            await provider.send("eth_requestAccounts", [])
-            const signer = provider.getSigner()
-            signer.getBalance().then(res => {
-                setBalance(ethers.utils.formatEther(res))
-            })
-            const mintContract = new ethers.Contract(Addresses.land, landAbi, provider)
-            const totalSupply = await mintContract.totalSupply()
+        if (window.ethereum && landContract !== null) {
+            const totalSupply = await landContract.totalSupply()
             setAlreadyMinted(Number(totalSupply.toString()))
         }
     }
 
     useEffect(() => {
         updateTotalSupply()
-    })
+    }, [address, landContract])
 
 
     useEffect(() => {
         if (window.ethereum) {
-            // @ts-ignore
-            window.ethereum.request({method: 'eth_requestAccounts'})
-                .then(result => {
-                    // @ts-ignore
-                    setAddress(String(result[0]))
+            provider.listAccounts()
+                .then(res => {
+                    if (res.length > 0) {
+                        setAddress(res[0])
+                    }
                 })
-                .catch(error => {
-                    console.log(error)
-                });
+
         } else {
-            alert('Please install metamask');
+            showWarningToast(errorsMessage.INSTALL_METAMASK);
         }
     })
 
     const handleMint = async () => {
         if (window.ethereum && (address !== '')) {
             if (chainID !== Network.chainId) {
-                alert('Please switch to Rinkeby testnet in metamask.')
+                showWarningToast(errorsMessage.SWITCH_TO_RINKEBY_TESTNET);
+                // alert('Please switch to Rinkeby testnet in metamask.')
                 return
             }
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            await provider.send("eth_requestAccounts", []);
             const signer = provider.getSigner()
-            const mintContract = new ethers.Contract(Addresses.land, landAbi, provider);
+            let balance;
+            signer.getBalance()
+                .then(res => {
+                    balance = Number(ethers.utils.formatEther(res))
+                })
             if (price > balance) {
-                alert('Not enough ETH in your wallet')
+                showWarningToast(errorsMessage.NOT_ENOUGH_ETH);
+                // alert('Not enough ETH in your wallet')
             } else {
-                const contractWithSigner = mintContract.connect(signer)
+                const contractWithSigner = landContract.connect(signer)
                 const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
                 const tx = await contractWithSigner.publicMint(amount, false, options)
                 await tx.wait()
                 // console.log(tx)
-                alert('Minted Successfully')
+                showSuccessToast(successMessages.MINTED_SUCCESSFULLY);
+                // alert('Minted Successfully')
             }
         } else {
-            alert('Please connect Metamask first')
+            showWarningToast(errorsMessage.CONNECT_METAMASK_FIRST);
+            // alert('Please connect Metamask first')
         }
     }
 
     const handleMintAndStake = async () => {
         if (window.ethereum && (address !== '')) {
             if (chainID !== Network.chainId) {
-                alert('Please switch to Rinkeby testnet in metamask.')
+                showWarningToast(errorsMessage.SWITCH_TO_RINKEBY_TESTNET);
+                // alert('Please switch to Rinkeby testnet in metamask.')
                 return
             }
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            await provider.send("eth_requestAccounts", []);
             const signer = provider.getSigner()
-            // signer.getAddress().then(_address => {console.log(_address)})
-            // signer.getBalance().then(res  => console.log(ethers.utils.formatEther(res)))
-            const mintContract = new ethers.Contract(Addresses.land, landAbi, provider);
-            const nftBalance = await mintContract.balanceOf(address)
+            const nftBalance = await landContract.balanceOf(address)
+            let balance;
+            signer.getBalance()
+                .then(res => {
+                    balance = Number(ethers.utils.formatEther(res))
+                })
             if (price > balance) {
-                alert('Not enough ETH in your wallet')
+                showWarningToast(errorsMessage.NOT_ENOUGH_ETH);
+                // alert('Not enough ETH in your wallet')
             } else if (Number(nftBalance.toString()) + amount > maxMint) {
-                alert(`Max ${maxMint} nft mintable and you already have ${nftBalance.toString()} in your wallet.`)
+                showWarningToast(errorsMessage.ALREADY_MAX_NFT_MINTABLE(maxMint, nftBalance));
+                // alert(`Max ${maxMint} nft mintable and you already have ${nftBalance.toString()} in your wallet.`)
             } else {
-                const contractWithSigner = mintContract.connect(signer)
+                const contractWithSigner = landContract.connect(signer)
                 const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
                 const tx = await contractWithSigner.publicMint(amount, true, options)
                 await tx.wait()
                 // console.log(tx)
-                alert('Minted and staked Successfully!')
+                showSuccessToast(successMessages.MINTED_AND_STAKED_SUCCESSFULLY);
+                // alert('Minted and staked Successfully!')
             }
         } else {
-            alert('Please connect Metamask first')
+            showWarningToast(errorsMessage.CONNECT_METAMASK_FIRST);
+            // alert('Please connect Metamask first')
         }
+    }
+
+    const isWalletConnected = () => {
+        provider.listAccounts()
+            .then(res => {
+                if (res.length > 0) {
+                    setAddress(res[0])
+                }
+            })
     }
 
     return (
         <div className="mint">
             {/* Stars */}
-            <StarsAnimtedBg/>
+            <StarsAnimtedBg />
 
             <div className='container'>
-                <Nav/>
+                <Nav walletConnected={isWalletConnected}/>
+                {/* <Link to={routeUrl.home}>
+                    Home
+                </Link> */}
 
-                <div class="mint__wrapper">
+                <div className="mint__wrapper">
                     {/* <!-- Logo --> */}
-                    <div class="logo">
+                    <div className="logo">
                         <img src={logoSrc} alt="logo"/>
                     </div>
-                    <div class="mint__triangle mint__triangle--left"></div>
-                    <div class="mint__triangle mint__triangle--right">
+                    <div className="mint__triangle mint__triangle--left"></div>
+                    <div className="mint__triangle mint__triangle--right">
                         <div></div>
                     </div>
-                    <div class="mint__box">
-                        <div class="mint__box__content">
+                    <div className="mint__box">
+                        <div className="mint__box__content">
                             <h2>LAND mint is live!</h2>
                             <div>
                                 <span className='mint__box__content__already-minted'>ALREADY MINTED</span>
-                                <h3 className='mint-box-already-minted'>{alreadyMinted} / 10,000</h3>
+                                <h3 className='text-center'>{alreadyMinted} / 10,000</h3>
                             </div>
                             <div className='flex gap-2 flex-col'>
-                                <h3 className='mint-box-already-minted'>{price.toFixed(2)} ETH</h3>
+                                <h3 className='text-center'>{price.toFixed(2)} ETH</h3>
                                 <div className='mint__box__content__button-group flex-center'>
                                     <div className='number-field__buttons'>
                                         <div>

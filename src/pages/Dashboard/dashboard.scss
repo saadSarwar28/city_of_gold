@@ -54,80 +54,77 @@ $dashboardNavHexagonTwo: polygon(
     width: auto;
   }
 
-  // Triangle top left corner
-  &::after {
-    content: "";
-    position: absolute;
-    clip-path: polygon(0 0, 0 100%, 100% 0);
-    background-image: var(--border-linear-gradient);
-    // top: 0px;
-    // left: 1px;
-    // width: 60px;
-    // height: 60px;
+  // // Triangle top left corner
+  // &::after {
+  //   content: "";
+  //   position: absolute;
+  //   clip-path: polygon(0 0, 0 100%, 100% 0);
+  //   background-image: var(--border-linear-gradient);
 
-    @include ipad {
-      top: 0px;
-      left: 1px;
-      width: 60px;
-      height: 60px;
-    }
+  //   @include ipad {
+  //     top: 0px;
+  //     left: 1px;
+  //     width: 60px;
+  //     height: 60px;
+  //   }
 
-    @include desktop {
-      top: 0px;
-      left: 1px;
-      width: 60px;
-      height: 60px;
-    }
-  }
+  //   @include desktop {
+  //     top: 0px;
+  //     left: 1px;
+  //     width: 60px;
+  //     height: 60px;
+  //   }
+  // }
 
-  // Triangle bottom right corner
-  &::before {
-    content: "";
-    position: absolute;
-    clip-path: polygon(0 100%, 100% 100%, 100% 0);
-    background-image: var(--border-linear-gradient);
-    // bottom: 0px;
-    // right: 1px;
-    // width: 60px;
-    // height: 60px;
+  // // Triangle bottom right corner
+  // &::before {
+  //   content: "";
+  //   position: absolute;
+  //   clip-path: polygon(0 100%, 100% 100%, 100% 0);
+  //   background-image: var(--border-linear-gradient);
+  //   // bottom: 0px;
+  //   // right: 1px;
+  //   // width: 60px;
+  //   // height: 60px;
 
-    @include ipad {
-      bottom: 0px;
-      right: 1px;
-      width: 60px;
-      height: 60px;
-    }
+  //   @include ipad {
+  //     bottom: 0px;
+  //     right: 1px;
+  //     width: 60px;
+  //     height: 60px;
+  //   }
 
-    @include desktop {
-      bottom: 0px;
-      right: 1px;
-      width: 60px;
-      height: 60px;
-    }
-  }
+  //   @include desktop {
+  //     bottom: 0px;
+  //     right: 1px;
+  //     width: 60px;
+  //     height: 60px;
+  //   }
+  // }
   
 }
 
 .staking__notched-box {
   padding: 2px;
   width: 100%;
-  height: 500px;
-  background-image: var(--border-linear-gradient);
+  // height: 500px;
+  // background-image: var(--border-linear-gradient);
+  border-radius: 10px;
   // clip-path: var(--dashboard-main-box-polygon);
-  clip-path: var(--dashboard-box-mobile);
+  // clip-path: var(--dashboard-box-mobile);
 
   @include ipad {
     width: 650px;
-    height: 500px;
-    background-image: var(--border-linear-gradient);
-    clip-path: var(--dashboard-main-box-polygon-ipad);
+    // height: 500px;
+    // background-image: var(--border-linear-gradient);
+    // clip-path: var(--dashboard-main-box-polygon-ipad);
   }
 
   @include desktop {
     width: 900px;
-    height: 500px;
+    // min-height: 700px;
     background-image: var(--border-linear-gradient);
-    clip-path: var(--dashboard-main-box-polygon);
+    // clip-path: var(--dashboard-main-box-polygon);
   }
 }
 
@@ -135,18 +132,20 @@ $dashboardNavHexagonTwo: polygon(
   width: 100%;
   height: 100%;
   background-color: var(--body-color);
-  // clip-path: var(--dashboard-main-box-polygon);
-  clip-path: var(--dashboard-box-mobile);
+  border-radius: 10px;
+  padding: 20px;
+  // clip-path: var(--dashboard-box-mobile);
+
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   
   @include ipad {
-    clip-path: var(--dashboard-main-box-polygon-ipad);
+    // clip-path: var(--dashboard-main-box-polygon-ipad);
   }
   
   @include desktop {
-    clip-path: var(--dashboard-main-box-polygon);
+    // clip-path: var(--dashboard-main-box-polygon);
   }
 }
 
@@ -247,5 +246,203 @@ $dashboardNavHexagonTwo: polygon(
   img {
     width: 100%;
     height: 100%;
+  }
+}
+
+$tableBorderColor: rgba(122, 86, 19, 0.629);
+
+.staking__table {
+  // Todo: has to change with padding of parent element
+  // margin-top: 2rem;
+  border-collapse: collapse;
+  color: var(--font-light-gray-color);
+  width: 750px;
+  text-align: center;
+  z-index: 1;
+  
+
+  thead {
+    display: none;
+
+    @include desktop {
+      display: table-header-group;
+    }
+    
+    tr th {
+      color: var(--accent-color);
+      border-bottom: 1px solid $tableBorderColor;
+    }
+  }
+
+  tr {
+
+    display: block;
+    border: 1px solid $tableBorderColor;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+
+    @include desktop {
+      display: table-row;
+      border: none;
+      margin-bottom: 0;
+      border-bottom: 1px solid $tableBorderColor;
+    }
+
+
+    &:last-child {
+
+      @include desktop {
+        border-bottom: none;
+
+      }
+    }
+    
+  }
+
+  th {
+    color: white;
+  }
+
+  th, td {
+    padding: 1rem;
+  }
+  
+  th {
+    &:not(:first-child) {
+      border-left: 1px solid $tableBorderColor;
+      border-radius: 20px;
+    }
+  }
+
+  td {
+    display: block;
+    text-align: end;
+    position: relative;
+
+    &::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 1rem;
+      color: var(--accent-color);
+    }
+
+    @include desktop {
+      text-align: center;
+      display: table-cell;
+      border-bottom: none;
+
+      &::before {
+        content: "";
+        // position: absolute;
+      }
+      
+    }
+
+    &:not(:first-child) {
+      border-left: none;
+      
+      @include desktop {
+        border-left: 1px solid $tableBorderColor;
+
+      }
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $tableBorderColor;
+      
+      @include desktop {
+        border-bottom: none;
+      }
+    }
+
+    
+  }
+  
+}
+
+$buttonYPadding: 6px;
+$buttonXPadding: 7px;
+
+
+
+.staking__table__wrapper {
+  // width: 100%;
+  height: 100%;
+  // width: 750px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow-x: auto;
+  // height: 400px;
+  // padding: 5rem;  
+  // background-color: red;
+}
+
+.scroll {
+  // width: 200px;
+  // height: 400px;
+  // background: red;
+  // overflow: scroll;
+}
+
+
+.saking__table__logo {
+  position: absolute;
+  width: 600px;
+  opacity: 0.1;
+  display: none;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.staking .buttonGroup {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  // flex-direction: column;
+  flex-direction: row;
+
+  @include desktop {
+  }
+}
+
+.claim-rewards-button {
+  padding: $buttonYPadding $buttonXPadding;
+  border-radius: 5px;
+  border: none;
+  // margin-right: 10px;
+  // width: 90px;
+  // border: 1px solid rgb(148, 104, 23);
+  // background-color: var(--body-color);
+  // background-color: rgb(148, 104, 23);
+  background-image: var(--border-linear-gradient);
+  // color: var(--font-light-gray-color);
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+
+  &:hover {
+    color: white;
+    background-color: rgb(148, 104, 23);
+  }
+}
+
+
+.unstake-button {
+  // width: 90px;
+  cursor: pointer;
+  color: rgb(146, 146, 146);
+  background-color: var(--body-color);
+  border: 1px solid rgb(146, 146, 146);
+  padding: $buttonYPadding $buttonXPadding;
+  border-radius: 5px;
+
+  transition: all 0.2s ease-in;
+
+  &:hover {
+    background-color: rgb(146, 146, 146);
+    color: black;
   }
 }

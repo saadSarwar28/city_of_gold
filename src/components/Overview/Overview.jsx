@@ -7,6 +7,7 @@ import React from 'react';
 import "./overview.css";
 import { overviewSectionContent } from '../../static/siteContent';
 import overviewImage from "../../static/images/3.png";
+import CustomImage from '../CustomImage';
 
 const Overview = () => {
   return (
@@ -16,6 +17,16 @@ const Overview = () => {
 
           {/* Overview image section */}
           <div className='overview__image' data-aos="fade-right">
+            {/* <CustomImage 
+              imgSrc={overviewImage}
+              imgAlt={"overview__content__image"}
+              
+              rest={{
+                loading: "earger",
+                height: "520",
+                width: "750",
+              }}
+            /> */}
             <img src={overviewImage} alt="overview__content__image" />
           </div>
 

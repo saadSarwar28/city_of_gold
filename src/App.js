@@ -12,42 +12,64 @@ import TreasureHunt from "./pages/TreasureHunt/TreasureHunt";
 import { routeUrl } from "./utils/routeUrls";
 import "./static/css/style.css";
 import Conversion from "./pages/Conversion/Conversion";
+import NotFound from "./pages/404/NotFound";
+import Thankyou from "./pages/Thankyou/Thankyou";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <div className="App">
+      <ToastContainer />
       <Router>
         <Routes>
           {/* Route For Home Page */}
-          <Route 
-            path="/" 
-            element={<Home />} 
+          <Route
+            exact
+            path="/"
+            element={<Home />}
           />
 
           {/* Route For Mint Page */}
-          <Route 
-            path={routeUrl.mint} 
-            element={<Mint />} 
+          <Route
+            exact
+            path={routeUrl.mint}
+            element={<Mint />}
           />
 
           {/* Route For Staking */}
-          <Route 
+          <Route
+            exact
             path={routeUrl.staking}
-            element={<Dashboard />} 
+            element={<Dashboard />}
           />
 
           {/* Route for Treasure Hunt */}
-          <Route 
+          <Route
+            exact
             path={routeUrl.treasureHunt}
-            element={<TreasureHunt />} 
+            element={<TreasureHunt />}
           />
 
           {/* Route for Conversion */}
           <Route
+            exact
             path={routeUrl.conversion}
-            element={<Conversion />} 
+            element={<Conversion />}
           />
 
+          {/* Route for Thankyou Page */}
+          <Route
+            exact
+            path={routeUrl.thankyou}
+            element={<Thankyou />}
+          />
+
+          {/* For Non Existing URL shows 404 Page  */}
+          <Route
+            path="*"
+            element={<NotFound />}
+          />
 
         </Routes>
       </Router>
