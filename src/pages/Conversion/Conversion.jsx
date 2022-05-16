@@ -190,10 +190,19 @@ const Conversion = () => {
         }
     }
 
+    const isWalletConnected = () => {
+        provider.listAccounts()
+            .then(res => {
+                if (res.length > 0) {
+                    setAddress(res[0])
+                }
+            })
+    }
+
     return (
         <div className=''>
             <div className="container">
-                <Nav/>
+                <Nav walletConnected={isWalletConnected}/>
                 <div className="conversion__wrapper">
                     <h1 className='section-heading'>Mint ESTATES</h1>
                     <div className="conversion">

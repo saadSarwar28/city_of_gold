@@ -13,8 +13,7 @@ import { toast } from 'react-toastify';
 import { showSuccessToast, showWarningToast } from '../../utils/utilityFunctions';
 import errorsMessage from '../../constants/errorMessages';
 import successMessages from '../../constants/successMessages';
-import { Link } from 'react-router-dom';
-import { routeUrl } from '../../utils/routeUrls';
+import estateAbi from "../../abi/Estate.json";
 
 const Mint = () => {
 
@@ -23,8 +22,26 @@ const Mint = () => {
     const [alreadyMinted, setAlreadyMinted] = useState(0)
     const [price, setPrice] = useState(0)
     const [amount, setAmount] = useState(1)
-    const [balance, setBalance] = useState(0)
     const [chainID, setChainId] = useState(0)
+    const [provider, setProvider] = useState(new ethers.providers.Web3Provider(window.ethereum))
+    const [signer, setSigner] = useState(null)
+    const [landContract, setLandContract] = useState(null)
+
+    const initializeLandContract = () => {
+        if (window.ethereum && address !== '') {
+            setLandContract(new ethers.Contract(Addresses.land, landAbi, provider))
+        }
+    }
+
+    useEffect(() => {
+        initializeLandContract()
+    }, [address])
+
+    useEffect(() => {
+        if (window.ethereum && address !== '') {
+            setSigner(provider.getSigner())
+        }
+    }, [provider, address])
 
     const increaseAmount = () => {
         if (amount < maxMint) {
@@ -40,7 +57,6 @@ const Mint = () => {
 
     useEffect(() => {
         if (window.ethereum) {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
             provider.getNetwork().then(res => {
                 setChainId(res.chainId)
             })
@@ -48,52 +64,39 @@ const Mint = () => {
     })
 
     async function updateMintPrice() {
-        if (window.ethereum) {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            await provider.send("eth_requestAccounts", [])
-            const mintContract = new ethers.Contract(Addresses.land, landAbi, provider)
-            const mintPrice = await mintContract.nftPrice()
+        if (window.ethereum && landContract !== null) {
+            const mintPrice = await landContract.nftPrice()
             setPrice(Number(ethers.utils.formatEther(mintPrice)) * amount)
         }
     }
 
     useEffect(() => {
         updateMintPrice()
-    })
+    }, [address, landContract, amount])
 
     async function updateTotalSupply() {
-        if (window.ethereum) {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            await provider.send("eth_requestAccounts", [])
-            const signer = provider.getSigner()
-            signer.getBalance().then(res => {
-                setBalance(ethers.utils.formatEther(res))
-            })
-            const mintContract = new ethers.Contract(Addresses.land, landAbi, provider)
-            const totalSupply = await mintContract.totalSupply()
+        if (window.ethereum && landContract !== null) {
+            const totalSupply = await landContract.totalSupply()
             setAlreadyMinted(Number(totalSupply.toString()))
         }
     }
 
     useEffect(() => {
         updateTotalSupply()
-    })
+    }, [address, landContract])
 
 
     useEffect(() => {
         if (window.ethereum) {
-            // @ts-ignore
-            window.ethereum.request({method: 'eth_requestAccounts'})
-                .then(result => {
-                    // @ts-ignore
-                    setAddress(String(result[0]))
+            provider.listAccounts()
+                .then(res => {
+                    if (res.length > 0) {
+                        setAddress(res[0])
+                    }
                 })
-                .catch(error => {
-                    console.log(error)
-                });
+
         } else {
             showWarningToast(errorsMessage.INSTALL_METAMASK);
-            
         }
     })
 
@@ -104,15 +107,17 @@ const Mint = () => {
                 // alert('Please switch to Rinkeby testnet in metamask.')
                 return
             }
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            await provider.send("eth_requestAccounts", []);
             const signer = provider.getSigner()
-            const mintContract = new ethers.Contract(Addresses.land, landAbi, provider);
+            let balance;
+            signer.getBalance()
+                .then(res => {
+                    balance = Number(ethers.utils.formatEther(res))
+                })
             if (price > balance) {
                 showWarningToast(errorsMessage.NOT_ENOUGH_ETH);
                 // alert('Not enough ETH in your wallet')
             } else {
-                const contractWithSigner = mintContract.connect(signer)
+                const contractWithSigner = landContract.connect(signer)
                 const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
                 const tx = await contractWithSigner.publicMint(amount, false, options)
                 await tx.wait()
@@ -133,13 +138,13 @@ const Mint = () => {
                 // alert('Please switch to Rinkeby testnet in metamask.')
                 return
             }
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            await provider.send("eth_requestAccounts", []);
             const signer = provider.getSigner()
-            // signer.getAddress().then(_address => {console.log(_address)})
-            // signer.getBalance().then(res  => console.log(ethers.utils.formatEther(res)))
-            const mintContract = new ethers.Contract(Addresses.land, landAbi, provider);
-            const nftBalance = await mintContract.balanceOf(address)
+            const nftBalance = await landContract.balanceOf(address)
+            let balance;
+            signer.getBalance()
+                .then(res => {
+                    balance = Number(ethers.utils.formatEther(res))
+                })
             if (price > balance) {
                 showWarningToast(errorsMessage.NOT_ENOUGH_ETH);
                 // alert('Not enough ETH in your wallet')
@@ -147,7 +152,7 @@ const Mint = () => {
                 showWarningToast(errorsMessage.ALREADY_MAX_NFT_MINTABLE(maxMint, nftBalance));
                 // alert(`Max ${maxMint} nft mintable and you already have ${nftBalance.toString()} in your wallet.`)
             } else {
-                const contractWithSigner = mintContract.connect(signer)
+                const contractWithSigner = landContract.connect(signer)
                 const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
                 const tx = await contractWithSigner.publicMint(amount, true, options)
                 await tx.wait()
@@ -161,7 +166,14 @@ const Mint = () => {
         }
     }
 
-   
+    const isWalletConnected = () => {
+        provider.listAccounts()
+            .then(res => {
+                if (res.length > 0) {
+                    setAddress(res[0])
+                }
+            })
+    }
 
     return (
         <div className="mint">
@@ -169,7 +181,7 @@ const Mint = () => {
             <StarsAnimtedBg />
 
             <div className='container'>
-                <Nav/>
+                <Nav walletConnected={isWalletConnected}/>
                 {/* <Link to={routeUrl.home}>
                     Home
                 </Link> */}

@@ -192,10 +192,19 @@ const Dashboard = () => {
         updateTotalEstatesEarning()
     }, [stakedEstates])
 
+    const isWalletConnected = () => {
+        provider.listAccounts()
+            .then(res => {
+                if (res.length > 0) {
+                    setAddress(res[0])
+                }
+            })
+    }
+
     return (
         <div className='dashboard-page'>
             <div className="container">
-                <Nav/>
+                <Nav walletConnected={isWalletConnected}/>
                 <div className="stakeinfo__list">
                     <StakeInfoItem
                         title="Lands Owned"

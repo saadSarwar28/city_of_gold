@@ -12,57 +12,56 @@ import { showWarningToast } from '../../utils/utilityFunctions';
 import errorsMessage from '../../constants/errorMessages';
 import { routeUrl } from '../../utils/routeUrls';
 
-const Nav = () => {
+interface NavProps {
+    walletConnected: () => void
+}
+
+// const Bottom: React.FC<BottomProps> = (
+const Nav: React.FC<NavProps> = (
+    {
+        walletConnected
+    }) => {
     const location = useLocation()
     const mobileNavRef = useRef();
     const navigation = useNavigate();
 
     const [address, setAddress] = useState('Connect Wallet')
-    // const [provider, setProvider] = useState(new ethers.providers.Web3Provider(window.ethereum) )
+    const [provider, setProvider] = useState(new ethers.providers.Web3Provider(window.ethereum))
     const [chainID, setChainId] = useState(0)
+    // const [walletConnected, setWalletConnected] = useState(false)
 
-    // useEffect(() => {
-    //     if (window.ethereum) {
-    //         // @ts-ignore
-    //         window.ethereum.request({method: 'eth_requestAccounts'})
-    //             .then(result => {
-    //                 // @ts-ignore
-    //                 setAddress(String(result[0]).substring(0, 3) + '...' + String(result[0]).substring(39, 42))
-    //             })
-    //             .catch(error => {
-    //                 console.log(error)
-    //             });
-    //     } else {
-    //         alert('Please install metamask');
-    //     }
-    // })
+    useEffect(() => {
+        if (window.ethereum) {
+            provider.listAccounts()
+                .then(res => {
+                    if (res.length > 0) {
+                        setAddress(String(res[0]).substring(0, 3) + '...' + String(res[0]).substring(39, 42))
+                        walletConnected()
+                    }
+                })
+        } else {
+            alert('Please install metamask');
+        }
+    })
 
-    // useEffect(() => {
-    //     if (window.ethereum) {
-    //         provider.send("eth_requestAccounts", []).then(res => {
-    //             setAddress(res[0])
-    //         })
-    //     }
-    // }, [provider])
+    useEffect(() => {
+        if (window.ethereum && address !== '') {
+            provider.getNetwork().then(res => {
+                setChainId(res.chainId)
+            })
+        }
+    }, [provider])
 
-    // useEffect(() => {
-    //     if (window.ethereum) {
-    //         provider.getNetwork().then(res => {
-    //             setChainId(res.chainId)
-    //         })
-    //     }
-    // }, [provider])
-
-    // useEffect(() => {
-    //     if (window.ethereum && chainID !== 4 && chainID !== 0) {
-    //         // alert('Please switch to Ethereum Rinkeby Testnet in Metamask.')
-    //         showWarningToast(errorsMessage.INSTALL_METAMASK);
-    //         window.ethereum.request({
-    //             method: 'wallet_switchEthereumChain',
-    //             params: [{ chainId: '0x4' }], // chainId must be in hexadecimal numbers
-    //         });
-    //     }
-    // }, [chainID])
+    useEffect(() => {
+        if (window.ethereum && chainID !== 4 && chainID !== 0) {
+            // alert('Please switch to Ethereum Rinkeby Testnet in Metamask.')
+            showWarningToast(errorsMessage.SWITCH_TO_RINKEBY_TESTNET);
+            window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{chainId: '0x4'}], // chainId must be in hexadecimal numbers
+            });
+        }
+    }, [chainID])
 
     const connectWallet = () => {
         if (address === 'Connect Wallet') {
@@ -72,6 +71,7 @@ const Nav = () => {
                     .then(result => {
                         // @ts-ignore
                         setAddress(String(result[0]).substring(0, 3) + '...' + String(result[0]).substring(39, 42))
+                        walletConnected()
                     })
                     .catch(error => {
                         console.log(error)
@@ -160,21 +160,19 @@ const Nav = () => {
                         </ul>
                 }
 
-                
-
 
                 {/* Checking if pathname is mint then its shows the address andd Connect Wallet */}
                 {
                     // {/* Checking if pathname is mint then its shows the address andd Connect Wallet else it shoes Launch DAap button */ }
-                    location.pathname === routeUrl.mint ? 
+                    location.pathname === routeUrl.mint ?
                         // Connect Wallet Button and Address
                         <div className="discord-button">
                             <button onClick={connectWallet}>{address}</button>
                         </div> :
-                        
-                        // Launch DAap Button
+
+                        // Launch DAP Button
                         <div className="discord-button">
-                            <button onClick={launchDApp}>Launch DAap</button>
+                            <button onClick={launchDApp}>Launch App</button>
                         </div>
                 }
 
