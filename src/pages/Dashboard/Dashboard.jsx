@@ -164,7 +164,6 @@ const Dashboard = () => {
         if (window.ethereum && address !== '' && stakingContract !== null) {
             stakingContract.calculateTotalCogEarning(true, {from: address})
                 .then(res => {
-                    console.log(res.toString(), ' < here ')
                     setCogEarnedFromLand(Number(ethers.utils.formatEther(res)).toFixed(2))
                 })
         }

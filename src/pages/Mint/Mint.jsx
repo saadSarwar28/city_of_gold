@@ -29,7 +29,7 @@ const Mint = () => {
 
     const initializeLandContract = () => {
         if (window.ethereum && address !== '') {
-            setLandContract(new ethers.Contract(Addresses.land, landAbi, provider))
+            setLandContract(new ethers.Contract(Addresses.LAND, landAbi, provider))
         }
     }
 
@@ -149,9 +149,6 @@ const Mint = () => {
             if (price > balance) {
                 showWarningToast(errorsMessage.NOT_ENOUGH_ETH);
                 // alert('Not enough ETH in your wallet')
-            } else if (Number(nftBalance.toString()) + amount > maxMint) {
-                showWarningToast(errorsMessage.ALREADY_MAX_NFT_MINTABLE(maxMint, nftBalance));
-                // alert(`Max ${maxMint} nft mintable and you already have ${nftBalance.toString()} in your wallet.`)
             } else {
                 const contractWithSigner = landContract.connect(signer)
                 const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
