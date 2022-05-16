@@ -48,14 +48,6 @@ const Conversion = () => {
 
     useEffect(() => {
         if (window.ethereum) {
-            provider.send("eth_requestAccounts", []).then(res => {
-                setAddress(res[0])
-            })
-        }
-    }, [provider])
-
-    useEffect(() => {
-        if (window.ethereum) {
             provider.getNetwork().then(res => {
                 setChainId(res.chainId)
             })
