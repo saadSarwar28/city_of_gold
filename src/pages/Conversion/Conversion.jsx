@@ -27,7 +27,7 @@ const Conversion = () => {
 
     useEffect(() => {
         if (window.ethereum && landContract !== null && address !== '') {
-            landContract.isApprovedForAll(address, Addresses.estate)
+            landContract.isApprovedForAll(address, Addresses.ESTATE)
                 .then(res => {
                     if (res) {
                         setApproved(true)
@@ -64,8 +64,8 @@ const Conversion = () => {
 
     useEffect(() => {
         if (window.ethereum && address !== '') {
-            setLandContract(new ethers.Contract(Addresses.land, landAbi, provider))
-            setEstateContract(new ethers.Contract(Addresses.estate, estateAbi, provider))
+            setLandContract(new ethers.Contract(Addresses.LAND, landAbi, provider))
+            setEstateContract(new ethers.Contract(Addresses.ESTATE, estateAbi, provider))
         }
     }, [address])
 
@@ -106,7 +106,7 @@ const Conversion = () => {
         }
         if (window.ethereum && address !== '') {
             const landContractSigned = landContract.connect(signer)
-            const tx = await landContractSigned.setApprovalForAll(Addresses.estate, true)
+            const tx = await landContractSigned.setApprovalForAll(Addresses.ESTATE, true)
             await tx.wait()
             setApproved(true)
             showWarningToast(successMessages.LAND_APPROVED)
