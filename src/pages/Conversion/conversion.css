@@ -16,7 +16,7 @@
 .conversion {
   width: 100%;
   position: relative;
-  margin: 2rem 0 2rem;
+  margin: 2rem 0 7rem;
 }
 
 @media (min-width: 768px) {
@@ -112,55 +112,20 @@
   overflow: scroll;
   background-color: var(--body-color);
   -webkit-clip-path: var(--dashboard-box-mobile);
-          clip-path: var(--dashboard-box-mobile);
+  clip-path: var(--dashboard-box-mobile);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: end;
-      -ms-flex-align: end;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-.conversion__notched-box__content::-webkit-scrollbar {
-  display: none;
-}
-
-.conversion__notched-box__table {
-  width: 100%;
-  color: white;
-  padding: 5%;
-  line-height: 50px;
-}
-
-.conversion__notched-box__table_body {
-  text-align: center;
-}
-
-.conversion__bottom_buttons__wrapper {
-  display: flex;
-  justify-content: space-evenly;
-  margin-bottom: 2rem;
-  width: 60%;
-}
-
-.conversion__bottom_buttons {
-  background-image: var(--button-border-gradient);
-  color: var(--body-color);
-  border-radius: 10px;
-  padding: 10px;
-  cursor: pointer;
-  text-decoration: none;
-  position: relative;
-  bottom: 0;
-  transition: bottom 0.2s ease-in;
-  display: block;
-  font-size: 20px;
-  width: 30%;
-  font-weight: 700;
+  -ms-flex-align: end;
+  align-items: baseline;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 @media (min-width: 768px) {

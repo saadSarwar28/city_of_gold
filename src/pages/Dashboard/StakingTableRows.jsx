@@ -173,24 +173,24 @@ const StakeTableRow = ({type, id, _isStaked}) => {
 
     return (
         <tr>
-            <td className="staking__notched-box__table_body">{type}</td>
-            <td className="staking__notched-box__table_body">{id}</td>
-            <td className="staking__notched-box__table_body">{stakedAt}</td>
-            <td className="staking__notched-box__table_body">{cogEarned}</td>
-            <td className="staking__notched-box__table_body_last_row">
+            <td className="">{type}</td>
+            <td className="">{id}</td>
+            <td className="">{stakedAt}</td>
+            <td className="">{cogEarned}</td>
+            <td className="">
                 {
                     isStaked ?
-                        <>
+                        <div>
                             <button type="button" className="claim-rewards-button" onClick={claimRewards}>Claim COG
                             </button>
                             <button type="button" className="unstake-button" onClick={unstakeToken}>Unstake</button>
-                        </>
-                        : <>
+                        </div>
+                        : <div>
                             <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
                             <button type="button" className="stake-button" onClick={stakeToken}
                                     title="Needs approval first">Stake
                             </button>
-                        </>
+                        </div>
                 }
             </td>
         </tr>

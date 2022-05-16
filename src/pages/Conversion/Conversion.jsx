@@ -9,6 +9,9 @@ import {ethers} from "ethers";
 import Addresses from "../../constants/contractAddresses";
 import landAbi from "../../abi/Land.json";
 import estateAbi from "../../abi/Estate.json";
+import { showSuccessToast, showWarningToast } from '../../utils/utilityFunctions';
+import errorMessages from '../../constants/errorMessages';
+import successMessages from '../../constants/successMessages';
 
 const Conversion = () => {
     const [provider, setProvider] = useState(new ethers.providers.Web3Provider(window.ethereum))
@@ -80,11 +83,13 @@ const Conversion = () => {
 
     async function approveAll() {
         if (approved) {
-            alert('Already approved!')
+            showWarningToast(errorMessages.ALREADY_APPROVED)
+            // alert('Already approved!')
             return
         }
         if (!(selectedLands.length === 3)) {
-            alert('Please select at least and not more than 3 LAND tokens.')
+            showWarningToast(errorMessages.SELECT_AT_LEAST_NOT_MORE_THAN_THREE_LAND_TOKENS);
+            // alert('Please select at least and not more than 3 LAND tokens.')
             return
         }
         const landsSorted = selectedLands.sort()
@@ -95,7 +100,8 @@ const Conversion = () => {
             }
         }
         if (!areConsecutive) {
-            alert('ESTATE can only be minted by three consecutive lands.')
+            showWarningToast(errorMessages.ESTATE_CAN_MINTED_BY_THREE_CONSECUTIVE_LANDS)
+            // alert('ESTATE can only be minted by three consecutive lands.')
             return
         }
         if (window.ethereum && address !== '') {
@@ -103,16 +109,19 @@ const Conversion = () => {
             const tx = await landContractSigned.setApprovalForAll(Addresses.ESTATE, true)
             await tx.wait()
             setApproved(true)
-            alert('Land approved')
+            showWarningToast(successMessages.LAND_APPROVED)
+            // alert('Land approved')
         }
     }
 
     async function convertToEstate() {
         if (!approved) {
-            alert('Conversion requires approval first!')
+            showWarningToast(errorMessages.CONVERSION_REQUIRE_APPROVAL_FIRST)
+            // alert('Conversion requires approval first!')
         }
         if (!(selectedLands.length === 3)) {
-            alert('Please select at least and not more than 3 LAND tokens.')
+            showWarningToast(errorMessages.SELECT_AT_LEAST_NOT_MORE_THAN_THREE_LAND_TOKENS)
+            // alert('Please select at least and not more than 3 LAND tokens.')
             return
         }
         const landsSorted = selectedLands.sort()
@@ -123,14 +132,16 @@ const Conversion = () => {
             }
         }
         if (!areConsecutive) {
-            alert('ESTATE can only be minted by three consecutive lands.')
+            showWarningToast(errorMessages.ESTATE_CAN_MINTED_BY_THREE_CONSECUTIVE_LANDS)
+            // alert('ESTATE can only be minted by three consecutive lands.')
             return
         }
         if (window.ethereum && address !== '') {
             const estateContractSigned = estateContract.connect(signer)
             const tx = await estateContractSigned.mint(selectedLands.sort(), false)
             await tx.wait()
-            alert('ESTATE minted successfully')
+            showSuccessToast(successMessages.MINTED_SUCCESSFULLY)
+            // alert('ESTATE minted successfully')
             setOwnedLands(ownedLands => [])
             setRefreshLands(!refreshLands)
             setApproved(false)
@@ -139,10 +150,12 @@ const Conversion = () => {
 
     async function convertToEstateAndStake() {
         if (!approved) {
-            alert('Conversion requires approval first!')
+            showWarningToast(errorMessages.CONVERSION_REQUIRE_APPROVAL_FIRST)
+            // alert('Conversion requires approval first!')
         }
         if (!(selectedLands.length === 3)) {
-            alert('Please select at least and not more than 3 LAND tokens.')
+            showWarningToast(errorMessages.selectedLands);
+            // alert('Please select at least and not more than 3 LAND tokens.')
             return
         }
         const landsSorted = selectedLands.sort()
@@ -153,14 +166,16 @@ const Conversion = () => {
             }
         }
         if (!areConsecutive) {
-            alert('ESTATE can only be minted by three consecutive lands.')
+            showWarningToast(errorMessages.ESTATE_CAN_MINTED_BY_THREE_CONSECUTIVE_LANDS)
+            // alert('ESTATE can only be minted by three consecutive lands.')
             return
         }
         if (window.ethereum && address !== '') {
             const estateContractSigned = estateContract.connect(signer)
             const tx = await estateContractSigned.mint(selectedLands.sort(), true)
             await tx.wait()
-            alert('ESTATE minted successfully')
+            showSuccessToast(successMessages.ESTATE_MINTED_SUCCESSFULLY);
+            // alert('ESTATE minted successfully')
             setOwnedLands(ownedLands => [])
             setRefreshLands(!refreshLands)
             setApproved(false)
@@ -175,10 +190,19 @@ const Conversion = () => {
         }
     }
 
+    const isWalletConnected = () => {
+        provider.listAccounts()
+            .then(res => {
+                if (res.length > 0) {
+                    setAddress(res[0])
+                }
+            })
+    }
+
     return (
         <div className=''>
             <div className="container">
-                <Nav/>
+                <Nav walletConnected={isWalletConnected}/>
                 <div className="conversion__wrapper">
                     <h1 className='section-heading'>Mint ESTATES</h1>
                     <div className="conversion">

@@ -10,16 +10,20 @@ import Team from '../../components/Team/Team'
 // import RoadmapSection from '../../components/Roadmap/Roadmap'
 // import TeamSection from '../../components/Team/Team'
 import MainSection from './MainSection'
+import { useLocation } from 'react-router-dom';
+
 
 const Home = () => {
 
-  const [isLoading, setIsLoading] = useState(true);
-  
-  useEffect(() => {
-    // Adding event listener for loader
-    window.addEventListener("load", pageLoaderCallback)
+  const location = useLocation();
 
-    // Removing the event listener when component remove
+  const [isLoading, setIsLoading] = useState(true);
+
+  
+
+  useEffect(() => {
+    window.addEventListener("load", pageLoaderCallback)
+    
     return unmountCallback;
   }, [])
 
@@ -27,44 +31,49 @@ const Home = () => {
   const unmountCallback = () => {
     window.removeEventListener("load", pageLoaderCallback);
   }
+  
+  const pageLoaderCallback = (e) => {
+    if (e.target.readyState === "complete" || e.target.readyState === "interactive") {
+      setIsLoading(false);
 
-  const pageLoaderCallback = () => {
-    setIsLoading(false);
+    }
   }
   
   return (
     <>
       {
-        isLoading &&
+        isLoading ?
           <div className='loaderWrapper'>
             <BounceLoader color='orange' size={70}/>
-          </div>
+          </div> :
+          <>
+            {/* Gradient with Main Section and Overview */}
+            <div className="gradient" id="main-section">
+              
+              {/* Main Section */}
+              <MainSection />
+
+              {/* Overview section */}
+              <Overview />
+
+            </div>
+
+            {/* Gallery section */}
+            <Gallery />
+
+            {/* Metaverse section */}
+            <Metaverse />
+
+            {/* RoadMap Section */}
+            <Roadmap />
+
+            {/* Team Section */}
+            <Team />
+
+            {/* Footer */}
+            <Footer />
+          </>
       }
-      {/* Gradient with Main Section and Overview */}
-      <div className="gradient" id="main-section">
-        
-        {/* Main Section */}
-        <MainSection />
-
-        {/* Overview section */}
-        <Overview />
-
-      </div>
-
-      {/* Gallery section */}
-      <Gallery />
-
-      {/* Metaverse section */}
-      <Metaverse />
-
-      {/* RoadMap Section */}
-      <Roadmap />
-
-      {/* Team Section */}
-      <Team />
-
-      {/* Footer */}
-      <Footer />
 
     </>
 

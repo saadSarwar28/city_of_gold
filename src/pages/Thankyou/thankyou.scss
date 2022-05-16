@@ -1,0 +1,29 @@
+@import "../../static/css/sass/mixins/breakporintMixin";
+
+.thankyou__content {
+  display: grid;
+  min-height: 100vh;
+}
+
+.thankyou__wrapper {
+  width: 100%;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.thankyou__heading {
+  color: var(--accent-color);
+  font-size: 3rem;
+  padding-top: 4rem;
+  text-align: center;
+  
+  @include ipad {
+    font-size: 6rem;
+  }
+}
+
+.thankyou__footer__wrapper {
+  align-self: end;
+}

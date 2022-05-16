@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,kBAAkB,CAAC;EACjB,OAAO,EAAE,IAAI;EACb,UAAU,EAAE,KAAK;CAClB;;AAED,AAAA,kBAAkB,CAAC;EACjB,KAAK,EAAE,IAAI;EAEX,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,MAAM;EACvB,WAAW,EAAE,MAAM;CACpB;;AAED,AAAA,kBAAkB,CAAC;EACjB,KAAK,EAAE,mBAAmB;EAC1B,SAAS,EAAE,IAAI;EACf,WAAW,EAAE,IAAI;EACjB,UAAU,EAAE,MAAM;CAKnB;;ACXG,MAAM,EAAC,SAAS,EAAE,KAAK;EDE3B,AAAA,kBAAkB,CAAC;IAOf,SAAS,EAAE,IAAI;GAElB;;;AAED,AAAA,0BAA0B,CAAC;EACzB,UAAU,EAAE,GAAG;CAChB",
+    "sources": [
+        "thankyou.scss",
+        "../../static/css/sass/mixins/_breakporintMixin.scss"
+    ],
+    "names": [],
+    "file": "thankyou.css"
+}
