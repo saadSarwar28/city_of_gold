@@ -3,13 +3,14 @@
 }
 
 .main--wrapper {
+  padding-right: 10px;
   min-height: 100vh;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr;
       grid-template-columns: 1fr;
-  -ms-grid-rows: 14vh 86vh;
-      grid-template-rows: 14vh 86vh;
+  -ms-grid-rows: auto 1fr;
+      grid-template-rows: auto 1fr;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;

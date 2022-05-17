@@ -177,21 +177,21 @@ const StakeTableRow = ({type, id, _isStaked}) => {
 
     return (
         <tr>
-            <td className="">{type}</td>
-            <td className="">{id}</td>
-            <td className="">{stakedAt}</td>
-            <td className="">{cogEarned}</td>
-            <td className="">
+            <td data-label='Token Type'>{type}</td>
+            <td data-label='Token ID'>{id}</td>
+            <td data-label='Staked at'>{stakedAt}</td>
+            <td data-label='Pending COG'>{cogEarned}</td>
+            <td data-label='Actions'>
                 {
                     isStaked ?
-                        <div>
+                        <div className='buttonGroup' >
                             <button type="button" className="claim-rewards-button" onClick={claimRewards}>Claim COG
                             </button>
                             <button type="button" className="unstake-button" onClick={unstakeToken}>Unstake</button>
                         </div>
-                        : <div>
-                            <button type="button" className="stake-button" onClick={approveToken}>Approve</button>
-                            <button type="button" className="stake-button" onClick={stakeToken}
+                        : <div className='buttonGroup' >
+                            <button type="button" className="claim-rewards-button" onClick={approveToken}>Approve</button>
+                            <button type="button" className="unstake-button" onClick={stakeToken}
                                     title="Needs approval first">Stake
                             </button>
                         </div>

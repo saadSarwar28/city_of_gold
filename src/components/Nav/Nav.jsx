@@ -11,6 +11,8 @@ import {ethers} from "ethers";
 import { showWarningToast } from '../../utils/utilityFunctions';
 import errorsMessage from '../../constants/errorMessages';
 import { routeUrl } from '../../utils/routeUrls';
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { MdClose } from "react-icons/md";
 
 interface NavProps {
     walletConnected: () => void
@@ -95,15 +97,22 @@ const Nav: React.FC<NavProps> = (
         navigation(routeUrl.mint)
     }
 
+
     return (
         <>
             <nav>
                 {/* Nav logo */}
-                <div className="logo">
-                    <img
-                        src="https://storage.googleapis.com/msgsndr/3Lm0Uh5hGdQixz6dXDVn/media/622c01e16fc5bb0fea50a60f.png"
-                        alt="City of gold logo"/>
-                </div>
+                <Link to={routeUrl.home}>
+                    <div 
+                        className="logo"
+
+                    >
+                        <img
+                            src="https://storage.googleapis.com/msgsndr/3Lm0Uh5hGdQixz6dXDVn/media/622c01e16fc5bb0fea50a60f.png"
+                            alt="City of gold logo"/>
+                        
+                    </div>
+                </Link>
                 {/* Desktop Nav link */}
                 {
                     location.pathname === routeUrl.mint ?
@@ -177,11 +186,7 @@ const Nav: React.FC<NavProps> = (
                 }
 
                 {/* Menu Button */}
-                <div className="menu-button" onClick={openNavMenu}>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+                <HiOutlineMenuAlt3 className='menu-button' onClick={openNavMenu} />
             </nav>
             {/* Mobile Nav */}
             <div className="nav--mobile" ref={mobileNavRef}>
@@ -221,9 +226,10 @@ const Nav: React.FC<NavProps> = (
                         >The Team</a>
 
                     </li>
-                    <button className="discord-button" onClick={connectWallet}>{address}</button>
-                    <FontAwesomeIcon icon={faXmark} onClick={closeNavMenu}
-                                     className="close-menu-button"></FontAwesomeIcon>
+                    <div className="discord-button">
+                        <button onClick={launchDApp}>Launch App</button>
+                    </div>
+                    <MdClose className="close-menu-button" onClick={closeNavMenu} />
                 </ul>
             </div>
         </>
