@@ -7,10 +7,11 @@
 
 // Main wrapper for Nav and Hero
 .main--wrapper {
+  padding-right: 10px;
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 14vh 86vh;
+  grid-template-rows: auto 1fr;
   justify-content: center;
   align-items: center;
 

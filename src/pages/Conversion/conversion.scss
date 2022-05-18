@@ -90,7 +90,7 @@
 .conversion__notched-box__content {
   width: 100%;
   height: 100%;
-  overflow: scroll;
+  // overflow: scroll;
   background-color: var(--body-color);
   -webkit-clip-path: var(--dashboard-box-mobile);
   clip-path: var(--dashboard-box-mobile);

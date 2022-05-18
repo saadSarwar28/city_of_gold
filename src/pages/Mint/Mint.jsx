@@ -14,6 +14,7 @@ import { showSuccessToast, showWarningToast } from '../../utils/utilityFunctions
 import errorsMessage from '../../constants/errorMessages';
 import successMessages from '../../constants/successMessages';
 import estateAbi from "../../abi/Estate.json";
+import AppNav from '../../components/Nav/AppNav';
 
 const Mint = () => {
 
@@ -185,7 +186,7 @@ const Mint = () => {
             <StarsAnimtedBg />
 
             <div className='container'>
-                <Nav walletConnected={isWalletConnected}/>
+                <AppNav walletConnected={isWalletConnected}/>
                 {/* <Link to={routeUrl.home}>
                     Home
                 </Link> */}

@@ -12,6 +12,7 @@ import estateAbi from "../../abi/Estate.json";
 import { showSuccessToast, showWarningToast } from '../../utils/utilityFunctions';
 import errorMessages from '../../constants/errorMessages';
 import successMessages from '../../constants/successMessages';
+import AppNav from '../../components/Nav/AppNav';
 
 const Conversion = () => {
     const [provider, setProvider] = useState(new ethers.providers.Web3Provider(window.ethereum))
@@ -194,7 +195,7 @@ const Conversion = () => {
     return (
         <div className=''>
             <div className="container">
-                <Nav walletConnected={isWalletConnected}/>
+                <AppNav walletConnected={isWalletConnected}/>
                 <div className="conversion__wrapper">
                     <h1 className='section-heading'>Mint ESTATES</h1>
                     <div className="conversion">

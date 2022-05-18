@@ -18,12 +18,12 @@ nav {
 
 @media (min-width: 768px) {
   nav {
-    padding-top: 26px;
+    padding-top: 15px;
   }
 }
 
 .logo {
-  width: 120px;
+  width: 110px;
 }
 
 .logo img {
