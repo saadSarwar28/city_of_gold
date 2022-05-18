@@ -23,12 +23,18 @@ const Mint = () => {
     const [price, setPrice] = useState(0)
     const [amount, setAmount] = useState(1)
     const [chainID, setChainId] = useState(0)
-    const [provider, setProvider] = useState(new ethers.providers.Web3Provider(window.ethereum))
+    const [provider, setProvider] = useState(null)
     const [signer, setSigner] = useState(null)
     const [landContract, setLandContract] = useState(null)
 
+    useEffect(() => {
+        if (window.ethereum && provider === null) {
+            setProvider(new ethers.providers.Web3Provider(window.ethereum))
+        }
+    })
+
     const initializeLandContract = () => {
-        if (window.ethereum && address !== '') {
+        if (window.ethereum && address !== '' && provider !== null) {
             setLandContract(new ethers.Contract(Addresses.LAND, landAbi, provider))
         }
     }
@@ -38,7 +44,7 @@ const Mint = () => {
     }, [address])
 
     useEffect(() => {
-        if (window.ethereum && address !== '') {
+        if (window.ethereum && address !== '' && provider !== null) {
             setSigner(provider.getSigner())
         }
     }, [provider, address])
@@ -57,12 +63,12 @@ const Mint = () => {
     }
 
     useEffect(() => {
-        if (window.ethereum) {
+        if (window.ethereum && provider !== null) {
             provider.getNetwork().then(res => {
                 setChainId(res.chainId)
             })
         }
-    })
+    }, [provider])
 
     async function updateMintPrice() {
         if (window.ethereum && landContract !== null) {
@@ -88,7 +94,7 @@ const Mint = () => {
 
 
     useEffect(() => {
-        if (window.ethereum) {
+        if (window.ethereum && provider !== null) {
             provider.listAccounts()
                 .then(res => {
                     if (res.length > 0) {
