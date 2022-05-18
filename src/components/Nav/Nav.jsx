@@ -26,12 +26,20 @@ const Nav: React.FC<NavProps> = (
     const navigation = useNavigate();
 
     const [address, setAddress] = useState('Connect Wallet')
-    const [provider, setProvider] = useState(new ethers.providers.Web3Provider(window.ethereum))
+    const [provider, setProvider] = useState(null)
     const [chainID, setChainId] = useState(0)
     // const [walletConnected, setWalletConnected] = useState(false)
 
     useEffect(() => {
         if (window.ethereum) {
+            setProvider(new ethers.providers.Web3Provider(window.ethereum))
+        } else {
+            // alert('Please install metamask');
+        }
+    })
+
+    useEffect(() => {
+        if (window.ethereum && provider !== null) {
             provider.listAccounts()
                 .then(res => {
                     if (res.length > 0) {
@@ -39,13 +47,11 @@ const Nav: React.FC<NavProps> = (
                         walletConnected()
                     }
                 })
-        } else {
-            alert('Please install metamask');
         }
     })
 
     useEffect(() => {
-        if (window.ethereum && address !== '') {
+        if (window.ethereum && address !== '' && provider !== null) {
             provider.getNetwork().then(res => {
                 setChainId(res.chainId)
             })
