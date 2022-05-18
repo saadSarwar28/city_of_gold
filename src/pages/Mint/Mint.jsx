@@ -104,7 +104,7 @@ const Mint = () => {
                 })
 
         } else {
-            showWarningToast(errorsMessage.INSTALL_METAMASK);
+            // showWarningToast(errorsMessage.INSTALL_METAMASK);
         }
     })
 
@@ -115,7 +115,6 @@ const Mint = () => {
                 // alert('Please switch to Rinkeby testnet in metamask.')
                 return
             }
-            const signer = provider.getSigner()
             let balance;
             signer.getBalance()
                 .then(res => {
@@ -146,8 +145,6 @@ const Mint = () => {
                 // alert('Please switch to Rinkeby testnet in metamask.')
                 return
             }
-            const signer = provider.getSigner()
-            const nftBalance = await landContract.balanceOf(address)
             let balance;
             signer.getBalance()
                 .then(res => {
@@ -172,12 +169,14 @@ const Mint = () => {
     }
 
     const isWalletConnected = () => {
-        provider.listAccounts()
-            .then(res => {
-                if (res.length > 0) {
-                    setAddress(res[0])
-                }
-            })
+        if (provider !== null) {
+            provider.listAccounts()
+                .then(res => {
+                    if (res.length > 0) {
+                        setAddress(res[0])
+                    }
+                })
+        }
     }
 
     return (

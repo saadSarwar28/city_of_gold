@@ -20,7 +20,7 @@ import AppNav from '../../components/Nav/AppNav';
 
 const Dashboard = () => {
 
-    const [provider, setProvider] = useState(new ethers.providers.Web3Provider(window.ethereum))
+    const [provider, setProvider] = useState(null)
     const [chainID, setChainId] = useState(0)
     const [address, setAddress] = useState('')
     const [stakingContract, setStakingContract] = useState(null)
@@ -35,6 +35,12 @@ const Dashboard = () => {
     const [totalSupply, setTotalSupply] = useState(0)
 
     const [allNfts, setAllNfts] = useState([])
+
+    useEffect(() => {
+        if (window.ethereum && provider === null) {
+            setProvider(new ethers.providers.Web3Provider(window.ethereum))
+        }
+    })
 
     useEffect(() => {
         ownedLands.forEach(land => {
@@ -84,7 +90,7 @@ const Dashboard = () => {
     }, [ownedLands, stakedLands, ownedEstates, stakedEstates])
 
     useEffect(() => {
-        if (window.ethereum) {
+        if (window.ethereum && provider !== null) {
             provider.getNetwork().then(res => {
                 setChainId(res.chainId)
             })

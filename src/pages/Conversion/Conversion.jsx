@@ -15,7 +15,7 @@ import successMessages from '../../constants/successMessages';
 import AppNav from '../../components/Nav/AppNav';
 
 const Conversion = () => {
-    const [provider, setProvider] = useState(new ethers.providers.Web3Provider(window.ethereum))
+    const [provider, setProvider] = useState(null)
     const [chainID, setChainId] = useState(0)
     const [address, setAddress] = useState('')
     const [landContract, setLandContract] = useState(null)
@@ -25,6 +25,12 @@ const Conversion = () => {
     const [signer, setSigner] = useState(null)
     const [approved, setApproved] = useState(false)
     const [refreshLands, setRefreshLands] = useState(true)
+
+    useEffect(() => {
+        if (window.ethereum && provider === null) {
+            setProvider(new ethers.providers.Web3Provider(window.ethereum))
+        }
+    })
 
     useEffect(() => {
         if (window.ethereum && landContract !== null && address !== '') {
@@ -38,7 +44,7 @@ const Conversion = () => {
     }, [address, landContract])
 
     useEffect(() => {
-        if (window.ethereum && address !== '') {
+        if (window.ethereum && address !== '' && provider !== null) {
             setSigner(provider.getSigner())
         }
     }, [provider, address])
@@ -46,14 +52,6 @@ const Conversion = () => {
     useEffect(() => {
         updateTotalLandOwned()
     }, [address, landContract, refreshLands])
-
-    useEffect(() => {
-        if (window.ethereum) {
-            provider.getNetwork().then(res => {
-                setChainId(res.chainId)
-            })
-        }
-    }, [provider])
 
     useEffect(() => {
         if (window.ethereum && address !== '') {
