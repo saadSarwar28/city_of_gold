@@ -22,14 +22,16 @@ const Home = () => {
   
 
   useEffect(() => {
-    window.addEventListener("load", pageLoaderCallback)
+    location.state?.prevUrl ?
+      setIsLoading(false) :
+      window.addEventListener("load", pageLoaderCallback)
     
     return unmountCallback;
   }, [])
 
 
   const unmountCallback = () => {
-    window.removeEventListener("load", pageLoaderCallback);
+    !location.state?.prevUrl && window.removeEventListener("load", pageLoaderCallback);
   }
   
   const pageLoaderCallback = (e) => {
