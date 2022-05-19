@@ -109,7 +109,7 @@ const AppNav: React.FC<NavProps> = (
         <>
             <nav>
                 {/* Nav logo */}
-                <Link to={routeUrl.home}>
+                <Link to={routeUrl.home} state={{prevUrl: true}}>
                     <div className="logo">
                         <img
                             src="https://storage.googleapis.com/msgsndr/3Lm0Uh5hGdQixz6dXDVn/media/622c01e16fc5bb0fea50a60f.png"
