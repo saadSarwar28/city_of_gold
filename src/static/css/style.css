@@ -307,13 +307,11 @@ button,
   display: block;
 }
 
-.discord-button:hover {
-  bottom: 3px;
-}
-
 .discord-button.large button {
   font-size: 1rem;
   padding: 15px 40px;
+  position: relative;
+  z-index: 1;
 }
 
 @media (min-width: 768px) {
@@ -336,6 +334,33 @@ button,
   height: 100%;
   width: 100%;
   display: block;
+  z-index: 1;
+}
+
+.discord-button button::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--accent-color);
+  top: 0;
+  left: 0;
+  -webkit-transform: scaleX(0);
+          transform: scaleX(0);
+  -webkit-transform-origin: right;
+          transform-origin: right;
+  z-index: -1;
+  -webkit-transition: -webkit-transform 0.25s ease-in;
+  transition: -webkit-transform 0.25s ease-in;
+  transition: transform 0.25s ease-in;
+  transition: transform 0.25s ease-in, -webkit-transform 0.25s ease-in;
+}
+
+.discord-button button:hover::after {
+  -webkit-transform: scaleX(1);
+          transform: scaleX(1);
+  -webkit-transform-origin: left;
+          transform-origin: left;
 }
 
 .gradient {
