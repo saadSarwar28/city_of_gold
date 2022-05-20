@@ -176,7 +176,9 @@ const AppNav: React.FC<NavProps> = (
                             My Assets
                         </Link>
                     </li>
-                    <button className="discord-button" onClick={connectWallet}>{address}</button>
+                    <div className="discord-button">
+                        <button onClick={connectWallet}>{address}</button>
+                    </div>
                     {/* Close Button */}
                     <MdClose className="close-menu-button" onClick={closeNavMenu}/>
                 </ul>

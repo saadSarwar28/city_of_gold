@@ -13,6 +13,8 @@ import { showSuccessToast, showWarningToast } from '../../utils/utilityFunctions
 import errorMessages from '../../constants/errorMessages';
 import successMessages from '../../constants/successMessages';
 import AppNav from '../../components/Nav/AppNav';
+import logoSrc from "../../static/images/logo_without_name.png";
+import ConversionImage from '../../components/Conversion/ConversionImage';
 
 const Conversion = () => {
     const [provider, setProvider] = useState(null)
@@ -190,6 +192,11 @@ const Conversion = () => {
             })
     }
 
+    // Select Handler for Image when click on Image this function calls
+    const isSelectHandler = (setIsSelected) => {
+        setIsSelected(prev => !prev);
+    }
+
     return (
         <div className=''>
             <div className="container">
@@ -199,7 +206,7 @@ const Conversion = () => {
                     <div className="conversion">
                         <div className="conversion__notched-box">
                             <div className="conversion__notched-box__content">
-                                <table className="conversion__notched-box__table">
+                                {/* <table className="conversion__notched-box__table">
                                     <thead>
                                     <tr>
                                         <th>
@@ -224,21 +231,76 @@ const Conversion = () => {
                                         })
                                     }
                                     </tbody>
-                                </table>
+                                </table> */}
+                                <div className="conversion__image__wrapper">
+                                    <ConversionImage 
+                                        // isSelected={false}
+                                        imgSrc={logoSrc}
+                                        isSelectHandler={isSelectHandler}
+                                    />
+                                    <ConversionImage 
+                                        isSelected={false}
+                                        imgSrc={logoSrc}
+                                        isSelectHandler={isSelectHandler}
+                                    />
+                                    <ConversionImage 
+                                        isSelected={false}
+                                        imgSrc={logoSrc}
+                                        isSelectHandler={isSelectHandler}
+                                    />
+                                    <ConversionImage 
+                                        imgSrc={logoSrc}
+                                        isSelectHandler={isSelectHandler}
+                                    />
+                                    <ConversionImage 
+                                        imgSrc={logoSrc}
+                                        isSelectHandler={isSelectHandler}
+                                    />
+                                    <ConversionImage 
+                                        imgSrc={logoSrc}
+                                        isSelectHandler={isSelectHandler}
+                                    />
+                                    <ConversionImage 
+                                        imgSrc={logoSrc}
+                                        isSelectHandler={isSelectHandler}
+                                    />
+                                    <ConversionImage 
+                                        imgSrc={logoSrc}
+                                        isSelectHandler={isSelectHandler}
+                                    />
+                                    <ConversionImage 
+                                        imgSrc={logoSrc}
+                                        isSelectHandler={isSelectHandler}
+                                    />
+                                </div>
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    // marginBottom: '2rem',
+                                    // width: '60%',
+                                    position: "relative",
+                                    // bottom: "10px",
+                                    // width: "100%",
+                                    gap: "2rem",
+                                    // justifySelf: "center",
+                                }}>
+                                    <div className="discord-button">
+                                        <button type="button" className="conversion__bottom_buttons" onClick={approveAll}>Approve</button>
+                                        
+                                    </div>
+                                    <div className="discord-button">
+
+                                    <button type="button" className="conversion__bottom_buttons" onClick={convertToEstate}>Convert to ESTATE</button>
+                                    </div>
+                                    <div className="discord-button">
+                                        <button type="button" className="conversion__bottom_buttons" onClick={convertToEstateAndStake}>Convert to ESTATE and stake
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-evenly',
-                        marginBottom: '2rem',
-                        width: '60%'
-                    }}>
-                        <button type="button" className="conversion__bottom_buttons" onClick={approveAll}>Approve</button>
-                        <button type="button" className="conversion__bottom_buttons" onClick={convertToEstate}>Convert to ESTATE</button>
-                        <button type="button" className="conversion__bottom_buttons" onClick={convertToEstateAndStake}>Convert to ESTATE and stake
-                        </button>
-                    </div>
+                    
                 </div>
             </div>
         </div>

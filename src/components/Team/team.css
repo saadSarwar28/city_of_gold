@@ -40,14 +40,14 @@
 
 .team__card {
   width: 100%;
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 0px 0px var(--border-radius) var(--border-radius);
   background-image: var(--border-linear-gradient);
   padding: 3px;
   position: relative;
 }
 
 .team__card__content {
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 0px 0px var(--border-radius) var(--border-radius);
   background-color: var(--body-color);
   text-transform: uppercase;
   padding: 10rem 1rem 2rem;
