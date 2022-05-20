@@ -297,7 +297,6 @@ button,
   background-image: var(--button-border-gradient);
   color: var(--body-color);
   border-radius: var(--border-radius);
-  padding: 2px;
   cursor: pointer;
   height: 100%;
   text-decoration: none;
