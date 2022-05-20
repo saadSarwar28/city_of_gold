@@ -267,6 +267,7 @@ html {
     10% 100%,
     /*bottom right second notched corner */
     0 93%);
+  --border-radius: 0;
 }
 
 body {
@@ -295,7 +296,7 @@ button,
 .discord-button {
   background-image: var(--button-border-gradient);
   color: var(--body-color);
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   padding: 2px;
   cursor: pointer;
   height: 100%;
@@ -327,7 +328,7 @@ button,
   cursor: pointer;
   background-image: var(--button-gradient);
   padding: 10px 15px;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   font-weight: 700;
   border: none;
   outline: none;

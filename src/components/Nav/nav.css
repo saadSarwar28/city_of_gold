@@ -48,6 +48,7 @@ nav {
 
 .nav__links li {
   font-size: 1.2rem;
+  color: var(--font-light-color);
 }
 
 .nav__links a {
