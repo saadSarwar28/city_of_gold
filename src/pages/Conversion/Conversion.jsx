@@ -9,7 +9,7 @@ import {ethers} from "ethers";
 import Addresses from "../../constants/contractAddresses";
 import landAbi from "../../abi/Land.json";
 import estateAbi from "../../abi/Estate.json";
-import { showSuccessToast, showWarningToast } from '../../utils/utilityFunctions';
+import {showSuccessToast, showWarningToast} from '../../utils/utilityFunctions';
 import errorMessages from '../../constants/errorMessages';
 import successMessages from '../../constants/successMessages';
 import AppNav from '../../components/Nav/AppNav';
@@ -18,7 +18,6 @@ import ConversionImage from '../../components/Conversion/ConversionImage';
 
 const Conversion = () => {
     const [provider, setProvider] = useState(null)
-    const [chainID, setChainId] = useState(0)
     const [address, setAddress] = useState('')
     const [landContract, setLandContract] = useState(null)
     const [estateContract, setEstateContract] = useState(null)
@@ -77,12 +76,10 @@ const Conversion = () => {
     async function approveAll() {
         if (approved) {
             showWarningToast(errorMessages.ALREADY_APPROVED)
-            // alert('Already approved!')
             return
         }
         if (!(selectedLands.length === 3)) {
             showWarningToast(errorMessages.SELECT_AT_LEAST_NOT_MORE_THAN_THREE_LAND_TOKENS);
-            // alert('Please select at least and not more than 3 LAND tokens.')
             return
         }
         const landsSorted = selectedLands.sort()
@@ -94,7 +91,6 @@ const Conversion = () => {
         }
         if (!areConsecutive) {
             showWarningToast(errorMessages.ESTATE_CAN_MINTED_BY_THREE_CONSECUTIVE_LANDS)
-            // alert('ESTATE can only be minted by three consecutive lands.')
             return
         }
         if (window.ethereum && address !== '') {
@@ -102,8 +98,7 @@ const Conversion = () => {
             const tx = await landContractSigned.setApprovalForAll(Addresses.ESTATE, true)
             await tx.wait()
             setApproved(true)
-            showWarningToast(successMessages.LAND_APPROVED)
-            // alert('Land approved')
+            showSuccessToast(successMessages.LAND_APPROVED)
         }
     }
 
@@ -134,7 +129,6 @@ const Conversion = () => {
             const tx = await estateContractSigned.mint(selectedLands.sort(), false)
             await tx.wait()
             showSuccessToast(successMessages.MINTED_SUCCESSFULLY)
-            // alert('ESTATE minted successfully')
             setOwnedLands(ownedLands => [])
             setRefreshLands(!refreshLands)
             setApproved(false)
@@ -144,11 +138,9 @@ const Conversion = () => {
     async function convertToEstateAndStake() {
         if (!approved) {
             showWarningToast(errorMessages.CONVERSION_REQUIRE_APPROVAL_FIRST)
-            // alert('Conversion requires approval first!')
         }
         if (!(selectedLands.length === 3)) {
             showWarningToast(errorMessages.selectedLands);
-            // alert('Please select at least and not more than 3 LAND tokens.')
             return
         }
         const landsSorted = selectedLands.sort()
@@ -160,7 +152,6 @@ const Conversion = () => {
         }
         if (!areConsecutive) {
             showWarningToast(errorMessages.ESTATE_CAN_MINTED_BY_THREE_CONSECUTIVE_LANDS)
-            // alert('ESTATE can only be minted by three consecutive lands.')
             return
         }
         if (window.ethereum && address !== '') {
@@ -168,7 +159,6 @@ const Conversion = () => {
             const tx = await estateContractSigned.mint(selectedLands.sort(), true)
             await tx.wait()
             showSuccessToast(successMessages.ESTATE_MINTED_SUCCESSFULLY);
-            // alert('ESTATE minted successfully')
             setOwnedLands(ownedLands => [])
             setRefreshLands(!refreshLands)
             setApproved(false)
@@ -206,101 +196,44 @@ const Conversion = () => {
                     <div className="conversion">
                         <div className="conversion__notched-box">
                             <div className="conversion__notched-box__content">
-                                {/* <table className="conversion__notched-box__table">
-                                    <thead>
-                                    <tr>
-                                        <th>
-                                            Select
-                                        </th>
-                                        <th>
-                                            Token ID
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {
-                                        ownedLands.sort().map(land => {
-                                            return (
-                                                <tr key={land}>
-                                                    <td className="conversion__notched-box__table_body">
-                                                        <input type="checkbox" onChange={() => selectLand(land)}/>
-                                                    </td>
-                                                    <td className="conversion__notched-box__table_body">{land}</td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                    </tbody>
-                                </table> */}
-                                <div className="conversion__image__wrapper">
-                                    <ConversionImage 
-                                        // isSelected={false}
-                                        imgSrc={logoSrc}
-                                        isSelectHandler={isSelectHandler}
-                                    />
-                                    <ConversionImage 
-                                        isSelected={false}
-                                        imgSrc={logoSrc}
-                                        isSelectHandler={isSelectHandler}
-                                    />
-                                    <ConversionImage 
-                                        isSelected={false}
-                                        imgSrc={logoSrc}
-                                        isSelectHandler={isSelectHandler}
-                                    />
-                                    <ConversionImage 
-                                        imgSrc={logoSrc}
-                                        isSelectHandler={isSelectHandler}
-                                    />
-                                    <ConversionImage 
-                                        imgSrc={logoSrc}
-                                        isSelectHandler={isSelectHandler}
-                                    />
-                                    <ConversionImage 
-                                        imgSrc={logoSrc}
-                                        isSelectHandler={isSelectHandler}
-                                    />
-                                    <ConversionImage 
-                                        imgSrc={logoSrc}
-                                        isSelectHandler={isSelectHandler}
-                                    />
-                                    <ConversionImage 
-                                        imgSrc={logoSrc}
-                                        isSelectHandler={isSelectHandler}
-                                    />
-                                    <ConversionImage 
-                                        imgSrc={logoSrc}
-                                        isSelectHandler={isSelectHandler}
-                                    />
-                                </div>
-                                <div style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    // marginBottom: '2rem',
-                                    // width: '60%',
-                                    position: "relative",
-                                    // bottom: "10px",
-                                    // width: "100%",
-                                    gap: "2rem",
-                                    // justifySelf: "center",
-                                }}>
-                                    <div className="discord-button">
-                                        <button type="button" className="conversion__bottom_buttons" onClick={approveAll}>Approve</button>
-                                        
-                                    </div>
-                                    <div className="discord-button">
-
-                                    <button type="button" className="conversion__bottom_buttons" onClick={convertToEstate}>Convert to ESTATE</button>
-                                    </div>
-                                    <div className="discord-button">
-                                        <button type="button" className="conversion__bottom_buttons" onClick={convertToEstateAndStake}>Convert to ESTATE and stake
-                                        </button>
-                                    </div>
-                                </div>
+                                {
+                                    ownedLands.length > 0 ?
+                                        <>
+                                            <div className="conversion__image__wrapper">
+                                                {
+                                                    ownedLands.sort().map(land => {
+                                                        return(<ConversionImage id={land} imgSrc={logoSrc} isSelectHandler={isSelectHandler} selectedId={selectLand}/>)
+                                                    })
+                                                }
+                                            </div>
+                                        </> : <h3 style={{color: 'white', alignSelf: 'center'}}>Looks like you haven't purchased any LAND yet.</h3>
+                                }
+                            </div>
+                        </div>
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            position: "relative",
+                            gap: "2rem",
+                            marginTop: '25px'
+                        }}>
+                            <div className="discord-button">
+                                <button type="button" className="conversion__bottom_buttons"
+                                        onClick={approveAll}>Approve
+                                </button>
+                            </div>
+                            <div className="discord-button">
+                                <button type="button" className="conversion__bottom_buttons"
+                                        onClick={convertToEstate}>Convert to ESTATE
+                                </button>
+                            </div>
+                            <div className="discord-button">
+                                <button type="button" className="conversion__bottom_buttons"
+                                        onClick={convertToEstateAndStake}>Convert to ESTATE and stake
+                                </button>
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </div>

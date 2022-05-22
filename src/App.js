@@ -14,6 +14,7 @@ import NotFound from "./pages/404/NotFound";
 import Thankyou from "./pages/Thankyou/Thankyou";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import MyAssets from "./pages/MyAssets/MyAssets";
 
 function App() {
   return (
@@ -40,6 +41,13 @@ function App() {
             exact
             path={routeUrl.staking}
             element={<Dashboard />}
+          />
+
+          {/* Route For Staking */}
+          <Route
+              exact
+              path={routeUrl.assets}
+              element={<MyAssets />}
           />
 
           {/* Route for Treasure Hunt */}

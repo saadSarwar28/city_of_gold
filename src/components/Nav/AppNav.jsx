@@ -18,7 +18,6 @@ interface NavProps {
     walletConnected: () => void
 }
 
-// const Bottom: React.FC<BottomProps> = (
 const AppNav: React.FC<NavProps> = (
     {
         walletConnected
@@ -136,7 +135,7 @@ const AppNav: React.FC<NavProps> = (
                         </Link>
                     </li>
                     <li>
-                        <Link to={routeUrl.conversion}>
+                        <Link to={routeUrl.assets}>
                             My Assets
                         </Link>
                     </li>

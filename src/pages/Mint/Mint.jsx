@@ -19,6 +19,7 @@ import AppNav from '../../components/Nav/AppNav';
 const Mint = () => {
 
     const maxMint = 9;
+    const [balance, setBalance] = useState(0)
     const [address, setAddress] = useState('')
     const [alreadyMinted, setAlreadyMinted] = useState(0)
     const [price, setPrice] = useState(0)
@@ -108,6 +109,22 @@ const Mint = () => {
         }
     })
 
+    const updateBalance = () => {
+        if (window.ethereum && address  !== '' && signer !== null) {
+            signer.getBalance()
+                .then(res => {
+                    setBalance(Number(ethers.utils.formatEther(res)))
+                    if (price > balance) {
+                        showWarningToast(errorsMessage.NOT_ENOUGH_ETH);
+                    }
+                })
+        }
+    }
+
+    useEffect(() => {
+        updateBalance()
+    }, [signer, address])
+
     const handleMint = async () => {
         if (window.ethereum && (address !== '')) {
             if (chainID !== Network.chainId) {
@@ -115,14 +132,8 @@ const Mint = () => {
                 // alert('Please switch to Rinkeby testnet in metamask.')
                 return
             }
-            let balance;
-            signer.getBalance()
-                .then(res => {
-                    balance = Number(ethers.utils.formatEther(res))
-                })
             if (price > balance) {
                 showWarningToast(errorsMessage.NOT_ENOUGH_ETH);
-                // alert('Not enough ETH in your wallet')
             } else {
                 const contractWithSigner = landContract.connect(signer)
                 const options = {value: ethers.utils.parseEther(String(price.toFixed(2)))}
@@ -130,11 +141,9 @@ const Mint = () => {
                 await tx.wait()
                 // console.log(tx)
                 showSuccessToast(successMessages.MINTED_SUCCESSFULLY);
-                // alert('Minted Successfully')
             }
         } else {
             showWarningToast(errorsMessage.CONNECT_METAMASK_FIRST);
-            // alert('Please connect Metamask first')
         }
     }
 
