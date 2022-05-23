@@ -3,7 +3,7 @@
 */
 
 import React, {useEffect, useState} from 'react'
-import "./conversion.css"
+import "./myasset.css"
 import {ethers} from "ethers";
 import Addresses from "../../constants/contractAddresses";
 import landAbi from "../../abi/Land.json";

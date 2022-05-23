@@ -15,6 +15,8 @@ import successMessages from '../../constants/successMessages';
 import AppNav from '../../components/Nav/AppNav';
 import logoSrc from "../../static/images/logo_without_name.png";
 import ConversionImage from '../../components/Conversion/ConversionImage';
+import  customImageSrc  from "../../static/images/city-sea-view.jpeg"
+import customImageSrc2 from "../../static/images/team-member-2.jpeg"
 
 const Conversion = () => {
     const [provider, setProvider] = useState(null)
@@ -205,8 +207,10 @@ const Conversion = () => {
                                                         return(<ConversionImage id={land} imgSrc={logoSrc} isSelectHandler={isSelectHandler} selectedId={selectLand}/>)
                                                     })
                                                 }
+                                                
                                             </div>
                                         </> : <h3 style={{color: 'white', alignSelf: 'center'}}>Looks like you haven't purchased any LAND yet.</h3>
+                                        
                                 }
                             </div>
                         </div>
@@ -229,7 +233,7 @@ const Conversion = () => {
                             </div>
                             <div className="discord-button">
                                 <button type="button" className="conversion__bottom_buttons"
-                                        onClick={convertToEstateAndStake}>Convert to ESTATE and stake
+                                        onClick={convertToEstateAndStake}>Convert to ESTATE and Stake
                                 </button>
                             </div>
                         </div>
