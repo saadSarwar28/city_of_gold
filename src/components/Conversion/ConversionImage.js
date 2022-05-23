@@ -12,7 +12,7 @@ const ConversionImage = ({id, imgSrc, isSelectHandler, selectedId}) => {
     return (
         <div className={isSelected ? 'conversion__image active' : 'conversion__image'} onClick={selectImage}>
             <img src={imgSrc} alt="conversion-image" width={400} height={400}/>
-            <div style={{color: 'navajowhite', position: 'absolute', bottom: '10%', right: '32%'}} >Land # {id}</div>
+            <div className='conversion__image__text'  >Land # {id}</div>
         </div>
     )
 }
