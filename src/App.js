@@ -15,8 +15,10 @@ import Thankyou from "./pages/Thankyou/Thankyou";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import MyAssets from "./pages/MyAssets/MyAssets";
+import Modal from 'react-modal';
 
 function App() {
+  Modal.setAppElement('#root');
   return (
     <div className="App">
       <ToastContainer />
