@@ -2,14 +2,29 @@
  * This Component show the asset details with popup 
  ***/
 
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import logoSrc from "../../static/images/logo_without_name.png";
 import Modal from 'react-modal';
 import cityViewImage from "../../static/images/cityofgold.jpg";
 import { MdOutlineClose } from "react-icons/md";
 import AssetDetailModal from './AssetDetailModal';
+import {ethers} from "ethers";
+import Addresses from "../../constants/contractAddresses";
+import scoresAbi from "../../abi/Scores.json";
+import TokenTypes from "../../utils/tokenTypes";
 
-const AssetDetails = ({id}) => {
+const AssetDetails = ({id, tokenType, address}) => {
+
+    const [provider, setProvider] = useState(null)
+    const [score, setScore] = useState('')
+    const [multiplier, setMultiplier] = useState('0')
+
+    useEffect(() => {
+        if (window.ethereum && provider === null) {
+            setProvider(new ethers.providers.Web3Provider(window.ethereum))
+        }
+    }, [address])
+
     // Popup State
     const [isOpen, setIsOpen] = useState(false);
 
@@ -18,6 +33,29 @@ const AssetDetails = ({id}) => {
     
     // Close popup
     const closeModal = () => setIsOpen(false);
+
+    useEffect(() => {
+        if (window.ethereum && address !== '' && provider !== null) {
+            console.log(' in use effect of scores')
+            const scores = new ethers.Contract(Addresses.SCORES, scoresAbi, provider)
+            if (tokenType == TokenTypes.LAND) {
+                scores.getLandScore(id)
+                    .then(res => {
+                        setScore(res.toString())
+                    })
+            } else {
+                scores.getEstateScore(id)
+                    .then(res => {
+                        setScore(res.toString())
+                    })
+                scores.getEstateMultiplier(id)
+                    .then(res => {
+                        setMultiplier('1.' + res.toString() + 'x')
+                    })
+            }
+        }
+    }, [address, provider])
+
 
     return (
         <>
@@ -30,12 +68,12 @@ const AssetDetails = ({id}) => {
             <AssetDetailModal 
                 isOpen={isOpen}
                 closeModal={closeModal}
-                heading={""}
-                featureOne={""}
-                featureTwo={""}
-                featureThree={""}
-                featureFour={""}
-                imgSrc={""}
+                heading={"Property Details"}
+                featureOne={tokenType}
+                featureTwo={id}
+                featureThree={score}
+                featureFour={multiplier}
+                imgSrc={logoSrc}
             />
         </>
     )

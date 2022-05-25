@@ -39,10 +39,10 @@ const AssetDetailModal = ({
         <div className='asset__image__popup__content'>
           <h1>{heading}</h1>
           <ul className='asset__feature__list'>
-            <li>Feature 1 : {featureOne}</li>
-            <li>Feature 2 : {featureTwo}</li>
-            <li>Feature 3 : {featureThree}</li>
-            <li>Feature 4 : {featureFour}</li>
+            <li>Token type : {featureOne}</li>
+            <li>Token ID : {featureTwo}</li>
+            <li>Score : {featureThree}</li>
+            <li>Multiplier (for ESTATE only) : {featureFour}</li>
           </ul>
         </div>
       </div>

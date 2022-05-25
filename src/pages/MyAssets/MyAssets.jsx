@@ -18,6 +18,7 @@ import Modal from 'react-modal';
 import { MdOutlineClose } from "react-icons/md";
 import { faBlackberry } from '@fortawesome/free-brands-svg-icons';
 import AssetDetailModal from '../../components/MyAssets/AssetDetailModal';
+import tokenTypes from "../../utils/tokenTypes";
 
 const MyAssets = () => {
     const [provider, setProvider] = useState(null)
@@ -25,9 +26,31 @@ const MyAssets = () => {
     const [landContract, setLandContract] = useState(null)
     const [estateContract, setEstateContract] = useState(null)
     const [ownedLands, setOwnedLands] = useState([])
+    const [ownedEstates, setOwnedEstates] = useState([])
     const [signer, setSigner] = useState(null)
     const [approved, setApproved] = useState(false)
     const [refreshLands, setRefreshLands] = useState(true)
+
+    const [allNfts, setAllNfts] = useState([])
+
+    useEffect(() => {
+        ownedLands.forEach(land => {
+            if (!allNfts.filter(nft => nft.id === land).length > 0) {
+                setAllNfts(allNfts => [...allNfts, {
+                    type: tokenTypes.LAND,
+                    id: land,
+                }])
+            }
+        })
+        ownedEstates.forEach(estate => {
+            if (!allNfts.filter(nft => nft.id === estate).length > 0) {
+                setAllNfts(allNfts => [...allNfts, {
+                    type: tokenTypes.ESTATE,
+                    id: estate,
+                }])
+            }
+        })
+    }, [ownedLands, ownedEstates])
 
     useEffect(() => {
         if (window.ethereum && provider === null) {
@@ -57,6 +80,10 @@ const MyAssets = () => {
     }, [address, landContract, refreshLands])
 
     useEffect(() => {
+        updateTotalEstatesOwned()
+    }, [address, estateContract])
+
+    useEffect(() => {
         if (window.ethereum && address !== '') {
             setLandContract(new ethers.Contract(Addresses.LAND, landAbi, provider))
             setEstateContract(new ethers.Contract(Addresses.ESTATE, estateAbi, provider))
@@ -75,6 +102,18 @@ const MyAssets = () => {
         }
     }
 
+    function updateTotalEstatesOwned() {
+        if (window.ethereum && address !== '' && estateContract !== null) {
+            estateContract.balanceOf(address).then(balance => {
+                for (let i = 0; i < Number(balance.toString()); i++) {
+                    estateContract.tokenOfOwnerByIndex(address, i).then(res => {
+                        setOwnedEstates(ownedEstates => [...ownedEstates, res.toString()])
+                    })
+                }
+            })
+        }
+    }
+
     const isWalletConnected = () => {
         provider.listAccounts()
             .then(res => {
@@ -83,14 +122,6 @@ const MyAssets = () => {
                 }
             })
     }
-
-    const [isOpen, setIsOpen] = useState(false);
-
-    // Open Popup on Image Click
-    const openModal = () => setIsOpen(true);
-
-    // Close popup
-    const closeModal = () => setIsOpen(false);
 
     return (
         <div className=''>
@@ -103,29 +134,11 @@ const MyAssets = () => {
                             <div className="conversion__notched-box__content">
                                 <div className="conversion__image__wrapper">
                                     {
-                                        ownedLands.sort().map(land => {
-                                            return(<AssetDetails id={land}/>)
+                                        allNfts.sort().map(token => {
+                                            return(<AssetDetails id={token.id} tokenType={token.type} address={address}/>)
                                         })
                                     }
-
-                                    {/* TODO: This component is for Demo please remove it  */}
-                                    <>
-                                        <div className='conversion__image active' onClick={openModal}>
-                                            <img src={cityViewImage} alt="conversion-image" width={400} height={400} />
-                                        </div>
-                                        <AssetDetailModal
-                                            isOpen={isOpen}
-                                            closeModal={closeModal}
-                                            heading={"Demo Heading"}
-                                            featureOne={"feature 1"}
-                                            featureTwo={"feature 2"}
-                                            featureThree={"feature 3"}
-                                            featureFour={"feature 4"}
-                                            imgSrc={cityViewImage}
-                                        />
-                                    </>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
