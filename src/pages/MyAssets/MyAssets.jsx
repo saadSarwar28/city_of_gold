@@ -17,6 +17,7 @@ import cityViewImage from "../../static/images/cityofgold.jpg";
 import Modal from 'react-modal';
 import { MdOutlineClose } from "react-icons/md";
 import { faBlackberry } from '@fortawesome/free-brands-svg-icons';
+import AssetDetailModal from '../../components/MyAssets/AssetDetailModal';
 
 const MyAssets = () => {
     const [provider, setProvider] = useState(null)
@@ -106,37 +107,25 @@ const MyAssets = () => {
                                             return(<AssetDetails id={land}/>)
                                         })
                                     }
+
+                                    {/* TODO: This component is for Demo please remove it  */}
                                     <>
                                         <div className='conversion__image active' onClick={openModal}>
                                             <img src={cityViewImage} alt="conversion-image" width={400} height={400} />
                                         </div>
-                                        <Modal
+                                        <AssetDetailModal
                                             isOpen={isOpen}
-                                            onRequestClose={closeModal}
-                                            style={styles}
-                                        >
-                                            <div className='asset__image__popup'>
-                                                <MdOutlineClose 
-                                                    size={20} 
-                                                    className="close-button"
-                                                    onClick={closeModal}
-                                                />
-                                                <div className='asset__image__popup__image'>
-                                                    <img src={cityViewImage} alt="conversion-image" width={200} height={200} />
-                                                </div>
-                                                <div className='asset__image__popup__content'>
-                                                    <h1>Demo Heading</h1>
-                                                    <ul className='asset__feature__list'>
-                                                        <li>Feature 1 : Hello</li>
-                                                        <li>Feature 2 : No Of bedroom</li>
-                                                        <li>Feature 3 : </li>
-                                                        <li>Feature 4 :</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </Modal>
+                                            closeModal={closeModal}
+                                            heading={"Demo Heading"}
+                                            featureOne={"feature 1"}
+                                            featureTwo={"feature 2"}
+                                            featureThree={"feature 3"}
+                                            featureFour={"feature 4"}
+                                            imgSrc={cityViewImage}
+                                        />
                                     </>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -146,25 +135,5 @@ const MyAssets = () => {
     )
 }
 
-const styles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        // marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        padding: 10,
-        backgroundColor: "#161616",
-        border: "none",
-        borderRadius: "none",
-       
-    },
-    overlay: {
-        zIndex: 2,
-        backgroundColor: "rgba(0, 0, 0, 0.9)"
-
-    }
-}
 
 export default MyAssets

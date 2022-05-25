@@ -151,3 +151,15 @@
   right: '32%';
 }
 
+.conversion__button__group {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  gap: 2rem;
+  margin-top: 25px;
+  flex-direction: column;
+
+  @include ipad {
+    flex-direction: row;
+  }
+}
