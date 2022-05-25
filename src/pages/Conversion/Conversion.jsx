@@ -214,13 +214,7 @@ const Conversion = () => {
                                 }
                             </div>
                         </div>
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            position: "relative",
-                            gap: "2rem",
-                            marginTop: '25px'
-                        }}>
+                        <div className='conversion__button__group'>
                             <div className="discord-button">
                                 <button type="button" className="conversion__bottom_buttons"
                                         onClick={approveAll}>Approve

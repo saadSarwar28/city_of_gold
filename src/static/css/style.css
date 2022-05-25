@@ -341,7 +341,7 @@ button,
   content: "";
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 99%;
   background-color: var(--accent-color);
   top: 0;
   left: 0;

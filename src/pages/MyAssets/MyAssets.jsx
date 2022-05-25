@@ -13,6 +13,11 @@ import errorMessages from '../../constants/errorMessages';
 import successMessages from '../../constants/successMessages';
 import AppNav from '../../components/Nav/AppNav';
 import AssetDetails from "../../components/MyAssets/AssetDetails";
+import cityViewImage from "../../static/images/cityofgold.jpg";
+import Modal from 'react-modal';
+import { MdOutlineClose } from "react-icons/md";
+import { faBlackberry } from '@fortawesome/free-brands-svg-icons';
+import AssetDetailModal from '../../components/MyAssets/AssetDetailModal';
 
 const MyAssets = () => {
     const [provider, setProvider] = useState(null)
@@ -79,6 +84,14 @@ const MyAssets = () => {
             })
     }
 
+    const [isOpen, setIsOpen] = useState(false);
+
+    // Open Popup on Image Click
+    const openModal = () => setIsOpen(true);
+
+    // Close popup
+    const closeModal = () => setIsOpen(false);
+
     return (
         <div className=''>
             <div className="container">
@@ -94,7 +107,25 @@ const MyAssets = () => {
                                             return(<AssetDetails id={land}/>)
                                         })
                                     }
+
+                                    {/* TODO: This component is for Demo please remove it  */}
+                                    <>
+                                        <div className='conversion__image active' onClick={openModal}>
+                                            <img src={cityViewImage} alt="conversion-image" width={400} height={400} />
+                                        </div>
+                                        <AssetDetailModal
+                                            isOpen={isOpen}
+                                            closeModal={closeModal}
+                                            heading={"Demo Heading"}
+                                            featureOne={"feature 1"}
+                                            featureTwo={"feature 2"}
+                                            featureThree={"feature 3"}
+                                            featureFour={"feature 4"}
+                                            imgSrc={cityViewImage}
+                                        />
+                                    </>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -103,5 +134,6 @@ const MyAssets = () => {
         </div>
     )
 }
+
 
 export default MyAssets
